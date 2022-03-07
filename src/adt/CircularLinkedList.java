@@ -7,7 +7,7 @@ package adt;
 
 /**
  *
- * @author USER
+ * @author JiaToong
  */
 public class CircularLinkedList <T> implements CircularListInterface<T> {
 
