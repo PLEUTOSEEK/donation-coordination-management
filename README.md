@@ -11,7 +11,7 @@ cd "folder path" --- Note: please use double quote cover your favourite folder p
 =========================================
 git clone "https://github.com/PLEUTOSEEK/donation-coordination-management.git"
 
-Try to add some file into proj for testing
+#Try to add some file into proj for testing
 =========================================
 git pull
 notepad fileTZX.txt ---Note: change TZX to your name
@@ -28,7 +28,7 @@ git pull
 ==================================
 git add .
 git commit -m "comment"
-git push -u origin main
+git push -u origin mainCancel changes
 
 
 
