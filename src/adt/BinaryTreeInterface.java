@@ -12,23 +12,19 @@ package adt;
 //U = node, T = list
 public interface BinaryTreeInterface<U, T> {
 
-    public void add(U label, T data);
+    public boolean addData(U label, T data);
 
-    public void updateData(U label, T data);
+    public boolean updateData(U label, T data);
 
     // fing specific element within a list that within a specific node
-    public void delData(U label, T data);
+    public boolean delData(U label, T data);
 
-    // delete the specific node without care the list inside is empty or not
-    // danger to use, use it only when neccessary, or else please use delData()
-    public void deleteNode(U label);
+    public boolean clearAt(U label);
 
     //clear all node, use it only when neccessary!
-    public void clear();
+    public boolean clear();
 
     public Object getData(U label, T data);
-
-    public Object getNode(U label);
 
     public Object getMin();
 
@@ -38,6 +34,6 @@ public interface BinaryTreeInterface<U, T> {
 
     public boolean containsNode(U label);
 
-    public void merge();
+    public boolean isEmpty();
 
 }

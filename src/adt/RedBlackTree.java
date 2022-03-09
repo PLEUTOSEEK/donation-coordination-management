@@ -33,6 +33,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         //((T) newNode.getListData().getFirst()).compareTo(data); //T (Object)
     }
 
+    @Override
     public boolean isEmpty() {
         return this.length == 0;
     }
@@ -49,8 +50,16 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return length;
     }
 
+    public void incLength() {
+        this.length += 1;
+    }
+
+    public void decLength() {
+        this.length -= 1;
+    }
+
     @Override
-    public void add(U label, T data) {
+    public boolean addData(U label, T data) {
         this.newNode = new Node(label);
         this.newNode.getListData().addLast(data);
 
@@ -98,6 +107,8 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                 fixInsert(this.newNode);
             }
         }
+
+        return inserted;
     }
 
     private void fixInsert(Node currentNewNode) {
@@ -257,14 +268,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         rrCase(currentNewNode.getRight());
     }
 
-    private void incLength() {
-        this.length += 1;
-    }
-
-    private void decLength() {
-        this.length -= 1;
-    }
-
     private void leftRotate(Node x) {
         /*
         x.parent = 000
@@ -374,23 +377,29 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public void delData(U label, T data) {
+    public boolean delData(U label, T data) {
         Node node = getNode(label);
+        boolean deleted = false;
         if (node != null) {
             node.getListData().delAt(node.getListData().indexOf(label));
             if (node.getListData().isEmpty()) {
                 this.deleteNode((U) node.getLabel());
+                deleted = true;
             }
         } else {
             // dont have node, cannot delete
         }
+
+        return deleted;
     }
 
     @Override
-    public void clear() {
+    public boolean clear() {
         this.root = null;
         this.newNode = null;
         this.length = 0;
+
+        return true;
     }
 
     @Override
@@ -400,7 +409,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return targetNode;
     }
 
-    @Override
     public Node getNode(U label) {
         Node currentNode = this.root;
         Node targetNode = getRec(label, currentNode);
@@ -447,11 +455,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public void merge() {
-
-    }
-
-    @Override
     public int compareTo(U Obj) { // (**)
 
         return this.compareTo(Obj);
@@ -459,13 +462,13 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     //==================DELETE
-    @Override
-    public void deleteNode(U label) {
+    public boolean deleteNode(U label) {
 
         Node node = getNode(label);
+        boolean deleted = false;
 
         if (node == null) {
-            return;
+            return deleted;
         }
 
         Node successor = getLeftMostNode(node.right);
@@ -476,20 +479,28 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             if (replaceWithCessor(node, successor, predecessor) == true) {//if use successor
                 if (isRedNode(successor)) {
                     removeFromTree(successor);
+                    deleted = true;
+                    decLength();
                 } else {
                     //DB case
                     successor = this.relocateDeleteNodeForSuccessor(successor);
                     fixDB(successor);
                     removeFromTree(successor);
+                    deleted = true;
+                    decLength();
                 }
             } else { //if use predecessor
                 if (isRedNode(predecessor)) {
                     removeFromTree(predecessor);
+                    deleted = true;
+                    decLength();
                 } else {
                     //DB case
                     predecessor = this.relocateDeleteNodeForPredecessor(predecessor);
                     fixDB(predecessor);
                     removeFromTree(predecessor);
+                    deleted = true;
+                    decLength();
                 }
             }
 
@@ -498,20 +509,24 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             if (replaceWithCessor(node, successor, predecessor) == true) {//if use successor
                 if (isRedNode(successor)) {
                     removeFromTree(successor);
+                    deleted = true;
                 } else {
                     //DB case
                     successor = this.relocateDeleteNodeForSuccessor(successor);
                     fixDB(successor);
                     removeFromTree(successor);
+                    deleted = true;
                 }
             } else { //if use predecessor
                 if (isRedNode(predecessor)) {
                     removeFromTree(predecessor);
+                    deleted = true;
                 } else {
                     //DB case
                     predecessor = relocateDeleteNodeForPredecessor(predecessor);
                     fixDB(predecessor);
                     removeFromTree(predecessor);
+                    deleted = true;
                 }
             }
 
@@ -519,12 +534,16 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             //case 1
             if (isRedNode(node)) {
                 removeFromTree(node);
+                deleted = true;
             } else {
                 //DB case
                 fixDB(node);
                 removeFromTree(node);
+                deleted = true;
             }
         }
+
+        return deleted;
     }
 
     private Node relocateDeleteNodeForPredecessor(Node predecessor) {
@@ -841,17 +860,21 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public void updateData(U label, T data) {
+    public boolean updateData(U label, T data) {
         Node node = getNode(label);
+        boolean updated = false;
         if (node != null) {
             if (node.getListData().indexOf(data) != -1) {
                 node.getListData().replaceAt(data, node.getListData().indexOf(label));
+                updated = true;
             } else {
                 // dont have data, cannot update
             }
         } else {
             // dont have node, cannot update
         }
+
+        return updated;
     }
 
     @Override
@@ -889,6 +912,22 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean clearAt(U label) {
+        Node node = getNode(label);
+        boolean cleared = false;
+        if (node != null) {
+
+            deleteNode((U) node.getLabel());
+            cleared = true;
+
+        } else {
+            // dont have node, cannot delete
+        }
+
+        return cleared;
     }
 
     // =====================DELETE
