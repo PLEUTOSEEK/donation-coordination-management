@@ -2,9 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
+        <group/>
+=======
+<<<<<<< HEAD
+        <group/>
+=======
         <group>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/adt/DoublyLinkedList.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/adt/ListInterface.java</file>
         </group>
+>>>>>>> 91090d5bfe54b92f3a3ba59b3ec256f1b6f4b158
+>>>>>>> 3de01af22c0893d3489c3671fe32c3952debdbde
     </open-files>
 </project-private>
