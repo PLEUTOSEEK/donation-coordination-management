@@ -17,6 +17,8 @@ interface Panel {
 
     public void add();
 
+    public void display();
+
     public void update();
 
     public void delete();
