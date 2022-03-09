@@ -7,7 +7,7 @@ package entity;
 
 /**
  *
- * @author USER
+ * @author JiaToong
  */
 public class Donation {
     

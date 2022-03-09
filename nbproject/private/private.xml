@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularListInterface.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedList.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Donation.java</file>
+        </group>
+>>>>>>> 91090d5bfe54b92f3a3ba59b3ec256f1b6f4b158
     </open-files>
 </project-private>
