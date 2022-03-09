@@ -7,12 +7,12 @@ package entity;
 
 /**
  *
- * @author JiaToong
+ * @author Tee Zhuo Xuan
  */
-public class Donation implements Comparable<Donation> {
+public class Donee implements Comparable<Donee> {
 
     @Override
-    public int compareTo(Donation o) {
+    public int compareTo(Donee o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
