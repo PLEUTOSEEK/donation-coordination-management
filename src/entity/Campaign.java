@@ -6,7 +6,7 @@
 package entity;
 
 import adt.DoublyLinkedList;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,7 +14,7 @@ import java.time.LocalTime;
  *
  * @author Tee Zhuo Xuan
  */
-public class Campaign {
+public class Campaign implements Comparable<Campaign> {
 
     private String campaignID;
     private String campaignName;
@@ -202,6 +202,11 @@ public class Campaign {
 
     public void setDateModified(Timestamp dateModified) {
         this.dateModified = dateModified;
+    }
+
+    @Override
+    public int compareTo(Campaign o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
