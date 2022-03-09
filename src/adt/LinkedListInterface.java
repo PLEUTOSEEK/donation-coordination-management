@@ -9,7 +9,7 @@ package adt;
  *
  * @author JiaToong
  */
-public interface CircularListInterface<T> {
+public interface LinkedListInterface<T> {
     
     boolean addLastNode(T element);
     boolean addFirstNode(T element);

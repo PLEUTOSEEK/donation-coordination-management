@@ -9,7 +9,7 @@ package adt;
  *
  * @author JiaToong
  */
-public class CircularLinkedList <T> implements CircularListInterface<T> {
+public class CircularLinkedList <T> implements LinkedListInterface<T> {
 
     private Node firstNode, lastNode;
     
