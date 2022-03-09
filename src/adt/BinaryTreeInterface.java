@@ -14,6 +14,8 @@ public interface BinaryTreeInterface<U, T> {
 
     public void add(U label, T data);
 
+    public void updateData(U label, T data);
+
     // fing specific element within a list that within a specific node
     public void delData(U label, T data);
 
@@ -27,6 +29,14 @@ public interface BinaryTreeInterface<U, T> {
     public Object getData(U label, T data);
 
     public Object getNode(U label);
+
+    public Object getMin();
+
+    public Object getMax();
+
+    public boolean containsData(U label, T data);
+
+    public boolean containsNode(U label);
 
     public void merge();
 

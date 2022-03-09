@@ -382,9 +382,8 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                 this.deleteNode((U) node.getLabel());
             }
         } else {
-            // dont have element, cannot delete
+            // dont have node, cannot delete
         }
-
     }
 
     @Override
@@ -469,8 +468,8 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             return;
         }
 
-        Node successor = getSuccessor(node.right);
-        Node predecessor = getPredecessor(node.left);
+        Node successor = getLeftMostNode(node.right);
+        Node predecessor = getRightMostNode(node.left);
 
         if (hasLeftChild(node) && hasRightChild(node)) {
 
@@ -713,14 +712,14 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     private boolean hasSuccessor(Node node) {
-        return getSuccessor(node.right) != null;
+        return getLeftMostNode(node.right) != null;
     }
 
     private boolean hasPredecessor(Node node) {
-        return getPredecessor(node.left) != null;
+        return getRightMostNode(node.left) != null;
     }
 
-    private Node getSuccessor(Node node) {
+    private Node getLeftMostNode(Node node) {
         if (node == null) {
             return null;
         }
@@ -735,7 +734,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return node;
     }
 
-    private Node getPredecessor(Node node) {
+    private Node getRightMostNode(Node node) {
         if (node == null) {
             return null;
         }
@@ -839,6 +838,57 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     private boolean isOnLeft(Node node) {
         //before use this must check is root or not
         return node.parent.left == node;
+    }
+
+    @Override
+    public void updateData(U label, T data) {
+        Node node = getNode(label);
+        if (node != null) {
+            if (node.getListData().indexOf(data) != -1) {
+                node.getListData().replaceAt(data, node.getListData().indexOf(label));
+            } else {
+                // dont have data, cannot update
+            }
+        } else {
+            // dont have node, cannot update
+        }
+    }
+
+    @Override
+    public Object getMin() {
+        return getLeftMostNode(this.root).getListData();
+    }
+
+    @Override
+    public Object getMax() {
+        return getRightMostNode(this.root).getListData();
+    }
+
+    @Override
+    public boolean containsData(U label, T data) {
+        Node targetNode = getNode(label);
+
+        if (targetNode != null) {
+            if (targetNode.getListData().indexOf(data) != -1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean containsNode(U label) {
+        Node targetNode = getNode(label);
+
+        if (targetNode != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // =====================DELETE
