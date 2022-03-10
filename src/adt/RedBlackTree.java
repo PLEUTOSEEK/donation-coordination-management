@@ -924,11 +924,20 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public T[] getAllList() {
+    public T[] getAllArrayList() {
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
+        allList.quickSort();
 
         return allList.toArray();
+    }
+
+    public DoublyLinkedList<T> getAllList() {
+        DoublyLinkedList<T> allList = new DoublyLinkedList();
+        getAllList(this.root, allList);
+        allList.quickSort();
+
+        return allList;
     }
 
     public void getAllList(Node currentNode, DoublyLinkedList<T> allList) {

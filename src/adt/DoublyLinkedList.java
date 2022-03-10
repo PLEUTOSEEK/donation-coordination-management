@@ -133,6 +133,15 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
         return true;
     }
 
+    @Override
+    public boolean addUnique(T element) {
+        if (indexOf(element) == -1) {
+            addLast(element);
+            return true;
+        }
+        return false;
+    }
+
     //Interface
     @Override
     public boolean addAt(T element, int givenPos) {
@@ -320,24 +329,24 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
 
     //Interface
     @Override
-    public Object getAt(int givenPos) {
+    public T getAt(int givenPos) {
         //givenPos is start from 1
 
         if (givenPos >= 1 && givenPos <= length) {
 
             if (givenPos == 1) {
 
-                return this.head.element;
+                return (T) this.head.element;
 
             } else if (givenPos == this.length) {
 
-                return this.tail.element;
+                return (T) this.tail.element;
 
             } else {
 
                 Node current = loopThroughMiddle(givenPos);
 
-                return current.element;
+                return (T) current.element;
 
             }
 
@@ -566,6 +575,57 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
     @Override
     public boolean contains(T element) {
         return indexOf(element) != -1;
+    }
+
+    public void quickSort() {
+        quickSort(this, 1, length);
+    }
+
+    public void quickSort(DoublyLinkedList<T> linkedList, int lb, int ub) {
+
+        // start (if less than equal pivot, move forward
+        // end (if greater than pivot, move backward
+        // both stop then perform swap with end and start.
+        // start index is greater than end, then dont swap.
+        /////end swap with pivot (at this point, partition is successfully created
+        if (lb < ub) {
+
+            int pivotIndex = partition(this, lb, ub);
+
+            quickSort(this, lb, pivotIndex - 1);
+            //System.out.println(lb + " " + ub + " " + pivotIndex);
+            quickSort(this, pivotIndex + 1, ub);
+        }
+    }
+
+    public int partition(DoublyLinkedList<T> linkedList, int lb, int ub) {
+        T pivot = linkedList.getAt(lb);
+        int start = lb;
+        int end = ub;
+
+        while (start < end) {
+            while (start <= ub && linkedList.getAt(start).compareTo(pivot) <= 0) {
+
+                start++;
+            }
+
+            while (end >= lb && linkedList.getAt(end).compareTo(pivot) > 0) {
+                end--;
+            }
+
+            if (start < end) {
+                swap(linkedList, start, end);
+            }
+        }
+        swap(linkedList, lb, end);
+        return end;
+    }
+
+    public void swap(DoublyLinkedList<T> linkedList, int first, int sec) {
+        T element = linkedList.getAt(first);
+
+        linkedList.replaceAt(linkedList.getAt(sec), first);
+        linkedList.replaceAt(element, sec);
     }
 
     @Override
