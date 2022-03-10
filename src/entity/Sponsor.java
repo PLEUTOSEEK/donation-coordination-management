@@ -16,4 +16,8 @@ public class Sponsor implements Comparable<Sponsor> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public String[] strArr() {
+        return null;
+    }
+
 }

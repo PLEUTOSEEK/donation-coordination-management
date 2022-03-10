@@ -6,6 +6,7 @@
 package entity;
 
 import adt.DoublyLinkedList;
+import adt.RedBlackTree;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +35,7 @@ public class Campaign implements Comparable<Campaign> {
     private String description;
     private Timestamp campaignRegisterDate;
     private Timestamp dateModified;
+    private static String lastCampaignID = "";
 
     public Campaign() {
         this("", "", null, null, null, null, null, null, null, null, 0.0, "", "", "", "", "", null, null);
@@ -58,6 +60,10 @@ public class Campaign implements Comparable<Campaign> {
         this.description = description;
         this.campaignRegisterDate = campaignRegisterDate;
         this.dateModified = dateModified;
+    }
+
+    public static String getLastCampaignID() {
+        return lastCampaignID;
     }
 
     public String getCampaignID() {
@@ -207,6 +213,42 @@ public class Campaign implements Comparable<Campaign> {
     @Override
     public int compareTo(Campaign o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static String[] campaignHeaders() {
+        String[] campaignHeaders = {"Campaign ID", "Start Date", "End Date"};
+
+        return campaignHeaders;
+    }
+
+    private String[] strArr() {
+        return new String[]{campaignID, this.campaignStartDate.toString(), this.campaignEndDate.toString()};
+    }
+
+    private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
+        Campaign[] campaigns = campaignList.getAllList();
+        String[][] campaignRows = new String[campaignList.getLength()][];
+        for (int i = 0; i < campaigns.length; i++) {
+            campaignRows[i] = campaigns[i].strArr();
+        }
+        return campaignRows;
+    }
+
+    public String autoGenerateID() {
+        String newCampaignID = "";
+        int seq = 0;
+        if (lastCampaignID.equals("")) {
+            newCampaignID = "C1001";
+        } else {
+            seq = Integer.parseInt(lastCampaignID.substring(1));
+            seq += 1;
+
+            newCampaignID = "C" + seq;
+        }
+
+        lastCampaignID = newCampaignID;
+
+        return lastCampaignID;
     }
 
 }

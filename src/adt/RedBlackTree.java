@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author Tee Zhuo Xuan
  * @param <U>
  */
-public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<T>> implements BinaryTreeInterface<U, T>, Comparable<U> {
+public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<T>> implements BinaryTreeInterface<U, T> {
 
     private Node root;
     private Node newNode;
@@ -451,13 +451,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         }
 
         return getRec(label, currentNode.getRight());
-
-    }
-
-    @Override
-    public int compareTo(U Obj) { // (**)
-
-        return this.compareTo(Obj);
 
     }
 
@@ -928,6 +921,24 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         }
 
         return cleared;
+    }
+
+    @Override
+    public T[] getAllList() {
+        DoublyLinkedList<T> allList = new DoublyLinkedList();
+        getAllList(this.root, allList);
+
+        return allList.toArray();
+    }
+
+    public void getAllList(Node currentNode, DoublyLinkedList<T> allList) {
+        if (this.root != null) {
+            getAllList(currentNode.left, allList);
+
+            allList.joinLast(currentNode.getListData());
+
+            getAllList(currentNode.right, allList);
+        }
     }
 
     // =====================DELETE

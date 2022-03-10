@@ -8,8 +8,9 @@ package adt;
 /**
  *
  * @author Angelina Oon
+ * @param <T>
  */
-public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<T>, Comparable<T> {
+public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<T> {
 
     private Node head;
     private Node tail;
@@ -31,11 +32,6 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
 
     public int getLength() {
         return length;
-    }
-
-    @Override
-    public int compareTo(T o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -83,8 +79,8 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
 
         public void setNext(Node next) {
             this.next = next;
-        }
 
+        }
     }
 
     //Interface
@@ -590,6 +586,26 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
             current = current.getPrev();
         }
         System.out.println();
+    }
+
+    public T[] toArray() {
+        Node current = this.head;
+
+        if (current != null) {
+
+            T[] array = (T[]) new Object[this.length];
+            int index = 0;
+
+            while (current != null) {
+                array[index] = ((T) current.element);
+                current = current.getNext();
+                index++;
+            }
+            return array;
+        } else {
+            return null;
+        }
+
     }
 
 }
