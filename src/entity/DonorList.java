@@ -127,7 +127,7 @@ public class DonorList implements Comparable<DonorList> {
         return donorListRows;
     }
 
-    public static void demandTable(RedBlackTree<LocalDate, DonorList> donorDB) {
+    public static void donorListTable(RedBlackTree<LocalDate, DonorList> donorDB) {
         String[] doneeListHeader = DonorList.donorListHeaders();
         String[][] doneeListData = DonorList.donorListRows(donorDB);
 

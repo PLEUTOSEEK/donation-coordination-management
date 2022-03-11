@@ -131,7 +131,7 @@ public class SponsorList implements Comparable<SponsorList> {
         return sponsorListRows;
     }
 
-    public static void demandTable(RedBlackTree<LocalDate, SponsorList> donorDB) {
+    public static void sponsorListTable(RedBlackTree<LocalDate, SponsorList> donorDB) {
         String[] sponsorListHeader = SponsorList.sponsorListHeaders();
         String[][] sponsorListData = SponsorList.sponsorListRows(donorDB);
 

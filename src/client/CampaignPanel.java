@@ -404,59 +404,71 @@ public class CampaignPanel implements Panel {
                     }
 
                     if (validIndex == true) {
+                        boolean hasUpdateSomething = false;
                         for (int i = 0; i < splitIndexInt.length; i++) {
                             switch (splitIndexInt[i]) {
                                 case 1:
                                     System.out.print("Enter the new campaign name: ");
                                     campaign.setCampaignName(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 2:
                                     System.out.print("Enter the new campaign start date [dd. MMM. yyyy]: ");
                                     campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                    hasUpdateSomething = true;
                                     break;
                                 case 3:
                                     System.out.print("Enter the new campaign start time [H:mm:ss]: ");
                                     campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                    hasUpdateSomething = true;
                                     break;
                                 case 4:
                                     System.out.print("Enter the new campaign end date [dd. MMM. yyyy]: ");
                                     campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                    hasUpdateSomething = true;
                                     break;
                                 case 5:
                                     System.out.print("Enter the new campaign end time [H:mm:ss]: ");
                                     campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                    hasUpdateSomething = true;
                                     break;
                                 case 6:
                                     System.out.print("Enter the new target amount: ");
                                     campaign.setTargetAmount(input.nextDouble());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 7:
                                     System.out.print("Enter the new campaign email: ");
                                     campaign.setCampaignEmail(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 8:
                                     System.out.print("Enter the new campaign mobile no: ");
                                     campaign.setCampaignMobileNo(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 9:
 
                                     System.out.print("Enter the new campaign campaign address: ");
                                     campaign.setCampagnAddress(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 10:
                                     System.out.print("Enter the new campaign bank no: ");
                                     campaign.setCampaignBankNo(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 case 11:
                                     System.out.print("Enter the new campaign description: ");
                                     campaign.setDescription(input.nextLine());
+                                    hasUpdateSomething = true;
                                     break;
                                 default:
                                     System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                             }
                         }
 
-                        if (splitIndexInt.length != 0) {
+                        if (hasUpdateSomething == true) {
                             System.out.println("Confirm update campaign ? (Y/N)");
                             confirmation = input.nextLine();
 

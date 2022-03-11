@@ -150,7 +150,109 @@ class DemandListPanel implements Panel {
         } while (option.toUpperCase().equals("Y"));
     }
 
+    public String demandListUpdateMenu() {
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Demand name\n");
+        menu.append("2. Demand description\n");
+        menu.append("3. Demand register date\n");
+        return menu.toString();
+    }
+
     private void update(RedBlackTree<LocalDate, DemandList> demandListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String demandListID = "";
+        String indexSelected = "";
+        boolean hasSponsor = true;
+        DemandList demandList = new DemandList();
+        LocalDate oriRegisterDate = null;
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
+
+        do {
+            DemandList.demandTable(demandListDB);
+
+            System.out.println("Enter demand list ID: ");
+            demandListID = input.nextLine();
+
+            if (demandListDB.contains(new DemandList(demandListID)) == true) {
+                demandList = demandListDB.get(new DemandList(demandListID));
+                oriRegisterDate = demandList.getDateRegister();
+                boolean validIndex = true;
+                do {
+                    System.out.println(demandListUpdateMenu());
+                    validIndex = true;
+                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                    indexSelected = input.nextLine();
+
+                    String[] splitIndex = indexSelected.split("\\s+");
+                    int[] splitIndexInt = new int[splitIndex.length];
+
+                    for (int i = 0; i < splitIndex.length; i++) {
+                        try {
+                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                        } catch (Exception e) {
+                            validIndex = false;
+                            break;
+                        }
+                    }
+
+                    if (validIndex == true) {
+                        boolean hasUpdateSomething = false;
+                        for (int i = 0; i < splitIndexInt.length; i++) {
+                            switch (splitIndexInt[i]) {
+                                case 1:
+                                    System.out.println("Enter demand name: ");
+                                    demandList.setDemandName(input.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 2:
+                                    System.out.println("Enter demand description: ");
+                                    demandList.setDescription(input.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 3:
+
+                                    System.out.println("Enter demand register date [dd. MMM. yyyy]: ");
+                                    demandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
+                                    break;
+
+                                default:
+                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                            }
+                        }
+
+                        if (splitIndexInt.length != 0) {
+                            System.out.println("Confirm update Demand list ? (Y/N)");
+                            confirmation = input.nextLine();
+
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                if (oriRegisterDate != demandList.getDateRegister()) {
+                                    demandListDB.delData(oriRegisterDate, demandList);
+                                    demandListDB.addData(demandList.getDateRegister(), demandList);
+                                } else {
+                                    demandListDB.updateData(demandList.getDateRegister(), demandList);
+                                }
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update Demand list successfully" : "Update Demand list abort");
+                        } else {
+                            System.out.println("No data selected to be update...");
+                        }
+                    }
+
+                } while (validIndex == false);
+            } else {
+                System.out.println("Demand list ID not found, update Demand list abort");
+            }
+
+            System.out.println("Continue update Demand list ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
 
     }
 

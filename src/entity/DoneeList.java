@@ -131,7 +131,7 @@ public class DoneeList implements Comparable<DoneeList> {
         return doneeListRows;
     }
 
-    public static void demandTable(RedBlackTree<LocalDate, DoneeList> doneeList) {
+    public static void doneeListTable(RedBlackTree<LocalDate, DoneeList> doneeList) {
         String[] doneeListHeader = DoneeList.doneeListHeaders();
         String[][] doneeListData = DoneeList.doneeListRows(doneeList);
 

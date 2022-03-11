@@ -122,6 +122,130 @@ class SponsorListPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public String sponsorListUpdateMenu() {
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Sponsor\n");
+        menu.append("2. Sponsor Join Date\n");
+
+        return menu.toString();
+
+    }
+
+    public void update(DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String sponsorListID = "";
+        String sponsorID = "";
+        String indexSelected = "";
+        boolean hasSponsor = true;
+        SponsorList sponsorList = new SponsorList();
+        LocalDate oriJoinDate = null;
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
+
+        do {
+            SponsorList.sponsorListTable(sponsorListDB);
+
+            System.out.println("Enter sponsor list ID: ");
+            sponsorListID = input.nextLine();
+
+            if (sponsorListDB.contains(new SponsorList(sponsorListID)) == true) {
+                sponsorList = sponsorListDB.get(new SponsorList(sponsorListID));
+                oriJoinDate = sponsorList.getDateJoin();
+                boolean validIndex = true;
+                do {
+                    System.out.println(sponsorListUpdateMenu());
+                    validIndex = true;
+                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                    indexSelected = input.nextLine();
+
+                    String[] splitIndex = indexSelected.split("\\s+");
+                    int[] splitIndexInt = new int[splitIndex.length];
+
+                    for (int i = 0; i < splitIndex.length; i++) {
+                        try {
+                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                        } catch (Exception e) {
+                            validIndex = false;
+                            break;
+                        }
+                    }
+
+                    if (validIndex == true) {
+                        boolean hasUpdateSomething = false;
+                        for (int i = 0; i < splitIndexInt.length; i++) {
+                            switch (splitIndexInt[i]) {
+                                case 1:
+                                    do {
+                                        hasSponsor = true;
+                                        Sponsor.sponsorTable(sponsorDB);
+                                        System.out.println("Enter Sponsor ID: ");
+                                        sponsorID = input.nextLine();
+
+                                        if (sponsorDB.contains(new Sponsor(sponsorID))) {
+                                            SponsorList[] SponsorListArr = sponsorListDB.getAllArrayList();
+
+                                            for (int j = 0; j < SponsorListArr.length; j++) {
+                                                if (SponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && SponsorListArr[j].getSponsor().equals(new Sponsor(sponsorID))) {
+                                                    hasSponsor = false;
+                                                    break;
+                                                }
+                                            }
+                                            if (hasSponsor == false) {
+                                                System.out.println("Sponsor ID exist in the campaign already, try again the other Sponsor");
+                                            }
+                                        } else {
+                                            hasSponsor = false;
+                                            System.out.println("Sponsor ID not found, try again");
+                                        }
+                                    } while (hasSponsor == false);
+                                    sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(sponsorID))));
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 2:
+                                    System.out.print("Enter the new Sponsor join date [dd. MMM. yyyy]: ");
+                                    sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                    hasUpdateSomething = true;
+                                    break;
+
+                                default:
+                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                            }
+                        }
+
+                        if (splitIndexInt.length != 0) {
+                            System.out.println("Confirm update donor list ? (Y/N)");
+                            confirmation = input.nextLine();
+
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                if (oriJoinDate != sponsorList.getDateJoin()) {
+                                    sponsorListDB.delData(oriJoinDate, sponsorList);
+                                    sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                                } else {
+                                    sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                                }
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update sponsor list successfully" : "Update Sponsor list abort");
+                        } else {
+                            System.out.println("No data selected to be update...");
+                        }
+                    }
+
+                } while (validIndex == false);
+            } else {
+                System.out.println("Sponsor list ID not found, update Sponsor list abort");
+            }
+
+            System.out.println("Continue update sponsor list ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
+    }
+
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
