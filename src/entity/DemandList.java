@@ -23,7 +23,7 @@ public class DemandList implements Comparable<DemandList> {
     private double pricePerUnit;
     private String description;
     private int orgiQty;
-    private Timestamp dateRegister;
+    private LocalDate dateRegister;
     private Timestamp dateModified;
     private static String lastDemandID;
 
@@ -90,11 +90,11 @@ public class DemandList implements Comparable<DemandList> {
         this.orgiQty = orgiQty;
     }
 
-    public Timestamp getDateRegister() {
+    public LocalDate getDateRegister() {
         return dateRegister;
     }
 
-    public void setDateRegister(Timestamp dateRegister) {
+    public void setDateRegister(LocalDate dateRegister) {
         this.dateRegister = dateRegister;
     }
 
@@ -142,8 +142,8 @@ public class DemandList implements Comparable<DemandList> {
         return new String[]{demandListID, demandName, String.valueOf(quantity)};
     }
 
-    private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandList) {
-        DemandList[] demandLists = demandList.getAllArrayList();
+    private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {
+        DemandList[] demandLists = demandListDB.getAllArrayList();
         String[][] demandRows = new String[demandLists.length][];
         for (int i = 0; i < demandLists.length; i++) {
             demandRows[i] = demandLists[i].strArr();
@@ -151,9 +151,9 @@ public class DemandList implements Comparable<DemandList> {
         return demandRows;
     }
 
-    public static void demandTable(RedBlackTree<LocalDate, DemandList> demandList) {
+    public static void demandTable(RedBlackTree<LocalDate, DemandList> demandListDB) {
         String[] demandHeader = DemandList.demandHeaders();
-        String[][] demandData = DemandList.demandRows(demandList);
+        String[][] demandData = DemandList.demandRows(demandListDB);
 
         ASCIITable.getInstance().printTable(demandHeader, demandData);
     }

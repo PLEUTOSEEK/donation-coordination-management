@@ -950,6 +950,16 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         }
     }
 
+    public boolean contains(T element) {
+        return this.getAllList().contains(element);
+    }
+
+    @Override
+    public T get(T data) {
+        DoublyLinkedList<T> campaignList = getAllList();
+        return campaignList.getAt(campaignList.indexOf(data));
+    }
+
     // =====================DELETE
     private class Node<U extends Comparable<? super U>, T extends Comparable<T>> {
 

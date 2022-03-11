@@ -37,4 +37,7 @@ public interface BinaryTreeInterface<U, T> {
     public boolean isEmpty();
 
     public T[] getAllArrayList();
+
+    public T get(T data);
+
 }

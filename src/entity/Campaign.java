@@ -30,7 +30,7 @@ public class Campaign implements Comparable<Campaign> {
     private String campaignBankNo;
     private String description;
     private String status;
-    private Timestamp campaignRegisterDate;
+    private LocalDate campaignRegisterDate;
     private Timestamp dateModified;
     private static String lastCampaignID = "";
 
@@ -42,7 +42,7 @@ public class Campaign implements Comparable<Campaign> {
         this.campaignID = campaignID;
     }
 
-    public Campaign(String campaignID, String campaignName, LocalDate campaignStartDate, LocalTime campaignStartTime, LocalDate campaignEndDate, LocalTime campaignEndTime, double targetAmount, String campaignEmail, String campaignMobileNo, String campagnAddress, String campaignBankNo, String description, String status, Timestamp campaignRegisterDate, Timestamp dateModified) {
+    public Campaign(String campaignID, String campaignName, LocalDate campaignStartDate, LocalTime campaignStartTime, LocalDate campaignEndDate, LocalTime campaignEndTime, double targetAmount, String campaignEmail, String campaignMobileNo, String campagnAddress, String campaignBankNo, String description, String status, LocalDate campaignRegisterDate, Timestamp dateModified) {
         this.campaignID = campaignID;
         this.campaignName = campaignName;
         this.campaignStartDate = campaignStartDate;
@@ -176,11 +176,11 @@ public class Campaign implements Comparable<Campaign> {
         this.description = description;
     }
 
-    public Timestamp getCampaignRegisterDate() {
+    public LocalDate getCampaignRegisterDate() {
         return campaignRegisterDate;
     }
 
-    public void setCampaignRegisterDate(Timestamp campaignRegisterDate) {
+    public void setCampaignRegisterDate(LocalDate campaignRegisterDate) {
         this.campaignRegisterDate = campaignRegisterDate;
     }
 

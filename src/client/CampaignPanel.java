@@ -8,6 +8,7 @@ package client;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
+import entity.DemandList;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
@@ -26,7 +27,13 @@ import java.util.Scanner;
  */
 public class CampaignPanel implements Panel {
 
-    public void controlPanel(RedBlackTree<LocalDate, Campaign> campaignList, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void controlPanel(RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, SponsorList> sponsorListDB,
+            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, DonorList> donorListDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB) {
+
         Scanner input = new Scanner(System.in);
         int option = 0;
 
@@ -36,26 +43,31 @@ public class CampaignPanel implements Panel {
 
             switch (option) {
                 case 1:
-                    add(campaignList, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB);
+                    add(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB);
                     break;
                 case 2:
-                    Campaign.campaignTable(campaignList);
+                    Campaign.campaignTable(campaignDB);
                     break;
                 case 3:
                     search();
                     break;
                 case 4:
-                    delete(campaignList);
+                    delete(campaignDB);
                     break;
                 case 5:
-                    update(campaignList);
+                    update(campaignDB);
                     break;
                 case 6:
+                    supportListPanel(campaignDB, demandListDB);
+                    break;
+                case 7:
                     System.out.println("Return to previous Page...");
                     break;
+                default:
+                    System.out.println("Index not correct...");
             }
 
-        } while (option != 6);
+        } while (option != 7);
     }
 
     @Override
@@ -72,12 +84,59 @@ public class CampaignPanel implements Panel {
         menu.append("3. Search campaign \n");
         menu.append("4. Deactive campaign \n");
         menu.append("5. Update campaign \n");
-        menu.append("6. Exit \n");
+        menu.append("6. Campaign support list maintenance");
+        menu.append("7. Exit \n");
 
         return menu.toString();
     }
 
-    public void add(RedBlackTree<LocalDate, Campaign> campaignList, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public String supportListMenu() {
+        StringBuilder menu = new StringBuilder();
+        menu.append("1. Sponsor List \n");
+        menu.append("2. Donee List \n");
+        menu.append("3. Donor List \n");
+        menu.append("4. Demand List \n");
+        menu.append("5. Exit \n");
+        return menu.toString();
+    }
+
+    public void supportListPanel(RedBlackTree<LocalDate, Campaign> campaignDB, RedBlackTree<LocalDate, DemandList> demandListDB) {
+        Scanner input = new Scanner(System.in);
+        int option = 0;
+
+        SponsorListPanel sponsorListPanel = new SponsorListPanel();
+        DoneeListPanel doneeListPanel = new DoneeListPanel();
+        DonorListPanel donorListPanel = new DonorListPanel();
+        DemandListPanel demandListPanel = new DemandListPanel();
+
+        do {
+            System.out.println(menu());
+            option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    sponsorListPanel.controlPanel();
+                    break;
+                case 2:
+                    doneeListPanel.controlPanel();
+                    break;
+                case 3:
+                    donorListPanel.controlPanel();
+                    break;
+                case 4:
+                    demandListPanel.controlPanel(campaignDB, demandListDB);
+                    break;
+                case 5:
+                    System.out.println("Return to previous Page...");
+                    break;
+                default:
+                    System.out.println("Index not correct...");
+            }
+
+        } while (option != 4);
+    }
+
+    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -110,7 +169,8 @@ public class CampaignPanel implements Panel {
             campaign.setCampaignBankNo(input.nextLine());
             System.out.print("Enter the campaign description: ");
             campaign.setDescription(input.nextLine());
-            campaign.setCampaignRegisterDate(new Timestamp(System.currentTimeMillis()));
+            System.out.print("Enter the campaign register date: ");
+            campaign.setCampaignRegisterDate(LocalDate.parse(input.nextLine(), dtfDate));
             campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
             campaign.setStatus("Active");
             //
@@ -125,7 +185,7 @@ public class CampaignPanel implements Panel {
             confirmation = input.nextLine();
 
             if (confirmation.toUpperCase().equals("Y")) {
-                campaignList.addData(campaign.getCampaignStartDate(), campaign);
+                campaignDB.addData(campaign.getCampaignStartDate(), campaign);
             }
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "Added campaign successfully" : "Add campaign abort");
@@ -148,7 +208,6 @@ public class CampaignPanel implements Panel {
         String confirmation = "";
         String sponsorID = "";
         SponsorList sponsorList = new SponsorList();
-        DoublyLinkedList<SponsorList> sponsorListList = new DoublyLinkedList<>();
         boolean haveRecord = false;
 
         do {
@@ -304,7 +363,7 @@ public class CampaignPanel implements Panel {
 
     }
 
-    public void update(RedBlackTree<LocalDate, Campaign> campaignList) {
+    public void update(RedBlackTree<LocalDate, Campaign> campaignDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -316,13 +375,13 @@ public class CampaignPanel implements Panel {
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("H:mm:ss");
 
         do {
-            Campaign.campaignTable(campaignList);
+            Campaign.campaignTable(campaignDB);
 
             System.out.println("Enter campaign ID: ");
             campaignID = input.nextLine();
 
-            if (campaignList.getAllList().contains(new Campaign(campaignID)) == true) {
-                DoublyLinkedList<Campaign> campaigns = campaignList.getAllList();
+            if (campaignDB.getAllList().contains(new Campaign(campaignID)) == true) {
+                DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
                 campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
                 oriStartDate = campaign.getCampaignStartDate();
                 boolean validIndex = true;
@@ -404,10 +463,10 @@ public class CampaignPanel implements Panel {
                             if (confirmation.toUpperCase().equals("Y")) {
                                 campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
                                 if (oriStartDate != campaign.getCampaignStartDate()) {
-                                    campaignList.delData(oriStartDate, campaign);
-                                    campaignList.addData(campaign.getCampaignStartDate(), campaign);
+                                    campaignDB.delData(oriStartDate, campaign);
+                                    campaignDB.addData(campaign.getCampaignStartDate(), campaign);
                                 } else {
-                                    campaignList.updateData(campaign.getCampaignStartDate(), campaign);
+                                    campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
                                 }
                             }
 
@@ -429,18 +488,18 @@ public class CampaignPanel implements Panel {
         } while (option.toUpperCase().equals("Y"));
     }
 
-    public void delete(RedBlackTree<LocalDate, Campaign> campaignList) {
+    public void delete(RedBlackTree<LocalDate, Campaign> campaignDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
         String campaignID = "";
 
         do {
-            Campaign.campaignTable(campaignList);
+            Campaign.campaignTable(campaignDB);
 
             System.out.println("Enter campaign ID: ");
             campaignID = input.nextLine();
-            DoublyLinkedList<Campaign> campaigns = campaignList.getAllList();
+            DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
             if (campaigns.contains(new Campaign(campaignID)) == true) {
                 System.out.println("Confirm deactive campaign ? (Y/N)");
                 confirmation = input.nextLine();
@@ -449,7 +508,7 @@ public class CampaignPanel implements Panel {
                     Campaign campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
                     campaign.setStatus("Inactive");
                     campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    campaignList.updateData(campaign.getCampaignStartDate(), campaign);
+                    campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
                 }
             } else {
                 System.out.println("Campaign ID not found, update campaign abort");
