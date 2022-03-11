@@ -5,8 +5,9 @@
  */
 package entity;
 
-import adt.DoublyLinkedList;
-import java.security.Timestamp;
+import adt.RedBlackTree;
+import com.bethecoder.ascii_table.ASCIITable;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,14 +15,10 @@ import java.time.LocalTime;
  *
  * @author Tee Zhuo Xuan
  */
-public class Campaign {
+public class Campaign implements Comparable<Campaign> {
 
     private String campaignID;
     private String campaignName;
-    private DoublyLinkedList<Sponsor> sponsorList;
-    private DoublyLinkedList<Donee> doneeList;
-    private DoublyLinkedList<Donor> donorList;
-    private DoublyLinkedList<Donation> donationList;
     private LocalDate campaignStartDate;
     private LocalTime campaignStartTime;
     private LocalDate campaignEndDate;
@@ -29,23 +26,25 @@ public class Campaign {
     private double targetAmount;
     private String campaignEmail;
     private String campaignMobileNo;
-    private String campagnAddress;
+    private String campaignAddress;
     private String campaignBankNo;
     private String description;
-    private Timestamp campaignRegisterDate;
+    private String status;
+    private LocalDate campaignRegisterDate;
     private Timestamp dateModified;
+    private static String lastCampaignID = "";
 
     public Campaign() {
-        this("", "", null, null, null, null, null, null, null, null, 0.0, "", "", "", "", "", null, null);
+        this("", "", null, null, null, null, 0.0, "", "", "", "", "", "", null, null);
     }
 
-    public Campaign(String campaignID, String campaignName, DoublyLinkedList<Sponsor> sponsorList, DoublyLinkedList<Donee> doneeList, DoublyLinkedList<Donor> donorList, DoublyLinkedList<Donation> donationList, LocalDate campaignStartDate, LocalTime campaignStartTime, LocalDate campaignEndDate, LocalTime campaignEndTime, double targetAmount, String campaignEmail, String campaignMobileNo, String campagnAddress, String campaignBankNo, String description, Timestamp campaignRegisterDate, Timestamp dateModified) {
+    public Campaign(String campaignID) {
+        this.campaignID = campaignID;
+    }
+
+    public Campaign(String campaignID, String campaignName, LocalDate campaignStartDate, LocalTime campaignStartTime, LocalDate campaignEndDate, LocalTime campaignEndTime, double targetAmount, String campaignEmail, String campaignMobileNo, String campagnAddress, String campaignBankNo, String description, String status, LocalDate campaignRegisterDate, Timestamp dateModified) {
         this.campaignID = campaignID;
         this.campaignName = campaignName;
-        this.sponsorList = sponsorList;
-        this.doneeList = doneeList;
-        this.donorList = donorList;
-        this.donationList = donationList;
         this.campaignStartDate = campaignStartDate;
         this.campaignStartTime = campaignStartTime;
         this.campaignEndDate = campaignEndDate;
@@ -53,11 +52,32 @@ public class Campaign {
         this.targetAmount = targetAmount;
         this.campaignEmail = campaignEmail;
         this.campaignMobileNo = campaignMobileNo;
-        this.campagnAddress = campagnAddress;
+        this.campaignAddress = campagnAddress;
         this.campaignBankNo = campaignBankNo;
         this.description = description;
+        this.status = status;
         this.campaignRegisterDate = campaignRegisterDate;
         this.dateModified = dateModified;
+    }
+
+    public String getCampaignAddress() {
+        return campaignAddress;
+    }
+
+    public void setCampaignAddress(String campaignAddress) {
+        this.campaignAddress = campaignAddress;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public static String getLastCampaignID() {
+        return lastCampaignID;
     }
 
     public String getCampaignID() {
@@ -74,38 +94,6 @@ public class Campaign {
 
     public void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
-    }
-
-    public DoublyLinkedList<Sponsor> getSponsorList() {
-        return sponsorList;
-    }
-
-    public void setSponsorList(DoublyLinkedList<Sponsor> sponsorList) {
-        this.sponsorList = sponsorList;
-    }
-
-    public DoublyLinkedList<Donee> getDoneeList() {
-        return doneeList;
-    }
-
-    public void setDoneeList(DoublyLinkedList<Donee> doneeList) {
-        this.doneeList = doneeList;
-    }
-
-    public DoublyLinkedList<Donor> getDonorList() {
-        return donorList;
-    }
-
-    public void setDonorList(DoublyLinkedList<Donor> donorList) {
-        this.donorList = donorList;
-    }
-
-    public DoublyLinkedList<Donation> getDonationList() {
-        return donationList;
-    }
-
-    public void setDonationList(DoublyLinkedList<Donation> donationList) {
-        this.donationList = donationList;
     }
 
     public LocalDate getCampaignStartDate() {
@@ -165,11 +153,11 @@ public class Campaign {
     }
 
     public String getCampagnAddress() {
-        return campagnAddress;
+        return campaignAddress;
     }
 
     public void setCampagnAddress(String campagnAddress) {
-        this.campagnAddress = campagnAddress;
+        this.campaignAddress = campagnAddress;
     }
 
     public String getCampaignBankNo() {
@@ -188,11 +176,11 @@ public class Campaign {
         this.description = description;
     }
 
-    public Timestamp getCampaignRegisterDate() {
+    public LocalDate getCampaignRegisterDate() {
         return campaignRegisterDate;
     }
 
-    public void setCampaignRegisterDate(Timestamp campaignRegisterDate) {
+    public void setCampaignRegisterDate(LocalDate campaignRegisterDate) {
         this.campaignRegisterDate = campaignRegisterDate;
     }
 
@@ -202,6 +190,75 @@ public class Campaign {
 
     public void setDateModified(Timestamp dateModified) {
         this.dateModified = dateModified;
+    }
+
+    @Override
+    public int compareTo(Campaign o) {//ID
+        if (this.campaignID.compareTo(o.campaignID) < 0) {
+            return -1;
+        } else if (this.campaignID.compareTo(o.campaignID) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof Campaign) {
+            Campaign other = (Campaign) o;
+            if (this.campaignID == other.getCampaignID()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    private static String[] campaignHeaders() {
+        String[] campaignHeaders = {"Campaign ID", "Start Date", "End Date"};
+
+        return campaignHeaders;
+    }
+
+    private String[] strArr() {
+        return new String[]{campaignID, this.campaignStartDate.toString(), this.campaignEndDate.toString()};
+    }
+
+    private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
+        Campaign[] campaigns = campaignList.getAllArrayList();
+        String[][] campaignRows = new String[campaignList.getLength()][];
+        for (int i = 0; i < campaigns.length; i++) {
+            campaignRows[i] = campaigns[i].strArr();
+        }
+        return campaignRows;
+    }
+
+    public static void campaignTable(RedBlackTree<LocalDate, Campaign> campaignList) {
+        String[] header = Campaign.campaignHeaders();
+        String[][] cmapaignData = Campaign.campaignRows(campaignList);
+
+        ASCIITable.getInstance().printTable(header, cmapaignData);
+    }
+
+    public String autoGenerateID() {
+        String newCampaignID = "";
+        int seq = 0;
+        if (lastCampaignID.equals("")) {
+            newCampaignID = "C1001";
+        } else {
+            seq = Integer.parseInt(lastCampaignID.substring(1));
+            seq += 1;
+
+            newCampaignID = "C" + seq;
+        }
+
+        lastCampaignID = newCampaignID;
+
+        return lastCampaignID;
     }
 
 }
