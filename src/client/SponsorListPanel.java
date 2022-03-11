@@ -86,6 +86,7 @@ class SponsorListPanel implements Panel {
                     System.out.println("Enter date join [dd. MMM. yyyy]: ");
                     sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                     sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    sponsorList.setStatus("Active");
                     sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
                     System.out.println("Confirm add sponsor to this campaign ? (Y/N)");
@@ -101,7 +102,7 @@ class SponsorListPanel implements Panel {
                     option = input.nextLine();
                 } while (option.toUpperCase().equals("Y"));
             } else {
-                System.out.println("Campaign ID not found, add demand abort");
+                System.out.println("Campaign ID not found, add sponsor abort");
             }
 
             System.out.println("Continue add sponsor ? (Y/N)");
@@ -215,7 +216,7 @@ class SponsorListPanel implements Panel {
                         }
 
                         if (splitIndexInt.length != 0) {
-                            System.out.println("Confirm update donor list ? (Y/N)");
+                            System.out.println("Confirm update sponsor list ? (Y/N)");
                             confirmation = input.nextLine();
 
                             if (confirmation.toUpperCase().equals("Y")) {
@@ -246,9 +247,37 @@ class SponsorListPanel implements Panel {
         } while (option.toUpperCase().equals("Y"));
     }
 
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String sponsorListID = "";
+
+        do {
+            SponsorList.sponsorListTable(sponsorListDB);
+
+            System.out.println("Enter sponsor list ID: ");
+            sponsorListID = input.nextLine();
+            DoublyLinkedList<SponsorList> sponsorLists = sponsorListDB.getAllList();
+            if (sponsorLists.contains(new SponsorList(sponsorListID)) == true) {
+                System.out.println("Confirm deactive sponsor list ? (Y/N)");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
+                    sponsorList.setStatus("Inactive");
+                    sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                }
+            } else {
+                System.out.println("Sponsor list ID not found, deactive Sponsor list abort");
+            }
+            System.out.println("Continue deactive sponsor list  ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
+
     }
 
     @Override
@@ -263,6 +292,11 @@ class SponsorListPanel implements Panel {
 
     @Override
     public void add() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

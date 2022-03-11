@@ -62,7 +62,7 @@ class DonorListPanel implements Panel {
                     do {
                         hasDonor = true;
                         Donor.donorTable(donorDB);
-                        System.out.println("Enter donee ID: ");
+                        System.out.println("Enter donor ID: ");
                         donorID = input.nextLine();
 
                         if (donorDB.contains(new Donor(donorID))) {
@@ -91,25 +91,26 @@ class DonorListPanel implements Panel {
                     System.out.println("Enter date join [dd. MMM. yyyy]: ");
                     donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                     donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    donorList.setStatus("Active");
                     donorList.setDonorListID(donorList.autoGenerateID());
 
-                    System.out.println("Confirm add donee to this campaign ? (Y/N)");
+                    System.out.println("Confirm add donor to this campaign ? (Y/N)");
                     confirmation = input.nextLine();
 
                     if (confirmation.toUpperCase().equals("Y")) {
                         donorListDB.addData(donorList.getDateJoin(), donorList);
                     }
 
-                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add sponsor abort");
+                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
-                    System.out.println("Continue add donee to this campaign ? (Y/N)");
+                    System.out.println("Continue add donor to this campaign ? (Y/N)");
                     option = input.nextLine();
                 } while (option.toUpperCase().equals("Y"));
             } else {
-                System.out.println("Campaign ID not found, add demand abort");
+                System.out.println("Campaign ID not found, add donor abort");
             }
 
-            System.out.println("Continue add donee ? (Y/N)");
+            System.out.println("Continue add donor ? (Y/N)");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -250,6 +251,39 @@ class DonorListPanel implements Panel {
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void delete(RedBlackTree<LocalDate, DonorList> donorListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String donorListID = "";
+
+        do {
+            DonorList.donorListTable(donorListDB);
+
+            System.out.println("Enter donor list ID: ");
+            donorListID = input.nextLine();
+            DoublyLinkedList<DonorList> donorLists = donorListDB.getAllList();
+            if (donorLists.contains(new DonorList(donorListID)) == true) {
+                System.out.println("Confirm deactive donor list ? (Y/N)");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
+                    donorList.setStatus("Inactive");
+                    donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    donorListDB.updateData(donorList.getDateJoin(), donorList);
+                }
+            } else {
+                System.out.println("Donor list ID not found, deactive donor list abort");
+            }
+            System.out.println("Continue deactive donor list  ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
+
     }
 
     @Override

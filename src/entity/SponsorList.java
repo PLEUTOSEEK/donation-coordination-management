@@ -21,6 +21,7 @@ public class SponsorList implements Comparable<SponsorList> {
     private Campaign campaign;
     private LocalDate dateJoin;
     private Timestamp dateModified;
+    private String status;
     private static String lastSponsorListID;
 
     public SponsorList() {
@@ -30,12 +31,21 @@ public class SponsorList implements Comparable<SponsorList> {
         this.sponsorListID = sponsorListID;
     }
 
-    public SponsorList(String sponsorListID, Sponsor sponsor, Campaign campaign, LocalDate dateJoin, Timestamp dateModified) {
+    public SponsorList(String sponsorListID, Sponsor sponsor, Campaign campaign, LocalDate dateJoin, Timestamp dateModified, String status) {
         this.sponsorListID = sponsorListID;
         this.sponsor = sponsor;
         this.campaign = campaign;
         this.dateJoin = dateJoin;
         this.dateModified = dateModified;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getSponsorListID() {

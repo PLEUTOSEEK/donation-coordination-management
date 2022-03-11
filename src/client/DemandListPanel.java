@@ -5,6 +5,7 @@
  */
 package client;
 
+import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
 import entity.DemandList;
@@ -124,6 +125,7 @@ class DemandListPanel implements Panel {
                     System.out.println("Enter demand register date [dd. MMM. yyyy]: ");
                     demandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
                     demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    demandList.setStatus("Active");
                     demandList.setDemandListID(demandList.autoGenerateID());
 
                     System.out.println("Confirm add demand list to this campaign? (Y/N)");
@@ -256,7 +258,37 @@ class DemandListPanel implements Panel {
 
     }
 
-    private void delete(RedBlackTree<LocalDate, DemandList> demandListDB) {
+    public void delete(RedBlackTree<LocalDate, DemandList> demandListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String demandListID = "";
+
+        do {
+            DemandList.demandTable(demandListDB);
+
+            System.out.println("Enter demand list ID: ");
+            demandListID = input.nextLine();
+            DoublyLinkedList<DemandList> demandLists = demandListDB.getAllList();
+            if (demandLists.contains(new DemandList(demandListID)) == true) {
+                System.out.println("Confirm deactive demand list ? (Y/N)");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    DemandList demandList = demandLists.getAt(demandLists.indexOf(new DemandList(demandListID)));
+                    demandList.setStatus("Inactive");
+                    demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    demandListDB.updateData(demandList.getDateRegister(), demandList);
+                }
+            } else {
+                System.out.println("Demand list ID not found, update campaign abort");
+            }
+            System.out.println("Continue deactive Demand list  ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
+
     }
 
     @Override

@@ -21,6 +21,7 @@ public class DonorList implements Comparable<DonorList> {
     private Campaign campaign;
     private LocalDate dateJoin;
     private Timestamp dateModified;
+    private String status;
     private static String lastDonorListID;
 
     public DonorList() {
@@ -30,12 +31,21 @@ public class DonorList implements Comparable<DonorList> {
         this.donorListID = donorListID;
     }
 
-    public DonorList(String donorListID, Donor donor, Campaign campaign, LocalDate dateJoin, Timestamp dateModified) {
+    public DonorList(String donorListID, Donor donor, Campaign campaign, LocalDate dateJoin, Timestamp dateModified, String status) {
         this.donorListID = donorListID;
         this.donor = donor;
         this.campaign = campaign;
         this.dateJoin = dateJoin;
         this.dateModified = dateModified;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDonorListID() {

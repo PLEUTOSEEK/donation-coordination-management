@@ -86,6 +86,7 @@ class DoneeListPanel implements Panel {
                     System.out.println("Enter date join [dd. MMM. yyyy]: ");
                     doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                     doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    doneeList.setStatus("Active");
                     doneeList.setDoneeListID(doneeList.autoGenerateID());
 
                     System.out.println("Confirm add donee to this campaign ? (Y/N)");
@@ -95,13 +96,13 @@ class DoneeListPanel implements Panel {
                         doneeListDB.addData(doneeList.getDateJoin(), doneeList);
                     }
 
-                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add sponsor abort");
+                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add Donee abort");
 
                     System.out.println("Continue add donee to this campaign ? (Y/N)");
                     option = input.nextLine();
                 } while (option.toUpperCase().equals("Y"));
             } else {
-                System.out.println("Campaign ID not found, add demand abort");
+                System.out.println("Campaign ID not found, add donee abort");
             }
 
             System.out.println("Continue add donee ? (Y/N)");
@@ -215,7 +216,7 @@ class DoneeListPanel implements Panel {
                         }
 
                         if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update donor list ? (Y/N)");
+                            System.out.println("Confirm update donee list ? (Y/N)");
                             confirmation = input.nextLine();
 
                             if (confirmation.toUpperCase().equals("Y")) {
@@ -244,6 +245,39 @@ class DoneeListPanel implements Panel {
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
         } while (option.toUpperCase().equals("Y"));
+    }
+
+    public void delete(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String doneeListID = "";
+
+        do {
+            DoneeList.doneeListTable(doneeListDB);
+
+            System.out.println("Enter donee list ID: ");
+            doneeListID = input.nextLine();
+            DoublyLinkedList<DoneeList> doneeLists = doneeListDB.getAllList();
+            if (doneeLists.contains(new DoneeList(doneeListID)) == true) {
+                System.out.println("Confirm deactive donee list ? (Y/N)");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
+                    doneeList.setStatus("Inactive");
+                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    doneeListDB.updateData(doneeList.getDateJoin(), doneeList);
+                }
+            } else {
+                System.out.println("Donee list ID not found, deactive donee list abort");
+            }
+            System.out.println("Continue deactive donee list  ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
+
     }
 
     @Override

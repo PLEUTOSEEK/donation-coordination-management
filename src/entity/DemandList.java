@@ -25,6 +25,7 @@ public class DemandList implements Comparable<DemandList> {
     private int orgiQty;
     private LocalDate dateRegister;
     private Timestamp dateModified;
+    private String status;
     private static String lastDemandID;
 
     public DemandList() {
@@ -32,6 +33,35 @@ public class DemandList implements Comparable<DemandList> {
 
     public DemandList(String demandListID) {
         this.demandListID = demandListID;
+    }
+
+    public DemandList(String demandListID, Campaign campaign, String demandName, int quantity, double pricePerUnit, String description, int orgiQty, LocalDate dateRegister, Timestamp dateModified, String status) {
+        this.demandListID = demandListID;
+        this.campaign = campaign;
+        this.demandName = demandName;
+        this.quantity = quantity;
+        this.pricePerUnit = pricePerUnit;
+        this.description = description;
+        this.orgiQty = orgiQty;
+        this.dateRegister = dateRegister;
+        this.dateModified = dateModified;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public static String getLastDemandID() {
+        return lastDemandID;
+    }
+
+    public static void setLastDemandID(String lastDemandID) {
+        DemandList.lastDemandID = lastDemandID;
     }
 
     public String getDemandListID() {
