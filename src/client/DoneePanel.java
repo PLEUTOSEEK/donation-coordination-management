@@ -268,22 +268,32 @@ public class DoneePanel implements Panel {
     }
 
     public static void deleteDonee(CircularLinkedQueue<Donee> doneeDB) {
-
+        String opt, select, confirm;
+        String doneeID = "";
         Scanner s = new Scanner(System.in);
+        Donee donee = new Donee();
 
-        System.out.print("Enter a Donee Id:");
-        String id = s.nextLine();
+        do {
+            Donee.doneeTable(doneeDB);
 
-//        for (int i = 0; i< queue.size(); i++){
-//            Donee temp = queue.get(queue, id);
-//            if (id.equals(temp.getId())){
-//                System.out.println(queue.dequeue().getId());
-//            }
-//            
-//            if (queue.isEmpty() == true){
-//                break;
-//            }
-//        }
+            System.out.print("Enter a Donee Id:");
+            String id = s.nextLine();
+
+            if (doneeDB.contains(new Donee(doneeID)) == true) {
+                System.out.println("Confirm deactive campaign ? (Y/N)");
+                confirm = s.nextLine();
+
+                if (confirm.toUpperCase().equals("Y")) {
+                    donee.setStatus("Inactive");
+                }
+            } else {
+                System.out.println("Donee ID not found...");
+            }
+            
+            System.out.println("Continue deactive campaign ? (Y/N)");
+            opt = s.nextLine();
+            
+        } while(opt.toUpperCase().equals("Y"));   
     }
 
     public static Donee searchDonee(CircularLinkedQueue<Donee> doneeDB) {
