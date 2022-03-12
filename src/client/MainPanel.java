@@ -22,7 +22,7 @@ import java.util.Scanner;
  *
  * @author Tee Zhuo Xuan
  */
-public class MainPanel implements Panel {
+public class mainPanel implements Panel {
 
     public void controlPanel(
             RedBlackTree<LocalDate, Campaign> campaignDB,
