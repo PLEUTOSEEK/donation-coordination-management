@@ -7,7 +7,7 @@ package adt;
 
 /**
  *
- * @author pheyzhen
+ * @author Wong Phey Zhen
  */
 public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedListInterface<T>{
 

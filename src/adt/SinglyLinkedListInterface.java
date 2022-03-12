@@ -7,7 +7,7 @@ package adt;
 
 /**
  *
- * @author pheyz
+ * @author Wong Phey Zhen
  */
 public interface SinglyLinkedListInterface<T> {
     

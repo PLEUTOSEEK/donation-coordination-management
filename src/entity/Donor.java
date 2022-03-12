@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  *
- * @author pz
+ * @author Wong Phey Zhen
  */
 public class Donor extends Account implements Comparable<Donor> {
 
