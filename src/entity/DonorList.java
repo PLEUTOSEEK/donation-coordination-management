@@ -125,7 +125,7 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     private String[] strArr() {
-        return new String[]{donorListID, donor.getDonorID()};
+        return new String[]{donorListID, donor.accountID};
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {

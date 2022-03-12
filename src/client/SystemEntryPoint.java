@@ -6,6 +6,7 @@
 package client;
 
 import adt.DoublyLinkedList;
+import adt.SinglyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
 import entity.DemandList;
@@ -29,7 +30,7 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList();
         DoublyLinkedList<Donee> doneeDB = new Donee().generateDummyDonee();
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList();
-        DoublyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();
+        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList();;
         RedBlackTree<LocalDate, DemandList> demandListDB = new DonorList().generateDummyDemandList();
 
