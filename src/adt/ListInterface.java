@@ -5,10 +5,6 @@
  */
 package adt;
 
-/**
- *
- * @author Angelina Oon
- */
 public interface ListInterface<T> {
 
     public boolean isEmpty();

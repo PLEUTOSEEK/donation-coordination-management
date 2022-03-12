@@ -82,7 +82,7 @@ class SponsorListPanel implements Panel {
         String option = "";
         String confirmation = "";
         String campaignID = "";
-        String sponsorID = "";
+        String lastSponsorID = "";
         Campaign campaign = new Campaign();
         Sponsor sponsor = new Sponsor();
         SponsorList sponsorList = new SponsorList();
@@ -103,9 +103,9 @@ class SponsorListPanel implements Panel {
                         hasSponsor = true;
                         Sponsor.sponsorTable(sponsorDB);
                         System.out.println("Enter sponsor ID: ");
-                        sponsorID = input.nextLine();
+                        lastSponsorID = input.nextLine();
 
-                        if (sponsorDB.contains(new Sponsor(sponsorID))) {
+                        if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
                             SponsorList[] sponsorListArr = sponsorListDB.getAllArrayList();
 
                             for (int i = 0; i < sponsorListArr.length; i++) {
@@ -123,7 +123,7 @@ class SponsorListPanel implements Panel {
                         }
                     } while (hasSponsor == false);
 
-                    sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(sponsorID)));
+                    sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
                     campaign = campaignDB.get(new Campaign(campaignID));
 
                     sponsorList.setCampaign(campaign);
@@ -183,7 +183,7 @@ class SponsorListPanel implements Panel {
         String option = "";
         String confirmation = "";
         String sponsorListID = "";
-        String sponsorID = "";
+        String lastSponsorID = "";
         String indexSelected = "";
         boolean hasSponsor = true;
         SponsorList sponsorList = new SponsorList();
@@ -227,13 +227,13 @@ class SponsorListPanel implements Panel {
                                         hasSponsor = true;
                                         Sponsor.sponsorTable(sponsorDB);
                                         System.out.println("Enter Sponsor ID: ");
-                                        sponsorID = input.nextLine();
+                                        lastSponsorID = input.nextLine();
 
-                                        if (sponsorDB.contains(new Sponsor(sponsorID))) {
+                                        if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
                                             SponsorList[] SponsorListArr = sponsorListDB.getAllArrayList();
 
                                             for (int j = 0; j < SponsorListArr.length; j++) {
-                                                if (SponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && SponsorListArr[j].getSponsor().equals(new Sponsor(sponsorID))) {
+                                                if (SponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && SponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
                                                     hasSponsor = false;
                                                     break;
                                                 }
@@ -246,7 +246,7 @@ class SponsorListPanel implements Panel {
                                             System.out.println("Sponsor ID not found, try again");
                                         }
                                     } while (hasSponsor == false);
-                                    sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(sponsorID))));
+                                    sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID))));
                                     hasUpdateSomething = true;
                                     break;
                                 case 2:
