@@ -5,17 +5,15 @@
  */
 package adt;
 
-/**
- *
- * @author Angelina Oon
- */
 public interface ListInterface<T> {
 
     public boolean isEmpty();
-    
+
     public boolean addFirst(T element);
 
     public boolean addLast(T element);
+
+    public boolean addUnique(T element);
 
     public boolean addAt(T element, int givenPos);
 
@@ -50,7 +48,7 @@ public interface ListInterface<T> {
     public void printForward();
 
     public void printBackward();
-    
+
     public void clear();
-  
+
 }
