@@ -43,6 +43,7 @@ public class MainPanel implements Panel {
 
             switch (option) {
                 case 1:
+                    System.out.println();
                     break;
                 case 2:
                     break;
