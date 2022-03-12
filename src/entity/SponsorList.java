@@ -129,7 +129,7 @@ public class SponsorList implements Comparable<SponsorList> {
     }
 
     private String[] strArr() {
-        return new String[]{sponsorListID, sponsor.getSponsorID()};
+        return new String[]{sponsorListID, sponsor.accountID};
     }
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {

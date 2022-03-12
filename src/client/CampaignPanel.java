@@ -217,11 +217,11 @@ public class CampaignPanel implements Panel {
             System.out.println("Enter sponsor ID: ");
             sponsorID = input.nextLine();
 
-            if (sponsorDB.contains(new Sponsor(sponsorID)) == true) {
+            if (sponsorDB.contains(new Sponsor(accountID)) == true) {
 
                 System.out.println("Confirm add sponsor ? (Y/N)");
                 confirmation = input.nextLine();
-                sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(sponsorID))));
+                sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(accountID))));
                 sponsorList.setCampaign(campaign);
                 sponsorList.setDateJoin(LocalDate.now());
                 sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
