@@ -5,6 +5,7 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
@@ -27,7 +28,7 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
         RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList();
-        DoublyLinkedList<Donee> doneeDB = new Donee().generateDummyDonee();
+        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList();
         DoublyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList();;
