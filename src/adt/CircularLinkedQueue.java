@@ -14,10 +14,51 @@ import java.util.Iterator;
 public class CircularLinkedQueue<T> implements QueueInterface<T> {
     private Node firstNode;
     private Node lastNode;
+    private int length;
 
     public CircularLinkedQueue() {
         this.firstNode = null;
         this.lastNode = null;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+    
+    private class Node {
+
+        private T data;
+        private Node next;
+
+        private Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        private Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
     }
 
     public boolean enqueue(T newEntry) {
@@ -187,21 +228,26 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
         
         return array;
     }
+    
+    public T[] toArray() {
+        Node current = this.firstNode;
 
-    private class Node {
+        if (current != null) {
 
-        private T data;
-        private Node next;
-        Node link;
+            T[] array = (T[]) new Object[this.length];
+            int index = 0;
 
-        private Node(T data) {
-            this.data = data;
-            this.next = null;
+            while (current != null) {
+                array[index] = ((T) current.data);
+                current = current.getNext();
+                index++;
+            }
+            return array;
+        } else {
+            return null;
         }
 
-        private Node(T data, Node next) {
-            this.data = data;
-            this.next = next;
-        }
     }
+
+    
 }
