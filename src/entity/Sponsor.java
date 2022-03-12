@@ -8,52 +8,60 @@ package entity;
 import adt.DoublyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 
-/**
- *
- * @author Tee Zhuo Xuan
- */
-public class Sponsor implements Comparable<Sponsor> {
+public class Sponsor extends Account implements Comparable<Sponsor> {
 
-    private String sponsorID;
-    private String sponsorName;
+    private String companyName;
+    private static String lastSponsorID = "";
 
     public Sponsor() {
+        this("", ' ', "", "", "", "", "");
+    }
+
+    public Sponsor(String lastSponsorID) {
+
+        this.lastSponsorID = lastSponsorID;
+    }
+
+    public Sponsor(String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
+
+        super(name, gender, ic, email, phoneNo, address);
+        this.companyName = companyName;
 
     }
 
-    public Sponsor(String sponsorID) {
-        this.sponsorID = sponsorID;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public String getSponsorID() {
-        return sponsorID;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public void setSponsorID(String sponsorID) {
-        this.sponsorID = sponsorID;
-    }
-
-    public String getSponsorName() {
-        return sponsorName;
-    }
-
-    public void setSponsorName(String sponsorName) {
-        this.sponsorName = sponsorName;
+    @Override
+    public String toString() {
+        return super.toString() + "\n" + companyName;
     }
 
     @Override
     public int compareTo(Sponsor o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        if (accountID.compareTo(o.accountID) < 0) {
+            return -1;
+        } else if (this.accountID.compareTo(o.accountID) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     private static String[] sponsorHeaders() {
-        String[] sponsorHeaders = {"Sponsor ID", "Sponsor Name"};
+        String[] sponsorHeaders = {"Sponsor ID", "Sponsor Name", "IC", "Phone No", "Company Name", "Company Email", "Company Address"};
 
         return sponsorHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{sponsorID, sponsorName};
+        return new String[]{accountID, name, ic, email, phoneNo, address, companyName};
     }
 
     private static String[][] sponsorRows(DoublyLinkedList<Sponsor> sponsorList) {
@@ -70,6 +78,30 @@ public class Sponsor implements Comparable<Sponsor> {
         String[][] sponsorData = Sponsor.sponsorRows(sponsorList);
 
         ASCIITable.getInstance().printTable(header, sponsorData);
+    }
+
+    @Override
+    public String autoGenerateID() {
+
+        String newSponsorID = "";
+        int seq = 0;
+        if (lastSponsorID.equals("")) {
+            newSponsorID = "S1001";
+        } else {
+            seq = Integer.parseInt(lastSponsorID.substring(1));
+            seq += 1;
+
+            newSponsorID = "S" + seq;
+        }
+
+        lastSponsorID = newSponsorID;
+
+        return lastSponsorID;
+
+    }
+
+    public DoublyLinkedList<Sponsor> generateDummySponsor() {
+        return null;
     }
 
 }

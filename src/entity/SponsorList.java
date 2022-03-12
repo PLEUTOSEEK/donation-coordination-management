@@ -129,7 +129,7 @@ public class SponsorList implements Comparable<SponsorList> {
     }
 
     private String[] strArr() {
-        return new String[]{sponsorListID, sponsor.getSponsorID()};
+        return new String[]{sponsorListID, sponsor.accountID};
     }
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
@@ -163,6 +163,10 @@ public class SponsorList implements Comparable<SponsorList> {
         lastSponsorListID = newCampaignID;
 
         return lastSponsorListID;
+    }
+
+    public RedBlackTree<LocalDate, SponsorList> generateDummySponsorList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
