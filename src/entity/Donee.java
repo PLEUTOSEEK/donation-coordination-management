@@ -10,7 +10,7 @@ import com.bethecoder.ascii_table.ASCIITable;
 
 /**
  *
- * @author Tee Zhuo Xuan
+ * @author junyao
  */
 public class Donee implements Comparable<Donee> {
 
