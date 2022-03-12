@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -79,7 +79,6 @@ public class CampaignPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
         menu.append("1. Add new campaign \n");
         menu.append("2. Display campaign \n");
         menu.append("3. Search campaign \n");
@@ -87,7 +86,6 @@ public class CampaignPanel implements Panel {
         menu.append("5. Update campaign \n");
         menu.append("6. Campaign support list maintenance");
         menu.append("7. Exit \n");
-
         return menu.toString();
     }
 
