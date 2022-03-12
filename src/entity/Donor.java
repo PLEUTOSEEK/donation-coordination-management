@@ -46,7 +46,7 @@ public class Donor implements Comparable<Donor> {
     }
 
     private static String[] donorHeaders() {
-        String[] donorHeaders = {"Donor ID", "Donor Name"};
+        String[] donorHeaders = {"Donor ID", "Donor Name",};
 
         return donorHeaders;
     }
