@@ -14,22 +14,18 @@ import com.bethecoder.ascii_table.ASCIITable;
  */
 public class Donor extends Account implements Comparable<Donor> {
 
-    private String donorID;
     private String donorName;
 
     public Donor() {
     }
 
     public Donor(String donorID) {
-        this.donorID = donorID;
+        this.accountID = donorID;
     }
 
-    public String getDonorID() {
-        return donorID;
-    }
-
-    public void setDonorID(String donorID) {
-        this.donorID = donorID;
+    public Donor(String donorID, String donorName) {
+        this.accountID = donorID;
+        this.donorName = donorName;
     }
 
     public String getDonorName() {
@@ -41,8 +37,29 @@ public class Donor extends Account implements Comparable<Donor> {
     }
 
     @Override
-    public int compareTo(Donor o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int compareTo(Donor o) {//ID
+        if (this.accountID.compareTo(o.accountID) < 0) {
+            return -1;
+        } else if (this.accountID.compareTo(o.accountID) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof Donor) {
+            Donor other = (Donor) o;
+            if (this.accountID == other.getAccountID()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     private static String[] donorHeaders() {
@@ -52,12 +69,13 @@ public class Donor extends Account implements Comparable<Donor> {
     }
 
     private String[] strArr() {
-        return new String[]{donorID, donorName};
+        return new String[]{accountID, donorName};
     }
 
     //change the list and apply toArray method.
     private static String[][] donorRows(DoublyLinkedList<Donor> donorList) {
-        Donor[] donors = donorList.toArray();
+        Donor[] donors = new Donor[donorList.getLength()];
+        donors = donorList.toArray(donors);
         String[][] donorRows = new String[donorList.getLength()][];
         for (int i = 0; i < donors.length; i++) {
             donorRows[i] = donors[i].strArr();
@@ -74,11 +92,11 @@ public class Donor extends Account implements Comparable<Donor> {
 
     @Override
     public String autoGenerateID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     public DoublyLinkedList<Donor> generateDummyDonor() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
 }

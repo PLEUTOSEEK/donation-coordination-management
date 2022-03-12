@@ -5,10 +5,15 @@
  */
 package entity;
 
+import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import com.bethecoder.ascii_table.ASCIITable;
+import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 /**
  *
@@ -22,7 +27,7 @@ public class DoneeList implements Comparable<DoneeList> {
     private LocalDate dateJoin;
     private Timestamp dateModified;
     private String status;
-    private static String lastDoneeListID;
+    private static String lastDoneeListID = "";
 
     public DoneeList() {
     }
@@ -129,11 +134,12 @@ public class DoneeList implements Comparable<DoneeList> {
     }
 
     private String[] strArr() {
-        return new String[]{doneeListID, donee.getDoneeID()};
+        return new String[]{doneeListID, donee.getAccountID()};
     }
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
-        DoneeList[] doneeLists = doneeListDB.getAllArrayList();
+        DoneeList[] doneeLists = new DoneeList[doneeListDB.getLength()];
+        doneeLists = doneeListDB.getAllArrayList(doneeLists);
         String[][] doneeListRows = new String[doneeLists.length][];
         for (int i = 0; i < doneeLists.length; i++) {
             doneeListRows[i] = doneeLists[i].strArr();
@@ -165,7 +171,57 @@ public class DoneeList implements Comparable<DoneeList> {
         return lastDoneeListID;
     }
 
-    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Donee> doneeDB) {
+
+        RedBlackTree<LocalDate, DoneeList> dummyDoneeList = new RedBlackTree<>();
+        //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
+        Faker faker = new Faker();
+        LocalDateTimeRangeRandomizer randomLDTR;
+        LocalDateTime randomLDT;
+        LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
+        //</editor-fold>
+        int counter = 1;
+        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+
+        DoneeList doneeList = new DoneeList();
+
+        while (counter <= campaigns.getLength()) {
+
+            Campaign campaign = campaigns.getAt(counter);
+            int randomTtl = faker.number().numberBetween(1, 3);
+
+            for (int record = 0; record < randomTtl; record++) {
+                DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getLength()];
+                doneeListArr = dummyDoneeList.getAllArrayList(doneeListArr);
+                Donee donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
+
+                doneeList = new DoneeList();
+                doneeList.setDoneeListID(autoGenerateID());
+                doneeList.setCampaign(campaign);
+                //<editor-fold defaultstate="collapsed" desc="sponsor check constraint">
+                if (doneeListArr != null) {
+
+                    for (int i = 0; i < doneeListArr.length; i++) {
+                        donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
+                        if (doneeListArr[i].getCampaign().equals(campaign) && doneeListArr[i].getDonee().equals(donee)) {
+                            donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
+                            i = 0;
+                        }
+                    }
+                }
+
+                //</editor-fold>
+                doneeList.setDonee(donee);
+                doneeList.setStatus("Active");
+                doneeList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));
+                doneeList.setDateModified(Timestamp.valueOf(doneeList.dateJoin.plusDays(faker.number().numberBetween(0, 6)).atStartOfDay()));
+                dummyDoneeList.addData(doneeList.getDateJoin(), doneeList);
+            }
+            counter++;
+        }
+
+        return dummyDoneeList;
     }
 }

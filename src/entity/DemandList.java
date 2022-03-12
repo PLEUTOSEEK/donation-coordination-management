@@ -173,7 +173,8 @@ public class DemandList implements Comparable<DemandList> {
     }
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {
-        DemandList[] demandLists = demandListDB.getAllArrayList();
+        DemandList[] demandLists = new DemandList[demandListDB.getLength()];
+        demandLists = demandListDB.getAllArrayList(demandLists);
         String[][] demandRows = new String[demandLists.length][];
         for (int i = 0; i < demandLists.length; i++) {
             demandRows[i] = demandLists[i].strArr();
@@ -203,6 +204,10 @@ public class DemandList implements Comparable<DemandList> {
         lastDemandID = newCampaignID;
 
         return lastDemandID;
+    }
+
+    public RedBlackTree<LocalDate, DemandList> generateDummyDemandList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

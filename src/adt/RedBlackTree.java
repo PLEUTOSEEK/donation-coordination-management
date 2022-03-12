@@ -81,6 +81,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                         currentNode = currentNode.getRight();
                     } else {
                         this.newNode.setParent(currentNode);
+
                         currentNode.setRight(this.newNode);
                         incLength();
                         inserted = true;
@@ -924,12 +925,12 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public T[] getAllArrayList() {
+    public T[] getAllArrayList(T[] array) {
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
         allList.quickSort();
 
-        return allList.toArray();
+        return (T[]) allList.toArray(array);
     }
 
     public DoublyLinkedList<T> getAllList() {
@@ -941,7 +942,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     public void getAllList(Node currentNode, DoublyLinkedList<T> allList) {
-        if (this.root != null) {
+        if (currentNode != null) {
             getAllList(currentNode.left, allList);
 
             allList.joinLast(currentNode.getListData());

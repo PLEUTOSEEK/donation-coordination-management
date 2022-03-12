@@ -20,8 +20,8 @@ public abstract class Account {
 
     }
 
-    public Account(String name, char gender, String ic, String email, String phoneNo, String address) {
-        this.accountID = autoGenerateID();
+    public Account(String accountID, String name, char gender, String ic, String email, String phoneNo, String address) {
+        this.accountID = accountID;
         this.name = name;
         this.gender = gender;
         this.ic = ic;
