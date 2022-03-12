@@ -77,4 +77,8 @@ public class Donee extends Account implements Comparable<Donee> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public DoublyLinkedList<Donee> generateDummyDonee() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

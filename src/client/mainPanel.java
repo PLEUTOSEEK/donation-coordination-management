@@ -5,14 +5,62 @@
  */
 package client;
 
+import adt.DoublyLinkedList;
+import adt.RedBlackTree;
+import entity.Campaign;
+import entity.DemandList;
+import entity.Donee;
+import entity.DoneeList;
+import entity.Donor;
+import entity.DonorList;
+import entity.Sponsor;
+import entity.SponsorList;
+import java.time.LocalDate;
+import java.util.Scanner;
+
 /**
  *
  * @author Tee Zhuo Xuan
  */
-public class mainPanel implements Panel {
+public class MainPanel implements Panel {
 
-    public void controlPanel() {
+    public void controlPanel(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, SponsorList> sponsorListDB,
+            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, DonorList> donorListDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB) {
+        CampaignPanel campaignPanel = new CampaignPanel();
 
+        Scanner input = new Scanner(System.in);
+        int option = 0;
+
+        do {
+            System.out.println(menu());
+            System.out.println("Option: ");
+            option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    campaignPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB, demandListDB);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    System.out.println("Return to previous Page...");
+                    break;
+                default:
+                    System.out.println("Index not correct...");
+            }
+
+        } while (option != 7);
     }
 
     @Override
@@ -56,6 +104,11 @@ public class mainPanel implements Panel {
 
     @Override
     public void exit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void controlPanel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

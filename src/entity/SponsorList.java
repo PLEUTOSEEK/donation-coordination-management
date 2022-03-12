@@ -165,4 +165,8 @@ public class SponsorList implements Comparable<SponsorList> {
         return lastSponsorListID;
     }
 
+    public RedBlackTree<LocalDate, SponsorList> generateDummySponsorList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

@@ -21,13 +21,58 @@ import java.util.Scanner;
  */
 class SponsorListPanel implements Panel {
 
-    public void controlPanel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void controlPanel(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, SponsorList> sponsorListDB
+    ) {
+
+        Scanner input = new Scanner(System.in);
+        int option = 0;
+
+        do {
+            System.out.println(menu());
+            System.out.println("Option: ");
+            option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    add(campaignDB, sponsorDB, sponsorListDB);
+                    break;
+                case 2:
+                    SponsorList.sponsorListTable(sponsorListDB);
+                    break;
+                case 3:
+                    search();
+                    break;
+                case 4:
+                    delete(sponsorListDB);
+                    break;
+                case 5:
+                    update(sponsorDB, sponsorListDB);
+                    break;
+                case 6:
+                    System.out.println("Return to previous Page...");
+                    break;
+                default:
+                    System.out.println("Index not correct...");
+            }
+
+        } while (option != 7);
     }
 
     @Override
     public String menu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Add new sponsor list \n");
+        menu.append("2. Display sponsor list \n");
+        menu.append("3. Search sponsor list \n");
+        menu.append("4. Deactive sponsor list \n");
+        menu.append("5. Update sponsor list \n");
+        menu.append("6. Exit \n");
+
+        return menu.toString();
     }
 
     private void add(RedBlackTree<LocalDate, Campaign> campaignDB,
@@ -297,6 +342,11 @@ class SponsorListPanel implements Panel {
 
     @Override
     public void delete() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void controlPanel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

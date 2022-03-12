@@ -164,4 +164,8 @@ public class DoneeList implements Comparable<DoneeList> {
 
         return lastDoneeListID;
     }
+
+    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

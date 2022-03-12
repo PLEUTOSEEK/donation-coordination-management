@@ -39,6 +39,7 @@ public class CampaignPanel implements Panel {
 
         do {
             System.out.println(menu());
+            System.out.println("Option: ");
             option = input.nextInt();
 
             switch (option) {

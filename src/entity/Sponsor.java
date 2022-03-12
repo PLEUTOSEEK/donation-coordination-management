@@ -77,4 +77,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public DoublyLinkedList<Sponsor> generateDummySponsor() {
+        return null;
+    }
+
 }

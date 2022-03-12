@@ -161,4 +161,12 @@ public class DonorList implements Comparable<DonorList> {
         return lastDonorListID;
     }
 
+    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public RedBlackTree<LocalDate, DemandList> generateDummyDemandList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
