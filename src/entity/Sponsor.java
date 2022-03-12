@@ -12,7 +12,7 @@ import com.bethecoder.ascii_table.ASCIITable;
  *
  * @author Tee Zhuo Xuan
  */
-public class Sponsor implements Comparable<Sponsor> {
+public class Sponsor extends Account implements Comparable<Sponsor> {
 
     private String sponsorID;
     private String sponsorName;
@@ -70,6 +70,11 @@ public class Sponsor implements Comparable<Sponsor> {
         String[][] sponsorData = Sponsor.sponsorRows(sponsorList);
 
         ASCIITable.getInstance().printTable(header, sponsorData);
+    }
+
+    @Override
+    public String autoGenerateID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
