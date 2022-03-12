@@ -5,8 +5,10 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
 import entity.Donee;
@@ -25,6 +27,8 @@ public class SystemEntryPoint {
 
     public static void main(String[] args) {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
+         << << << < HEAD
+
         DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
         DoublyLinkedList<Donee> doneeDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donor> donorDB = new DoublyLinkedList<>();//new Donor().generateDummyDonor();
@@ -68,8 +72,16 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB);
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);;
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList();
-
-        MainPanel mainPanel = new MainPanel();
+         == == ==
+                = DoublyLinkedList < Sponsor > sponsorDB = new Sponsor().generateDummySponsor();
+        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList();
+        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();
+        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList();
+        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();
+        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList();;
+        RedBlackTree<LocalDate, DemandList> demandListDB = new DonorList().generateDummyDemandList();
+         >>> >>> > 376
+        aaf63cd71aa96abbfbf9a39da12caae5b9d50 MainPanel mainPanel = new MainPanel();
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB, demandListDB);
     }
 }

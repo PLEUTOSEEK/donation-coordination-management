@@ -9,19 +9,61 @@ import java.util.Iterator;
 
 /**
  *
- * @author wjuny
+ * @author Wong Jun Yao
  */
 public class CircularLinkedQueue<T> implements QueueInterface<T> {
+
     private Node firstNode;
     private Node lastNode;
+    private int length;
 
     public CircularLinkedQueue() {
         this.firstNode = null;
         this.lastNode = null;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    private class Node<T extends Comparable<T>> {
+
+        private T data;
+        private Node next;
+
+        private Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        private Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+    }
+
     public boolean enqueue(T newEntry) {
-        Node newNode = new Node(newEntry, null);
+        Node newNode = new Node((Comparable) newEntry, null);
 
         if (firstNode == null) {
             firstNode = newNode;
@@ -42,11 +84,11 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
             return null;
         } else {
             if (firstNode == lastNode) {
-                front = firstNode.data;
+                front = (T) firstNode.data;
                 firstNode = null;
                 lastNode = null;
             } else {
-                front = firstNode.data;
+                front = (T) firstNode.data;
                 firstNode = firstNode.next;
                 lastNode.next = firstNode;
             }
@@ -59,21 +101,9 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
         if (firstNode == null) {
             return null;
         } else {
-            front = firstNode.data;
+            front = (T) firstNode.data;
         }
         return front;
-    }
-
-    public T getLast() {
-        T last;
-
-        if (firstNode.data == lastNode.data) {
-            last = firstNode.data;
-        } else {
-            last = lastNode.data;
-        }
-
-        return last;
     }
 
     public boolean isEmpty() {
@@ -100,10 +130,11 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
     public void clear() {
         firstNode = null;
         lastNode = null;
+        length = 0;
     }
 
     public boolean checkExitsData(T entry) {
-        Node node = new Node(entry);
+        Node node = new Node((Comparable) entry);
         Node tempnode = firstNode;
         boolean exist = false;
         do {
@@ -124,11 +155,11 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
         if (firstNode == null) {
             return;
         }
-        chk = checkExitsData(node.data);
+        chk = checkExitsData((T) node.data);
         if (chk == true) {
             while (node.next != firstNode) {
                 if (node.data == oldEntry) {
-                    node.data = newEntry;
+                    node.data = (Comparable) newEntry;
                     return;
                 }
                 node = node.next;
@@ -136,7 +167,7 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
             }
 
             if (node.data == oldEntry) {
-                node.data = newEntry;
+                node.data = (Comparable) newEntry;
                 return;
             }
         }
@@ -169,7 +200,7 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
         @Override
         public T next() {
-            T data = currentNode.data;
+            T data = (T) currentNode.data;
             atStart = false;
             currentNode = currentNode.next;
             return data;
@@ -178,30 +209,54 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
     public T[] get(CircularLinkedQueue q) {
         Node temp = q.firstNode;
-        
+
         T[] array = (T[]) new Object[q.size()];
-        
-        for (int i = 0; i < q.size()-1; i++){
-            array[i] = temp.next.data;
+
+        for (int i = 0; i < q.size() - 1; i++) {
+            array[i] = (T) temp.next.data;
         }
-        
+
         return array;
     }
 
-    private class Node {
+    public T[] toArray() {
+        Node current = this.firstNode;
 
-        private T data;
-        private Node next;
-        Node link;
+        if (current != null) {
 
-        private Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
+            T[] array = (T[]) new Object[this.length];
+            int index = 0;
 
-        private Node(T data, Node next) {
-            this.data = data;
-            this.next = next;
+            while (current != null) {
+                array[index] = ((T) current.data);
+                current = current.getNext();
+                index++;
+            }
+            return array;
+        } else {
+            return null;
         }
     }
+
+    public int indexOf(T element) {
+        Node current = firstNode;
+        int counter = 1;
+
+        while (current != null) {
+
+            if (element.equals(current.getData())) {
+                return counter;
+            }
+
+            current = current.getNext();
+            counter += 1;
+        }
+
+        return -1;
+    }
+
+    public boolean contains(T element) {
+        return indexOf(element) != -1;
+    }
+
 }
