@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author wjuny
+ * @author Wong Jun Yao
  */
 public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
@@ -104,18 +104,6 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
             front = (T) firstNode.data;
         }
         return front;
-    }
-
-    public T getLast() {
-        T last;
-
-        if (firstNode.data == lastNode.data) {
-            last = (T) firstNode.data;
-        } else {
-            last = (T) lastNode.data;
-        }
-
-        return last;
     }
 
     public boolean isEmpty() {

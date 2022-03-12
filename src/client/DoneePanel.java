@@ -296,15 +296,27 @@ public class DoneePanel implements Panel {
         } while(opt.toUpperCase().equals("Y"));   
     }
 
-    public static Donee searchDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public static void searchDonee(CircularLinkedQueue<Donee> doneeDB) {
         //iterator = CircularQueue.getIterator();
-        String id;
+        String opt;
+        String doneeID = "";
         Scanner s = new Scanner(System.in);
+        Donee donee = new Donee();
 
-        System.out.print("Enter a Donee Id:");
-        id = s.nextLine();
+        do {
+            Donee.doneeTable(doneeDB);
 
-        Donee.doneeTable(doneeDB);
+            System.out.print("Enter a Donee Id:");
+            String id = s.nextLine();
+
+            if (doneeDB.contains(new Donee(doneeID)) == true) {
+                
+            }
+            
+            System.out.println("Continue deactive campaign ? (Y/N)");
+            opt = s.nextLine();
+            
+        } while(opt.toUpperCase().equals("Y"));
 
         //iterator = CircularQueue.getIterator();
 //        while (iterator.hasNext()) {
@@ -318,6 +330,8 @@ public class DoneePanel implements Panel {
 //            System.out.printf("No record found!!\n\n");
 //        }
 //        return doneetosearch;
+//
+//
 //        for (int i = 0; i < temp.length; i++) {
 //            if (id.equals(temp[i].getId())) {
 //                System.out.println(temp[i].getId());
@@ -333,7 +347,6 @@ public class DoneePanel implements Panel {
 //                break;
 //            }
 //        }
-        return null;
     }
 
     @Override
