@@ -17,6 +17,11 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         this("", ' ', "", "", "", "", "");
     }
 
+    public Sponsor(String lastSponsorID) {
+
+        this.lastSponsorID = lastSponsorID;
+    }
+
     public Sponsor(String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
 
         super(name, gender, ic, email, phoneNo, address);

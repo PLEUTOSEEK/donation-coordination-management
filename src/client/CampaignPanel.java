@@ -206,7 +206,7 @@ public class CampaignPanel implements Panel {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
-        String sponsorID = "";
+        String accountID = "";
         SponsorList sponsorList = new SponsorList();
         boolean haveRecord = false;
 
@@ -215,7 +215,7 @@ public class CampaignPanel implements Panel {
             Sponsor.sponsorTable(sponsorDB);
 
             System.out.println("Enter sponsor ID: ");
-            sponsorID = input.nextLine();
+            accountID = input.nextLine();
 
             if (sponsorDB.contains(new Sponsor(accountID)) == true) {
 
