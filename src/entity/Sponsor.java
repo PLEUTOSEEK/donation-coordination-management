@@ -82,6 +82,7 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
 
     @Override
     public String autoGenerateID() {
+
         String newSponsorID = "";
         int seq = 0;
         if (lastSponsorID.equals("")) {
@@ -96,6 +97,7 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         lastSponsorID = newSponsorID;
 
         return lastSponsorID;
+
     }
 
 }

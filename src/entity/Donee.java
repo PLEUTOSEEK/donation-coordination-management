@@ -10,9 +10,9 @@ import com.bethecoder.ascii_table.ASCIITable;
 
 /**
  *
- * @author Tee Zhuo Xuan
+ * @author junyao
  */
-public class Donee implements Comparable<Donee> {
+public class Donee extends Account implements Comparable<Donee> {
 
     private String doneeID;
     private String doneeName;
@@ -70,6 +70,11 @@ public class Donee implements Comparable<Donee> {
         String[][] doneeData = Donee.doneeRows(doneeList);
 
         ASCIITable.getInstance().printTable(header, doneeData);
+    }
+
+    @Override
+    public String autoGenerateID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

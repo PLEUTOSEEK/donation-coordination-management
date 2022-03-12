@@ -7,7 +7,9 @@ package client;
 
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import entity.Account;
 import entity.Campaign;
+import entity.Donee;
 import entity.Donor;
 import entity.DonorList;
 import java.sql.Timestamp;
@@ -22,6 +24,10 @@ import java.util.Scanner;
 class DonorListPanel implements Panel {
 
     public void controlPanel() {
+        Account donee1 = new Donee();
+
+        donee1.autoGenerateID();
+
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -188,6 +194,7 @@ class DonorListPanel implements Panel {
                                         if (donorDB.contains(new Donor(donorID))) {
                                             DonorList[] donorListArr = donorListDB.getAllArrayList();
 
+                                            //check
                                             for (int j = 0; j < donorListArr.length; j++) {
                                                 if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
                                                     hasDonor = false;
