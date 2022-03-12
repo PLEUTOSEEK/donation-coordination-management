@@ -74,7 +74,6 @@ public class Donee extends Account implements Comparable<Donee> {
     public void setLastDoneeID(String lastDoneeID) {
         this.lastDoneeID = lastDoneeID;
     }
-    
 
     @Override
     public int compareTo(Donee o) {
@@ -96,9 +95,10 @@ public class Donee extends Account implements Comparable<Donee> {
     private String[] strArr() {
         return new String[]{doneeID, name};
     }
+    
 
     //change the list and apply toArray method.
-    private static String[][] doneeRows(DoublyLinkedList<Donee> doneeList) {
+    private static String[][] doneeRows(CircularLinkedQueue<Donee> doneeList) {
         Donee[] donees = doneeList.toArray();
         String[][] doneeRows = new String[doneeList.getLength()][];
         for (int i = 0; i < donees.length; i++) {
@@ -107,14 +107,13 @@ public class Donee extends Account implements Comparable<Donee> {
         return doneeRows;
     }
 
-    public static void doneeTable(DoublyLinkedList<Donee> doneeList) {
+    public static void doneeTable(CircularLinkedQueue<Donee> doneeList) {
         String[] header = Donee.doneeHeaders();
         String[][] doneeData = Donee.doneeRows(doneeList);
 
         ASCIITable.getInstance().printTable(header, doneeData);
     }
-
-<<<<<<< HEAD
+    
     public String autoGenerateID() {
         String newDoneeID = "";
         int n = 0;
@@ -153,10 +152,10 @@ public class Donee extends Account implements Comparable<Donee> {
 
             donee = new Donee();
 
-            donee.setDoneeID(autoGenerateID());
+            donee.setAccountID(autoGenerateID());
             donee.setName(doneeName[record]);
             donee.setIc(doneeIC[record]);
-            //donee.setGender(doneeGender.[record]);
+            donee.setGender(doneeGender[record].charAt(0));
             donee.setEmail(faker.internet().emailAddress());
             donee.setPhoneNo(doneePhone[record]);
             donee.setAddress(doneeAddress[record]);
@@ -168,17 +167,6 @@ public class Donee extends Account implements Comparable<Donee> {
 
             System.out.println(donee.getDoneeID().toString());
         }
-
         return null;
-=======
-    @Override
-    public String autoGenerateID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public DoublyLinkedList<Donee> generateDummyDonee() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
->>>>>>> 56cf93c235a512cff46df21730b521e5d9ef9776
-    }
-
 }

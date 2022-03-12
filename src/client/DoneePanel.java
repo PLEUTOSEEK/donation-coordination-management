@@ -14,13 +14,12 @@ import java.util.Iterator;
 /**
  * @author Wong Jun Yao
  */
-public class DoneePanel implements Panel{
+public class DoneePanel implements Panel {
 
     public void doneePanel(CircularLinkedQueue<Donee> doneeDB) {
 
         QueueInterface<Donee> doneeQueue;
         Iterator<Donee> iterator;
-        
 
         int opt;
         Scanner s = new Scanner(System.in);
@@ -65,14 +64,14 @@ public class DoneePanel implements Panel{
     }
 
     public void addNewDonee(CircularLinkedQueue<Donee> doneeDB) {
-        
+
         String confirm, opt;
         char gender = ' ';
         double requestAmount;
 
         Donee donee = new Donee();
         Scanner s = new Scanner(System.in);
-        
+
 //        if (queue.isEmpty() == true) {
 //            id = "DE1001";
 //        } else {
@@ -81,7 +80,6 @@ public class DoneePanel implements Panel{
 //            n++;
 //            id = "DE" + n;
 //        }
-
         do {
             System.out.print("\nName:");
             donee.setName(s.nextLine());
@@ -115,14 +113,14 @@ public class DoneePanel implements Panel{
             System.out.printf("Bank Account:");
             donee.setBankAcc(s.nextLine());
             donee.setStatus("Active");
-            
+
             System.out.println("Confirm add donee? (Y/N)");
             confirm = s.nextLine();
-            
+
             if (confirm.toUpperCase().equals("Y")) {
                 doneeDB.enqueue(donee);
             }
-            
+
             System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully" : "Add failed..");
 
             System.out.println("Continue add donee? (Y/N)");
@@ -140,34 +138,133 @@ public class DoneePanel implements Panel{
 
     public static void modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
 
-        String opt;
+        String opt, select, confirm;
+        String doneeID = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
-        
-        do{
+
+        do {
             Donee.doneeTable(doneeDB);
-            
-        }while();
+            System.out.print("Enter a Donee Id:");
+            String id = s.nextLine();
 
-        System.out.print("Enter a Donee Id:");
-        String id = s.nextLine();
+            if (doneeDB.contains(new Donee(doneeID)) == true) {
+                boolean validIndex = true;
+                do {
+                    validIndex = true;
 
+                    System.out.println("1. Name");
+                    System.out.println("2. NRIC");
+                    System.out.println("3. Gender");
+                    System.out.println("4. Email");
+                    System.out.println("5. Phone No");
+                    System.out.println("6. Address");
+                    System.out.println("7. Request Issue");
+                    System.out.println("8. Request Amount");
+                    System.out.println("9. Bank Typn");
+                    System.out.println("10. Bank Account");
+
+                    System.out.println("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
+                    select = s.nextLine();
+
+                    String[] splitIndex = select.split("\\s+");
+                    int[] splitIndexInt = new int[splitIndex.length];
+
+                    for (int i = 0; i < splitIndex.length; i++) {
+                        try {
+                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                        } catch (Exception e) {
+                            validIndex = false;
+                            break;
+                        }
+                    }
+
+                    if (validIndex == true) {
+                        boolean hasUpdateSomething = false;
+                        for (int i = 0; i < splitIndexInt.length; i++) {
+                            switch (splitIndexInt[i]) {
+                                case 1:
+                                    System.out.print("Enter the new name: ");
+                                    donee.setName(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 2:
+                                    System.out.print("Enter the new NRIC: ");
+                                    donee.setIc(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 3:
+                                    System.out.print("Enter the new gender: ");
+                                    donee.setGender(s.next().charAt(0));
+                                    s.nextLine();
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 4:
+                                    System.out.print("Enter the new email: ");
+                                    donee.setEmail(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 5:
+                                    System.out.print("Enter the new phone no: ");
+                                    donee.setPhoneNo(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 6:
+                                    System.out.print("Enter the new address: ");
+                                    donee.setAddress(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 7:
+                                    System.out.print("Enter the new request issue: ");
+                                    donee.setRequestIssue(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 8:
+                                    System.out.print("Enter the new request amount: ");
+                                    donee.setRequestAmount(s.nextDouble());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 9:
+                                    System.out.print("Enter the new bank type: ");
+                                    donee.setBankType(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                case 10:
+                                    System.out.print("Enter the new bank account: ");
+                                    donee.setBankAcc(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
+                                default:
+                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                            }
+                        }
+
+                        if (hasUpdateSomething == true) {
+                            System.out.println("Confirm update ? (Y/N)");
+                            confirm = s.nextLine();
+
+                            if (confirm.toUpperCase().equals("Y")) {
+
+                                doneeDB.modify(donee, donee);
+                            }
+
+                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully" : "Update failed...");
+                        } else {
+                            System.out.println("No data selected");
+                        }
+                    }
+                } while (validIndex == false);
+            } else {
+                System.out.println("Donee ID not found...");
+            }
+            System.out.println("Continue update campaign ? (Y/N)");
+            opt = s.nextLine();
+
+        } while (opt.toUpperCase().equals("Y"));
     }
 
     public static void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
-//        int i;
-//        Node current = head;
-//        if (queue == null) {
-//            System.out.println("Queue is empty");
-//        } else {
-//            System.out.println("Nodes of the circular linked list: ");
-//            do {
-//                //Prints each node by incrementing pointer.  
-//                System.out.print(" " + current.data);
-//                current = current.next;
-//            } while (current != queue.getFront());
-//            System.out.println();
-//        }
+        Donee.doneeTable(doneeDB);
     }
 
     public static void deleteDonee(CircularLinkedQueue<Donee> doneeDB) {
@@ -197,6 +294,8 @@ public class DoneePanel implements Panel{
         System.out.print("Enter a Donee Id:");
         id = s.nextLine();
 
+        Donee.doneeTable(doneeDB);
+
         //iterator = CircularQueue.getIterator();
 //        while (iterator.hasNext()) {
 //            doneetosearch = iterator.next();
@@ -209,14 +308,11 @@ public class DoneePanel implements Panel{
 //            System.out.printf("No record found!!\n\n");
 //        }
 //        return doneetosearch;
-        Donee temp[] = queue.get(queue);
-
 //        for (int i = 0; i < temp.length; i++) {
 //            if (id.equals(temp[i].getId())) {
 //                System.out.println(temp[i].getId());
 //            }
 //        }
-
 //        for (int i = 0; i< queue.size(); i++){
 //            Donee temp = queue.get(queue, id);
 //            if (id.equals(temp.getId())){
