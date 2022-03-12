@@ -106,8 +106,8 @@ class DoneeListPanel implements Panel {
                         doneeID = input.nextLine();
 
                         if (doneeDB.contains(new Donee(doneeID))) {
-                            DoneeList[] doneeListArr = doneeListDB.getAllArrayList();
-
+                            DoneeList[] doneeListArr = new DoneeList[doneeListDB.getLength()];
+                            doneeListArr = doneeListDB.getAllArrayList(doneeListArr);
                             for (int i = 0; i < doneeListArr.length; i++) {
                                 if (doneeListArr[i].getCampaign().equals(campaign) && doneeListArr[i].getDonee().equals(donee)) {
                                     hasDonee = false;
@@ -230,7 +230,8 @@ class DoneeListPanel implements Panel {
                                         doneeID = input.nextLine();
 
                                         if (doneeDB.contains(new Donee(doneeID))) {
-                                            DoneeList[] doneeListArr = doneeListDB.getAllArrayList();
+                                            DoneeList[] doneeListArr = new DoneeList[doneeListDB.getLength()];
+                                            doneeListArr = doneeListDB.getAllArrayList(doneeListArr);
 
                                             for (int j = 0; j < doneeListArr.length; j++) {
                                                 if (doneeListArr[j].getCampaign().equals(doneeList.getCampaign()) && doneeListArr[j].getDonee().equals(new Donee(doneeID))) {

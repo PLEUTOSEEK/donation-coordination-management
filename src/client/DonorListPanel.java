@@ -111,10 +111,10 @@ class DonorListPanel implements Panel {
                         donorID = input.nextLine();
 
                         if (donorDB.contains(new Donor(donorID))) {
-                            DonorList[] donotListArr = donorListDB.getAllArrayList();
-
-                            for (int i = 0; i < donotListArr.length; i++) {
-                                if (donotListArr[i].getCampaign().equals(campaign) && donotListArr[i].getDonor().equals(donor)) {
+                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
+                            donorListArr = donorListDB.getAllArrayList(donorListArr);
+                            for (int i = 0; i < donorListArr.length; i++) {
+                                if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(donor)) {
                                     hasDonor = false;
                                     break;
                                 }
@@ -231,7 +231,8 @@ class DonorListPanel implements Panel {
                                         donorID = input.nextLine();
 
                                         if (donorDB.contains(new Donor(donorID))) {
-                                            DonorList[] donorListArr = donorListDB.getAllArrayList();
+                                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
+                                            donorListArr = donorListDB.getAllArrayList(donorListArr);
 
                                             //check
                                             for (int j = 0; j < donorListArr.length; j++) {
