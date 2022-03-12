@@ -46,6 +46,7 @@ public class MainPanel implements Panel {
                     System.out.println();
                     break;
                 case 2:
+                    System.out.println("TRY");
                     break;
                 case 3:
                     break;
