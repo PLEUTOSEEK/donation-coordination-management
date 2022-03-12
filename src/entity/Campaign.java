@@ -316,6 +316,7 @@ public class Campaign implements Comparable<Campaign> {
             campaign.setCampaignRegisterDate(registerDate);
             campaign.setDateModified(dateModified);
 
+            //Adt.add(campaign);
             System.out.println(campaign.getCampaignID().toString());
         }
 

@@ -114,6 +114,7 @@ public class Donee extends Account implements Comparable<Donee> {
         ASCIITable.getInstance().printTable(header, doneeData);
     }
 
+<<<<<<< HEAD
     public String autoGenerateID() {
         String newDoneeID = "";
         int n = 0;
@@ -169,6 +170,15 @@ public class Donee extends Account implements Comparable<Donee> {
         }
 
         return null;
+=======
+    @Override
+    public String autoGenerateID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public DoublyLinkedList<Donee> generateDummyDonee() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+>>>>>>> 56cf93c235a512cff46df21730b521e5d9ef9776
     }
 
 }
