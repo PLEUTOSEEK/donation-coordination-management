@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author Wong Jun Yao
  */
-public class CircularLinkedQueue<T> implements QueueInterface<T> {
+public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterface<T> {
 
     private Node firstNode;
     private Node lastNode;
@@ -28,6 +28,11 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private class Node<T extends Comparable<T>> {
@@ -172,39 +177,6 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
             }
         }
         return;
-    }
-
-    public Iterator<T> getIterator() {
-        return new LinkedQueueIterator();
-    }
-
-    private class LinkedQueueIterator implements Iterator<T> {
-
-        private Node currentNode;
-        private boolean atStart;
-
-        public LinkedQueueIterator() {
-            if (!isEmpty()) {
-                currentNode = firstNode;
-                atStart = true;
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (isEmpty() || currentNode == firstNode && !atStart) {
-                return false;
-            }
-            return true;
-        }
-
-        @Override
-        public T next() {
-            T data = (T) currentNode.data;
-            atStart = false;
-            currentNode = currentNode.next;
-            return data;
-        }
     }
 
     public T[] get(CircularLinkedQueue q) {
