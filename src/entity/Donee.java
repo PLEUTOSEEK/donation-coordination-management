@@ -6,7 +6,6 @@
 package entity;
 
 import adt.CircularLinkedQueue;
-import adt.DoublyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
 
@@ -16,23 +15,18 @@ import com.github.javafaker.Faker;
  */
 public class Donee extends Account implements Comparable<Donee> {
 
-<<<<<<< HEAD
-    private String doneeName;
-=======
-    private String doneeID = "";
     private String requestIssue, status;
     private double requestAmount;
     private String bankType, bankAcc;
     //private List<Donation> donations;
-    private String lastDoneeID = "";
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+    private static String lastDoneeID = "";
 
     public Donee() {
-        this("", "", ' ', "", "", "", "", 0.0, "", "");
+        this("", "", "", ' ', "", "", "", "", 0.0, "", "");
     }
 
-    public Donee(String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc) {
-        super(name, gender, ic, email, phoneNo, address);
+    public Donee(String accountID, String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc) {
+        super(accountID, name, gender, ic, email, phoneNo, address);
         this.requestIssue = requestIssue;
         this.requestAmount = requestAmount;
         this.bankType = bankType;
@@ -45,7 +39,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
     public Donee(String doneeID, String doneeName) {
         this.accountID = doneeID;
-        this.doneeName = doneeName;
+        this.name = doneeName;
     }
 
     public void setRequestIssue(String requestIssue) {
@@ -77,22 +71,16 @@ public class Donee extends Account implements Comparable<Donee> {
     }
 
     @Override
-<<<<<<< HEAD
+
     public int compareTo(Donee o) {//ID
         if (this.accountID.compareTo(o.accountID) < 0) {
             return -1;
         } else if (this.accountID.compareTo(o.accountID) > 0) {
-=======
-    public int compareTo(Donee o) {
-        if (this.doneeID.compareTo(o.doneeID) < 0) {
-            return -1;
-        } else if (this.doneeID.compareTo(o.doneeID) > 0) {
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+
             return 1;
         } else {
             return 0;
         }
-<<<<<<< HEAD
     }
 
     @Override
@@ -108,8 +96,7 @@ public class Donee extends Account implements Comparable<Donee> {
         }
 
         return false;
-=======
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+
     }
 
     private static String[] doneeHeaders() {
@@ -119,23 +106,15 @@ public class Donee extends Account implements Comparable<Donee> {
     }
 
     private String[] strArr() {
-<<<<<<< HEAD
-        return new String[]{accountID, doneeName};
-=======
-        return new String[]{doneeID, name};
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+
+        return new String[]{accountID, name};
+
     }
-    
 
     //change the list and apply toArray method.
-<<<<<<< HEAD
-    private static String[][] doneeRows(DoublyLinkedList<Donee> doneeList) {
-        Donee[] donees = new Donee[doneeList.getLength()];
-        donees = doneeList.toArray(donees);
-=======
     private static String[][] doneeRows(CircularLinkedQueue<Donee> doneeList) {
         Donee[] donees = doneeList.toArray();
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+
         String[][] doneeRows = new String[doneeList.getLength()][];
         for (int i = 0; i < donees.length; i++) {
             doneeRows[i] = donees[i].strArr();
@@ -149,20 +128,14 @@ public class Donee extends Account implements Comparable<Donee> {
 
         ASCIITable.getInstance().printTable(header, doneeData);
     }
-    
-    public String autoGenerateID() {
-<<<<<<< HEAD
-        return null;
-    }
 
-    public DoublyLinkedList<Donee> generateDummyDonee() {
-        return null;
-    }
-=======
+    public String autoGenerateID() {
+
         String newDoneeID = "";
         int n = 0;
 
-        if (lastDoneeID.equals("")) {
+        if (lastDoneeID.equals(
+                "")) {
             newDoneeID = "DE1001";
         } else {
 
@@ -178,8 +151,6 @@ public class Donee extends Account implements Comparable<Donee> {
 
     public CircularLinkedQueue<Donee> generateDummyDonee() {
         Faker faker = new Faker();
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
-
         String[] doneeName = "Uzair Hassan,Keaton Bruce,Kajal Salas,Susie Wilkinson,Sullivan Bean,Ralph Yates,Ashlyn Cooke,Habib Cross,Jeff Reese,Corben Donald".split(",");
         String[] doneeIC = "1114152543,0904050315,0402005577,1004163133,0111147799,1101365780,0122554455,0302010441,0113224412,0730221541".split(",");
         String[] doneeGender = "M,M,M,F,F,M,F,F,M,M".split(",");
@@ -210,7 +181,7 @@ public class Donee extends Account implements Comparable<Donee> {
             donee.setBankAcc(doneeBankAcc[record]);
             donee.setStatus("Active");
 
-            System.out.println(donee.getDoneeID().toString());
+            System.out.println(donee.getAccountID().toString());
         }
         return null;
     }

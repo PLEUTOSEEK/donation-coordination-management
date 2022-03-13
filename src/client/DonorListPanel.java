@@ -7,6 +7,7 @@ package client;
 
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.Donor;
 import entity.DonorList;
@@ -23,7 +24,7 @@ class DonorListPanel implements Panel {
 
     public void controlPanel(
             RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donor> donorDB,
+            SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB
     ) {
 
@@ -81,7 +82,7 @@ class DonorListPanel implements Panel {
     }
 
     private void add(RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+            SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
 
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -178,7 +179,7 @@ class DonorListPanel implements Panel {
 
     }
 
-    public void update(DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void update(SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";

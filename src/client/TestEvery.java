@@ -5,11 +5,8 @@
  */
 package client;
 
-
-import adt.CircularLinkedQueue;
+import com.github.javafaker.Faker;
 import entity.Campaign;
-import entity.Donee;
-
 
 /**
  *
@@ -18,11 +15,13 @@ import entity.Donee;
 public class TestEvery {
 
     public static void main(String[] args) {
-
+        Faker faker = new Faker();
         Campaign campaign = new Campaign();
         campaign.generateDummyCampaign();//faker.expression("/^(\\+?6?01)[0|1|2|3|4|6|7|8|9]\\-*[0-9]{7,8}$/")
 
-
+        for (int i = 0; i < 10; i++) {
+            System.out.println(faker.random().nextInt(0, 1));
+        }
 
     }
 
