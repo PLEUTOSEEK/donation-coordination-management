@@ -7,6 +7,7 @@ package entity;
 
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
 import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
@@ -168,7 +169,7 @@ public class DonorList implements Comparable<DonorList> {
         return lastDonorListID;
     }
 
-    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Donor> donorDB) {
+    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList(RedBlackTree<LocalDate, Campaign> campaignDB, SinglyLinkedList<Donor> donorDB) {
         RedBlackTree<LocalDate, DonorList> dummyDonorList = new RedBlackTree<>();
         //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
         Faker faker = new Faker();
@@ -191,7 +192,7 @@ public class DonorList implements Comparable<DonorList> {
             for (int record = 0; record < randomTtl; record++) {
                 DonorList[] donorListArr = new DonorList[dummyDonorList.getLength()];
                 donorListArr = dummyDonorList.getAllArrayList(donorListArr);
-                Donor donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getLength()));
+                Donor donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
 
                 donorList = new DonorList();
                 donorList.setDonorListID(autoGenerateID());
@@ -200,9 +201,9 @@ public class DonorList implements Comparable<DonorList> {
                 if (donorListArr != null) {
 
                     for (int i = 0; i < donorListArr.length; i++) {
-                        donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getLength()));
+                        donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
                         if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(donor)) {
-                            donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getLength()));
+                            donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
                             i = 0;
                         }
                     }

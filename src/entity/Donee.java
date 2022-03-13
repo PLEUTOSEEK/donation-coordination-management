@@ -113,8 +113,8 @@ public class Donee extends Account implements Comparable<Donee> {
 
     //change the list and apply toArray method.
     private static String[][] doneeRows(CircularLinkedQueue<Donee> doneeList) {
-        Donee[] donees = doneeList.toArray();
-
+        Donee[] donees = new Donee[doneeList.getLength()];
+        donees = doneeList.toArray(donees);
         String[][] doneeRows = new String[doneeList.getLength()][];
         for (int i = 0; i < donees.length; i++) {
             doneeRows[i] = donees[i].strArr();
@@ -150,39 +150,44 @@ public class Donee extends Account implements Comparable<Donee> {
     }
 
     public CircularLinkedQueue<Donee> generateDummyDonee() {
+        CircularLinkedQueue<Donee> dummyDonee = new CircularLinkedQueue<Donee>();
         Faker faker = new Faker();
-        String[] doneeName = "Uzair Hassan,Keaton Bruce,Kajal Salas,Susie Wilkinson,Sullivan Bean,Ralph Yates,Ashlyn Cooke,Habib Cross,Jeff Reese,Corben Donald".split(",");
         String[] doneeIC = "1114152543,0904050315,0402005577,1004163133,0111147799,1101365780,0122554455,0302010441,0113224412,0730221541".split(",");
-        String[] doneeGender = "M,M,M,F,F,M,F,F,M,M".split(",");
+        int[] gender = {77, 70};
         //String[] doneeEmail = "Uzair@gmail.com,Keaton@gmail.com,Kajal@Salas.com,Susie@gmail.com,Sullivan@Bean.com,Ralph@Yates.com,Ashlyn@Cooke.com,Habib@gmail.com,JeffReese@gmail.com,Corben@Donald.com".split(",");
         String[] doneePhone = "0197682204,0143268085,0122323462,0164242625,0143268022,0146741265,0122072540,0195893047,0139285361,0198837324".split(",");
         String[] doneeAddress = "No. 9M-36, Jalan Utama 3/7G,No. L-84-59, Jln Zaaba 9,No. 9Z-04, Jalan Bukit Tunku 7/9,Lot 9, Jln 4,No. 720, Jalan Bangsar 3/69F,5, Lorong Pahang 22Y,No. 19, Jln Damansara 8Q,816, Jalan Pudu 6/4,9N-43, Jalan Kedah 3/9V,19, Lorong Keliling 3/20".split(",");
         String[] doneeRequestIssue = "Request for nursing home,Request for orphanage,Request for flood,Request for earthquake,Request for famine,Request for the food bank,Request for daughter's leukemia,Request for cancer medical expenses,Request for supplies, food, and education to African children,Request for leukemia patients".split(",");
         String[] doneeRequestAmount = "2000.00,1500.00,3200.00,2300.00,1000.00,2000.00,3000.00,1500.00,2500.00,3500.00".split(",");
-        String[] doneeBankType = "Public bank,Maybank,Ambank,Maybank,Public bank,Public bank,Maybank,Public bank,Ambank,Maybank".split(",");
-        String[] doneeBankAcc = "6685046056,155050504789,987458963,155151510679,6374581257,6854782213,150514248513,6457865510,987561489,155458520100".split(",");
+        String[] doneeBankType = {"Public bank", "Maybank"};
 
         Donee donee = new Donee();
 
-        for (int record = 0; record < 40; record++) {
+        for (int record = 0; record < 100; record++) {
+            System.out.println(record);
+            String bankNo = (int) faker.number().randomDouble(0, 1000, 9000) + " "
+                    + (int) faker.number().randomDouble(0, 1000, 9000) + " "
+                    + (int) faker.number().randomDouble(0, 10, 99);
 
             donee = new Donee();
 
             donee.setAccountID(autoGenerateID());
-            donee.setName(doneeName[record]);
-            donee.setIc(doneeIC[record]);
-            donee.setGender(doneeGender[record].charAt(0));
+            donee.setName(faker.name().fullName());
+            donee.setIc(doneeIC[faker.number().numberBetween(0, doneeIC.length - 1)]);
+            donee.setGender((char) gender[faker.random().nextInt(0, gender.length - 1)]);
             donee.setEmail(faker.internet().emailAddress());
-            donee.setPhoneNo(doneePhone[record]);
-            donee.setAddress(doneeAddress[record]);
-            donee.setRequestIssue(doneeRequestIssue[record]);
-            //donee.setRequestAmount(doneeRequestAmount[record]);
-            donee.setBankType(doneeBankType[record]);
-            donee.setBankAcc(doneeBankAcc[record]);
+            donee.setPhoneNo(doneePhone[faker.number().numberBetween(0, doneePhone.length - 1)]);
+            donee.setAddress(doneeAddress[faker.number().numberBetween(0, doneeAddress.length - 1)]);
+            donee.setRequestIssue(doneeRequestIssue[faker.number().numberBetween(0, doneeRequestIssue.length - 1)]);
+            donee.setRequestAmount(faker.number().randomDouble(2, 1000, 8000));
+            donee.setBankType(doneeBankType[faker.number().numberBetween(0, doneeBankType.length - 1)]);
+            donee.setBankAcc(bankNo);
             donee.setStatus("Active");
+            dummyDonee.enqueue(donee);
+            System.out.println(record + ". " + donee.getAccountID() + " " + donee.getName() + " " + dummyDonee.getLength());
 
-            System.out.println(donee.getAccountID().toString());
         }
-        return null;
+
+        return dummyDonee;
     }
 }

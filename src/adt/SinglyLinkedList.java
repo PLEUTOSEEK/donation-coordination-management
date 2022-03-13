@@ -182,17 +182,21 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         System.out.println("");
     }
 
-    public T[] toArray() {
+    public T[] toArray(T[] array) {
         Node curr = this.firstNode;
 
         if (curr != null) {
-            T[] array = (T[]) new Object[this.dataCount];
+
             int num = 0;
 
             while (curr != null) {
-                array[num] = ((T) curr.data);
-                curr = curr.getNext();
-                num++;
+                try {
+                    array[num] = ((T) curr.data);
+                    curr = curr.getNext();
+                    num++;
+                } catch (Exception e) {
+                    break;
+                }
             }
             return array;
         } else {

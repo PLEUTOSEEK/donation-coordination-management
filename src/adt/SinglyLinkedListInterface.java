@@ -10,15 +10,22 @@ package adt;
  * @author Wong Phey Zhen
  */
 public interface SinglyLinkedListInterface<T> {
-    
-    public boolean add (T element);
+
+    public boolean add(T element);
+
     public boolean add(int newPosition, T newElement);
-    public boolean remove (int inputPosition);
+
+    public boolean remove(int inputPosition);
+
     public boolean contains(T element);
-   // public boolean replace(T element, int inputPosition);
+    // public boolean replace(T element, int inputPosition);
+
     public void clear(T selemnt);
+
     public boolean empty();
+
     public void print(T element);
-    public T[] toArray();
-     
+
+    public T[] toArray(T[] array);
+
 }
