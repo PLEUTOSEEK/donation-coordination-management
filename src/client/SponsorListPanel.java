@@ -392,6 +392,7 @@ class SponsorListPanel implements Panel {
                 String name = input.nextLine();
                 Predicate<SponsorList> byName = x -> x.getSponsor().getName().contains(name);
                 arrListForPrint = Stream.of(sponsorListArr).filter(byName).toArray(SponsorList[]::new);
+                break;
             case 2:
                 Predicate<SponsorList> byEmail = x -> x.getSponsor().getEmail().contains(input.nextLine());
                 arrListForPrint = Stream.of(sponsorListArr).filter(byEmail).toArray(SponsorList[]::new);
@@ -410,7 +411,7 @@ class SponsorListPanel implements Panel {
                 break;
             default:
                 System.out.println("Index not correct...");
-
+                break;
         }
 
         System.out.println("TEAM...");
@@ -419,9 +420,11 @@ class SponsorListPanel implements Panel {
             for (SponsorList arrListForPrint1 : arrListForPrint) {
                 listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
             }
+            SponsorList.sponsorListTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
         }
 
-        SponsorList.sponsorListTable(listForPrint);
     }
 
     @Override
