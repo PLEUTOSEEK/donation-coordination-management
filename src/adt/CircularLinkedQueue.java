@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author Wong Jun Yao
  */
-public class CircularLinkedQueue<T> implements QueueInterface<T> {
+public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterface<T> {
 
     private Node firstNode;
     private Node lastNode;
@@ -28,6 +28,11 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private class Node<T extends Comparable<T>> {
@@ -75,7 +80,16 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
 
         lastNode = newNode;
         lastNode.next = firstNode;
+        length++;
         return true;
+    }
+
+    public T requeue() {
+
+        T element = dequeue();
+        enqueue(element);
+
+        return element;
     }
 
     public T dequeue() {
@@ -92,6 +106,7 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
                 firstNode = firstNode.next;
                 lastNode.next = firstNode;
             }
+            length--;
             return front;
         }
     }
@@ -104,6 +119,16 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
             front = (T) firstNode.data;
         }
         return front;
+    }
+
+    public T getEnd() {
+        T end = null;
+        if (lastNode == null) {
+            return null;
+        } else {
+            end = (T) lastNode.data;
+        }
+        return end;
     }
 
     public boolean isEmpty() {
@@ -174,39 +199,6 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
         return;
     }
 
-    public Iterator<T> getIterator() {
-        return new LinkedQueueIterator();
-    }
-
-    private class LinkedQueueIterator implements Iterator<T> {
-
-        private Node currentNode;
-        private boolean atStart;
-
-        public LinkedQueueIterator() {
-            if (!isEmpty()) {
-                currentNode = firstNode;
-                atStart = true;
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (isEmpty() || currentNode == firstNode && !atStart) {
-                return false;
-            }
-            return true;
-        }
-
-        @Override
-        public T next() {
-            T data = (T) currentNode.data;
-            atStart = false;
-            currentNode = currentNode.next;
-            return data;
-        }
-    }
-
     public T[] get(CircularLinkedQueue q) {
         Node temp = q.firstNode;
 
@@ -219,18 +211,20 @@ public class CircularLinkedQueue<T> implements QueueInterface<T> {
         return array;
     }
 
-    public T[] toArray() {
+    public T[] toArray(T[] array) {
         Node current = this.firstNode;
 
         if (current != null) {
 
-            T[] array = (T[]) new Object[this.length];
             int index = 0;
-
             while (current != null) {
-                array[index] = ((T) current.data);
-                current = current.getNext();
-                index++;
+                try {
+                    array[index] = ((T) current.data);
+                    current = current.getNext();
+                    index++;
+                } catch (Exception e) {
+                    break;
+                }
             }
             return array;
         } else {

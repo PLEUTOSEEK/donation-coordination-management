@@ -56,8 +56,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
     @Override
     public boolean equals(Object o) {
 
-        if (o instanceof Donor) {
-            Donor other = (Donor) o;
+        if (o instanceof Sponsor) {
+            Sponsor other = (Sponsor) o;
             if (this.accountID == other.getAccountID()) {
                 return true;
             } else {

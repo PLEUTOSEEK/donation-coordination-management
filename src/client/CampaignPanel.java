@@ -32,7 +32,10 @@ public class CampaignPanel implements Panel {
     public void controlPanel(RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
-            CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB,
+            RedBlackTree<LocalDate, DoneeList> doneeListDB,
+            SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB) {
 
@@ -46,7 +49,7 @@ public class CampaignPanel implements Panel {
 
             switch (option) {
                 case 1:
-                    add(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB);
+                    add(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB);
                     break;
                 case 2:
                     Campaign.campaignTable(campaignDB);
@@ -58,12 +61,16 @@ public class CampaignPanel implements Panel {
                     delete(campaignDB);
                     break;
                 case 5:
-                    update(campaignDB);
+                    deletePermanent(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
+
                     break;
                 case 6:
-                    supportListPanel(campaignDB, demandListDB);
+                    update(campaignDB);
                     break;
                 case 7:
+                    supportListPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
+                    break;
+                case 8:
                     System.out.println("Return to previous Page...");
                     break;
                 default:
@@ -85,9 +92,10 @@ public class CampaignPanel implements Panel {
         menu.append("2. Display campaign \n");
         menu.append("3. Search campaign \n");
         menu.append("4. Deactive campaign \n");
-        menu.append("5. Update campaign \n");
-        menu.append("6. Campaign support list maintenance");
-        menu.append("7. Exit \n");
+        menu.append("5. Delete campaign permanent \n");
+        menu.append("6. Update campaign \n");
+        menu.append("7. Campaign support list maintenance");
+        menu.append("8. Exit \n");
         return menu.toString();
     }
 
@@ -101,7 +109,16 @@ public class CampaignPanel implements Panel {
         return menu.toString();
     }
 
-    public void supportListPanel(RedBlackTree<LocalDate, Campaign> campaignDB, RedBlackTree<LocalDate, DemandList> demandListDB) {
+    public void supportListPanel(RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, SponsorList> sponsorListDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB,
+            RedBlackTree<LocalDate, DoneeList> doneeListDB,
+            SinglyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, DonorList> donorListDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB) {
+
         Scanner input = new Scanner(System.in);
         int option = 0;
 
@@ -116,13 +133,13 @@ public class CampaignPanel implements Panel {
 
             switch (option) {
                 case 1:
-                    sponsorListPanel.controlPanel();
+                    sponsorListPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB);
                     break;
                 case 2:
-                    doneeListPanel.controlPanel();
+                    doneeListPanel.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
                     break;
                 case 3:
-                    donorListPanel.controlPanel();
+                    donorListPanel.controlPanel(campaignDB, donorDB, donorListDB);
                     break;
                 case 4:
                     demandListPanel.controlPanel(campaignDB, demandListDB);
@@ -137,7 +154,7 @@ public class CampaignPanel implements Panel {
         } while (option != 4);
     }
 
-    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -145,58 +162,63 @@ public class CampaignPanel implements Panel {
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("H:mm:ss");
 
-        do {
-            // ID need to auto generate
+        if (doneeDB.getFront() != null) {
 
-            System.out.print("Enter the campaign name: ");
-            campaign.setCampaignName(input.nextLine());
-            System.out.print("Enter the campaign start date [dd. MMM. yyyy]: ");
-            campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
-            System.out.print("Enter the campaign start time [H:mm:ss]: ");
-            campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
-            System.out.print("Enter the campaign end date [dd. MMM. yyyy]: ");
-            campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
-            System.out.print("Enter the campaign end time [H:mm:ss]: ");
-            campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
-            System.out.print("Enter the target amount: ");
-            campaign.setTargetAmount(input.nextDouble());
-            System.out.print("Enter the campaign email: ");
-            campaign.setCampaignEmail(input.nextLine());
-            System.out.print("Enter the campaign mobile no: ");
-            campaign.setCampaignMobileNo(input.nextLine());
-            System.out.print("Enter the campaign campaign address: ");
-            campaign.setCampagnAddress(input.nextLine());
-            System.out.print("Enter the campaign bank no: ");
-            campaign.setCampaignBankNo(input.nextLine());
-            System.out.print("Enter the campaign description: ");
-            campaign.setDescription(input.nextLine());
-            System.out.print("Enter the campaign register date: ");
-            campaign.setCampaignRegisterDate(LocalDate.parse(input.nextLine(), dtfDate));
-            campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
-            campaign.setStatus("Active");
-            //
+            do {
+                // ID need to auto generate
+                System.out.print("Enter the campaign name: ");
+                campaign.setCampaignName(input.nextLine());
+                System.out.print("Enter the campaign start date [dd. MMM. yyyy]: ");
+                campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
+                System.out.print("Enter the campaign start time [H:mm:ss]: ");
+                campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
+                System.out.print("Enter the campaign end date [dd. MMM. yyyy]: ");
+                campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
+                System.out.print("Enter the campaign end time [H:mm:ss]: ");
+                campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
+                System.out.print("Enter the target amount: ");
+                campaign.setTargetAmount(input.nextDouble());
+                input.nextLine();
+                System.out.print("Enter the campaign email: ");
+                campaign.setCampaignEmail(input.nextLine());
+                System.out.print("Enter the campaign mobile no: ");
+                campaign.setCampaignMobileNo(input.nextLine());
+                System.out.print("Enter the campaign campaign address: ");
+                campaign.setCampagnAddress(input.nextLine());
+                System.out.print("Enter the campaign bank no: ");
+                campaign.setCampaignBankNo(input.nextLine());
+                System.out.print("Enter the campaign description: ");
+                campaign.setDescription(input.nextLine());
+                System.out.print("Enter the campaign register date [dd. MMM. yyyy]: ");
+                campaign.setCampaignRegisterDate(LocalDate.parse(input.nextLine(), dtfDate));
+                campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
+                campaign.setStatus("Active");
+                //
 
-            addSponsor(campaign, sponsorDB, sponsorListDB);
-            addDonee(campaign, doneeDB, doneeListDB);
-            addDonor(campaign, donorDB, donorListDB);
+                addSponsor(campaign, sponsorDB, sponsorListDB);
+                addDonee(campaign, doneeDB, doneeInHelpDB, doneeListDB, campaignDB);
+                addDonor(campaign, donorDB, donorListDB);
 
-            campaign.setCampaignID(campaign.autoGenerateID());
+                campaign.setCampaignID(campaign.autoGenerateID());
 
-            System.out.println("Confirm add campaign ? (Y/N)");
-            confirmation = input.nextLine();
+                System.out.println("Confirm add campaign ? (Y/N)");
+                confirmation = input.nextLine();
 
-            if (confirmation.toUpperCase().equals("Y")) {
-                campaignDB.addData(campaign.getCampaignStartDate(), campaign);
-            }
+                if (confirmation.toUpperCase().equals("Y")) {
+                    campaignDB.addData(campaign.getCampaignStartDate(), campaign);
+                }
 
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added campaign successfully" : "Add campaign abort");
+                System.out.println(confirmation.toUpperCase().equals("Y") ? "Added campaign successfully" : "Add campaign abort");
 
-            System.out.println("Continue add campaign ? (Y/N)");
-            option = input.nextLine();
+                System.out.println("Continue add campaign ? (Y/N)");
+                option = input.nextLine();
 
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "Return to previous page..." : "");
+                System.out.println(confirmation.toUpperCase().equals("Y") ? "Return to previous page..." : "");
 
-        } while (option.toUpperCase().equals("Y"));
+            } while (option.toUpperCase().equals("Y"));
+        } else {
+            System.out.println("No donee need help, no need campaign");
+        }
     }
 
     public void add(Campaign campaign) {
@@ -252,38 +274,41 @@ public class CampaignPanel implements Panel {
 
     }
 
-    public void addDonee(Campaign campaign, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public void addDonee(Campaign campaign, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, RedBlackTree<LocalDate, Campaign> campaignDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
         String doneeID = "";
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         DoneeList doneeList = new DoneeList();
         boolean haveRecord = false;
         do {
-
             Donee.doneeTable(doneeDB);
 
-            System.out.println("Enter donee ID: ");
-            doneeID = input.nextLine();
+            if (doneeDB.getFront() != null) {
+                System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
-            if (doneeDB.contains(new Donee(doneeID)) == true) {
                 System.out.println("Confirm add donee ? (Y/N)");
+
                 confirmation = input.nextLine();
 
-                doneeList.setDonee(doneeDB.getAt(doneeDB.indexOf(new Donee(doneeID))));
-                doneeList.setCampaign(campaign);
-                doneeList.setDateJoin(LocalDate.now());
-                doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                doneeList.setDoneeListID(doneeList.autoGenerateID());
-
                 if (confirmation.toUpperCase().equals("Y")) {
+                    Donee donee = doneeDB.dequeue();
+                    doneeInHelpDB.addLast(donee);
+                    doneeList.setDonee(donee);
+                    doneeList.setCampaign(campaign);
+                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    doneeList.setStatus("Active");
+                    doneeList.setDoneeListID(doneeList.autoGenerateID());
                     doneeListDB.addData(doneeList.getDateJoin(), doneeList);
                     haveRecord = true;
                 }
 
                 System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
+
             } else {
-                System.out.println("Donee ID not found, add sponsor abort");
+                System.out.println("No donee need help, add donee abort");
             }
 
             System.out.println("Continue add donee to this campaign ? (Y/N)");
@@ -306,42 +331,56 @@ public class CampaignPanel implements Panel {
         String confirmation = "";
         String donorID = "";
         DonorList donorList = new DonorList();
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         boolean haveRecord = false;
+        boolean hasDonor = true;
         do {
 
-            Donor.donorTable(donorDB);
+            do {
+                hasDonor = true;
+                Donor.donorTable(donorDB);
+                System.out.println("Enter donor ID: ");
+                donorID = input.nextLine();
 
-            System.out.println("Enter donor ID: ");
-            donorID = input.nextLine();
-
-            if (donorDB.contains(new Donor(donorID)) == true) {
-                System.out.println("Confirm add donor ? (Y/N)");
-                confirmation = input.nextLine();
-                donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
-                donorList.setCampaign(campaign);
-                donorList.setDateJoin(LocalDate.now());
-                donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                donorList.setDonorListID(donorList.autoGenerateID());
-
-                if (confirmation.toUpperCase().equals("Y")) {
-                    donorListDB.addData(donorList.getDateJoin(), donorList);
-                    haveRecord = true;
+                if (donorDB.contains(new Donor(donorID))) {
+                    DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
+                    donorListArr = donorListDB.getAllArrayList(donorListArr);
+                    for (int i = 0; i < donorListArr.length; i++) {
+                        if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(new Donor(donorID))) {
+                            hasDonor = false;
+                            break;
+                        }
+                    }
+                    if (hasDonor == false) {
+                        System.out.println("donor ID exist in the campaign already, try again the other donor");
+                    }
+                } else {
+                    hasDonor = false;
+                    System.out.println("donor ID not found, try again");
                 }
+            } while (hasDonor == false);
 
-                System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
-            } else {
-                System.out.println("Donor ID not found, add donor abort");
+            Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
+
+            donorList.setCampaign(campaign);
+            donorList.setDonor(donor);
+            System.out.println("Enter date join [dd. MMM. yyyy]: ");
+            donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+            donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+            donorList.setStatus("Active");
+            donorList.setDonorListID(donorList.autoGenerateID());
+
+            System.out.println("Confirm add donor to this campaign ? (Y/N)");
+            confirmation = input.nextLine();
+
+            if (confirmation.toUpperCase().equals("Y")) {
+                donorListDB.addData(donorList.getDateJoin(), donorList);
             }
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
             System.out.println("Continue add donor to this campaign ? (Y/N)");
             option = input.nextLine();
-
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
-
-            if (haveRecord == false) {
-                System.out.println("At least one donor needed for a campaign...");
-                option = "N";
-            }
         } while (option.toUpperCase().equals("Y"));
     }
 
@@ -532,6 +571,49 @@ public class CampaignPanel implements Panel {
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
         } while (option.toUpperCase().equals("Y"));
 
+    }
+
+    public void deletePermanent(RedBlackTree<LocalDate, Campaign> campaignDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String campaignID = "";
+
+        do {
+            Campaign.campaignTable(campaignDB);
+
+            System.out.println("Enter campaign ID: ");
+            campaignID = input.nextLine();
+            DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+            if (campaigns.contains(new Campaign(campaignID)) == true) {
+                System.out.println("Confirm delete campaign permanent? (Y/N)");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    Campaign campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
+                    campaign.setStatus("Permanent Inactive");
+                    campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
+                    DoneeList[] doneeListArr = new DoneeList[doneeListDB.getLength()];
+                    doneeListArr = doneeListDB.getAllArrayList(doneeListArr);
+
+                    for (int i = 0; i < doneeListArr.length; i++) {
+                        if (doneeListArr[i].getCampaign().equals(campaign)) {
+                            doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeListArr[i].getDonee()));
+                            doneeDB.enqueue(doneeListArr[i].getDonee());
+                            doneeListDB.delData(doneeListArr[i].getDateJoin(), doneeListArr[i]);
+                        }
+                    }
+
+                }
+            } else {
+                System.out.println("Campaign ID not found, update campaign abort");
+            }
+            System.out.println("Continue delete campaign permanent ? (Y/N)");
+            option = input.nextLine();
+
+            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (option.toUpperCase().equals("Y"));
     }
 
     @Override

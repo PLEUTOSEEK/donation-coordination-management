@@ -223,13 +223,13 @@ public class Campaign implements Comparable<Campaign> {
     }
 
     private static String[] campaignHeaders() {
-        String[] campaignHeaders = {"Campaign ID", "Start Date", "End Date"};
+        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{campaignID, this.campaignStartDate.toString(), this.campaignEndDate.toString()};
+        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString()};
     }
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
