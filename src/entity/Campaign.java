@@ -233,7 +233,8 @@ public class Campaign implements Comparable<Campaign> {
     }
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
-        Campaign[] campaigns = campaignList.getAllArrayList();
+        Campaign[] campaigns = new Campaign[campaignList.getLength()];
+        campaigns = campaignList.getAllArrayList(campaigns);
         String[][] campaignRows = new String[campaignList.getLength()][];
         for (int i = 0; i < campaigns.length; i++) {
             campaignRows[i] = campaigns[i].strArr();
@@ -266,6 +267,7 @@ public class Campaign implements Comparable<Campaign> {
     }
 
     public RedBlackTree<LocalDate, Campaign> generateDummyCampaign() {
+        RedBlackTree<LocalDate, Campaign> dummyCampaign = new RedBlackTree<>();
         // fake generator
         Faker faker = new Faker();
         LocalDateTimeRangeRandomizer randomLDTR;
@@ -316,11 +318,10 @@ public class Campaign implements Comparable<Campaign> {
             campaign.setCampaignRegisterDate(registerDate);
             campaign.setDateModified(dateModified);
 
-            //Adt.add(campaign);
-            System.out.println(campaign.getCampaignID().toString());
+            dummyCampaign.addData(campaign.campaignStartDate, campaign);
         }
 
-        return null;
+        return dummyCampaign;
     }
 
 }

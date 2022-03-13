@@ -17,6 +17,20 @@ import java.util.Set;
  */
 public class Donor extends Account implements Comparable<Donor> {
 
+<<<<<<< HEAD
+    private String donorName;
+
+    public Donor() {
+    }
+
+    public Donor(String donorID) {
+        this.accountID = donorID;
+    }
+
+    public Donor(String donorID, String donorName) {
+        this.accountID = donorID;
+        this.donorName = donorName;
+=======
     
     private String donorType;
     private String status;
@@ -41,6 +55,7 @@ public class Donor extends Account implements Comparable<Donor> {
 
     public void setDonorType(String donorType) {
         this.donorType = donorType;
+>>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
     }
 
     public String getStatus() {
@@ -53,6 +68,31 @@ public class Donor extends Account implements Comparable<Donor> {
 
     
     @Override
+<<<<<<< HEAD
+    public int compareTo(Donor o) {//ID
+        if (this.accountID.compareTo(o.accountID) < 0) {
+            return -1;
+        } else if (this.accountID.compareTo(o.accountID) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof Donor) {
+            Donor other = (Donor) o;
+            if (this.accountID == other.getAccountID()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+=======
     public int compareTo(Donor o) {
         if(this.accountID.compareTo(o.accountID) < 0){
            return -1;
@@ -61,6 +101,7 @@ public class Donor extends Account implements Comparable<Donor> {
        } else{
            return 0;
        }
+>>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
     }
 
     private static String[] donorHeaders() {
@@ -70,6 +111,16 @@ public class Donor extends Account implements Comparable<Donor> {
     }
 
     private String[] strArr() {
+<<<<<<< HEAD
+        return new String[]{accountID, donorName};
+    }
+
+    //change the list and apply toArray method.
+    private static String[][] donorRows(DoublyLinkedList<Donor> donorList) {
+        Donor[] donors = new Donor[donorList.getLength()];
+        donors = donorList.toArray(donors);
+        String[][] donorRows = new String[donorList.getLength()][];
+=======
         return new String[]{accountID, name, donorType, ic, email, phoneNo, address };
     }
 
@@ -77,6 +128,7 @@ public class Donor extends Account implements Comparable<Donor> {
     private static String[][] donorRows(SinglyLinkedList<Donor> donorList) {
         Donor[] donors = donorList.toArray();
         String[][] donorRows = new String[donorList.getDataCount()][];
+>>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
         for (int i = 0; i < donors.length; i++) {
             donorRows[i] = donors[i].strArr();
         }
@@ -92,6 +144,12 @@ public class Donor extends Account implements Comparable<Donor> {
 
     @Override
     public String autoGenerateID() {
+<<<<<<< HEAD
+        return null;
+    }
+
+    public DoublyLinkedList<Donor> generateDummyDonor() {
+=======
         String newDonorID = "";
        int seq = 0;
        if(lastDonorID.equals("")){
@@ -133,6 +191,7 @@ public class Donor extends Account implements Comparable<Donor> {
                
             System.out.println(donor.getAccountID().toString());
         }        
+>>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
         return null;
     }
 

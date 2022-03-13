@@ -106,8 +106,8 @@ class SponsorListPanel implements Panel {
                         lastSponsorID = input.nextLine();
 
                         if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
-                            SponsorList[] sponsorListArr = sponsorListDB.getAllArrayList();
-
+                            SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getLength()];
+                            sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
                             for (int i = 0; i < sponsorListArr.length; i++) {
                                 if (sponsorListArr[i].getCampaign().equals(campaign) && sponsorListArr[i].getSponsor().equals(sponsor)) {
                                     hasSponsor = false;
@@ -230,10 +230,10 @@ class SponsorListPanel implements Panel {
                                         lastSponsorID = input.nextLine();
 
                                         if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
-                                            SponsorList[] SponsorListArr = sponsorListDB.getAllArrayList();
-
-                                            for (int j = 0; j < SponsorListArr.length; j++) {
-                                                if (SponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && SponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
+                                            SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getLength()];
+                                            sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+                                            for (int j = 0; j < sponsorListArr.length; j++) {
+                                                if (sponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && sponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
                                                     hasSponsor = false;
                                                     break;
                                                 }

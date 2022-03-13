@@ -14,7 +14,7 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
     private static String lastSponsorID = "";
 
     public Sponsor() {
-        this("", ' ', "", "", "", "", "");
+        this("", "", ' ', "", "", "", "", "");
     }
 
     public Sponsor(String lastSponsorID) {
@@ -22,9 +22,9 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         this.lastSponsorID = lastSponsorID;
     }
 
-    public Sponsor(String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
+    public Sponsor(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
 
-        super(name, gender, ic, email, phoneNo, address);
+        super(accountID, name, gender, ic, email, phoneNo, address);
         this.companyName = companyName;
 
     }
@@ -43,9 +43,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
     }
 
     @Override
-    public int compareTo(Sponsor o) {
-
-        if (accountID.compareTo(o.accountID) < 0) {
+    public int compareTo(Sponsor o) {//ID
+        if (this.accountID.compareTo(o.accountID) < 0) {
             return -1;
         } else if (this.accountID.compareTo(o.accountID) > 0) {
             return 1;
@@ -54,8 +53,23 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof Donor) {
+            Donor other = (Donor) o;
+            if (this.accountID == other.getAccountID()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     private static String[] sponsorHeaders() {
-        String[] sponsorHeaders = {"Sponsor ID", "Sponsor Name", "IC", "Phone No", "Company Name", "Company Email", "Company Address"};
+        String[] sponsorHeaders = {"Sponsor ID", "Sponsor Name", "IC", "Company Email", "Phone No", "Company Address", "Company Name"};
 
         return sponsorHeaders;
     }
@@ -65,7 +79,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
     }
 
     private static String[][] sponsorRows(DoublyLinkedList<Sponsor> sponsorList) {
-        Sponsor[] sponsors = sponsorList.toArray();
+        Sponsor[] sponsors = new Sponsor[sponsorList.getLength()];
+        sponsors = sponsorList.toArray(sponsors);
         String[][] sponsorRows = new String[sponsorList.getLength()][];
         for (int i = 0; i < sponsors.length; i++) {
             sponsorRows[i] = sponsors[i].strArr();
