@@ -382,10 +382,7 @@ class SponsorListPanel implements Panel {
         System.out.println(sponsorListSearchMenu());
         System.out.print("Option: ");
         option = input.nextInt();
-        System.out.println("TEAM...");
-        System.out.print("Value: ");
         input.nextLine();
-
         switch (option) {
             case 1:
                 System.out.print("Name: ");
@@ -413,9 +410,6 @@ class SponsorListPanel implements Panel {
                 System.out.println("Index not correct...");
                 break;
         }
-
-        System.out.println("TEAM...");
-
         if (arrListForPrint != null) {
             for (SponsorList arrListForPrint1 : arrListForPrint) {
                 listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
