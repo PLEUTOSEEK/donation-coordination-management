@@ -23,7 +23,7 @@ import java.time.LocalDate;
  *
  * @author Tee Zhuo Xuan
  */
-public class TestEvery {
+public class SystemEntryPoint {
 
     public static void main(String[] args) {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
@@ -47,22 +47,11 @@ public class TestEvery {
 
         //</editor-fold>
         RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
-
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
-
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
-
-        Sponsor.sponsorTable(sponsorDB);
-        Donee.doneeTable(doneeDB);
-        Donor.donorTable(donorDB);
-        SponsorList.sponsorListTable(sponsorListDB);
-        DoneeList.doneeListTable(doneeListDB);
-        DonorList.donorListTable(donorListDB);
-        DemandList.demandTable(demandListDB);
 
         MainPanel mainPanel = new MainPanel();
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
     }
-
 }

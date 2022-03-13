@@ -57,7 +57,16 @@ class DemandListPanel implements Panel {
 
     @Override
     public String menu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Add new demand list \n");
+        menu.append("2. Display demand list \n");
+        menu.append("3. Search demand list \n");
+        menu.append("4. Deactive demand list \n");
+        menu.append("5. Update demand list \n");
+        menu.append("6. Exit \n");
+
+        return menu.toString();
     }
 
     @Override

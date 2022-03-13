@@ -7,9 +7,8 @@ package client;
 
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
-import entity.Account;
+import adt.SinglyLinkedList;
 import entity.Campaign;
-import entity.Donee;
 import entity.Donor;
 import entity.DonorList;
 import java.sql.Timestamp;
@@ -23,17 +22,58 @@ import java.util.Scanner;
  */
 class DonorListPanel implements Panel {
 
-    public void controlPanel() {
-        Account donee1 = new Donee();
+    public void controlPanel(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            SinglyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, DonorList> donorListDB
+    ) {
 
-        donee1.autoGenerateID();
+        Scanner input = new Scanner(System.in);
+        int option = 0;
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        do {
+            System.out.println(menu());
+            System.out.println("Option: ");
+            option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    add(campaignDB, donorDB, donorListDB);
+                    break;
+                case 2:
+                    DonorList.donorListTable(donorListDB);
+                    break;
+                case 3:
+                    search();
+                    break;
+                case 4:
+                    delete(donorListDB);
+                    break;
+                case 5:
+                    update(donorDB, donorListDB);
+                    break;
+                case 6:
+                    System.out.println("Return to previous Page...");
+                    break;
+                default:
+                    System.out.println("Index not correct...");
+            }
+
+        } while (option != 7);
     }
 
     @Override
     public String menu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Add new donor list \n");
+        menu.append("2. Display donor list \n");
+        menu.append("3. Search donor list \n");
+        menu.append("4. Deactive donor list \n");
+        menu.append("5. Update donor list \n");
+        menu.append("6. Exit \n");
+
+        return menu.toString();
     }
 
     @Override
@@ -42,7 +82,7 @@ class DonorListPanel implements Panel {
     }
 
     private void add(RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+            SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
 
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -72,10 +112,10 @@ class DonorListPanel implements Panel {
                         donorID = input.nextLine();
 
                         if (donorDB.contains(new Donor(donorID))) {
-                            DonorList[] donotListArr = donorListDB.getAllArrayList();
-
-                            for (int i = 0; i < donotListArr.length; i++) {
-                                if (donotListArr[i].getCampaign().equals(campaign) && donotListArr[i].getDonor().equals(donor)) {
+                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
+                            donorListArr = donorListDB.getAllArrayList(donorListArr);
+                            for (int i = 0; i < donorListArr.length; i++) {
+                                if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(donor)) {
                                     hasDonor = false;
                                     break;
                                 }
@@ -139,7 +179,7 @@ class DonorListPanel implements Panel {
 
     }
 
-    public void update(DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void update(SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -192,7 +232,8 @@ class DonorListPanel implements Panel {
                                         donorID = input.nextLine();
 
                                         if (donorDB.contains(new Donor(donorID))) {
-                                            DonorList[] donorListArr = donorListDB.getAllArrayList();
+                                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
+                                            donorListArr = donorListDB.getAllArrayList(donorListArr);
 
                                             //check
                                             for (int j = 0; j < donorListArr.length; j++) {
@@ -305,6 +346,11 @@ class DonorListPanel implements Panel {
 
     @Override
     public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void controlPanel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -5,6 +5,7 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
@@ -21,17 +22,63 @@ import java.util.Scanner;
  */
 class DoneeListPanel implements Panel {
 
-    public void controlPanel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void controlPanel(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB,
+            RedBlackTree<LocalDate, DoneeList> doneeListDB
+    ) {
+
+        Scanner input = new Scanner(System.in);
+        int option = 0;
+
+        do {
+            System.out.println(menu());
+            System.out.println("Option: ");
+            option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    add(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
+                    break;
+                case 2:
+                    DoneeList.doneeListTable(doneeListDB);
+                    break;
+                case 3:
+                    search();
+                    break;
+                case 4:
+                    delete(doneeDB, doneeInHelpDB, doneeListDB);
+                    break;
+                case 5:
+                    update(doneeListDB);
+                    break;
+                case 6:
+                    System.out.println("Return to previous Page...");
+                    break;
+                default:
+                    System.out.println("Index not correct...");
+            }
+
+        } while (option != 7);
     }
 
     @Override
     public String menu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Add new donee list \n");
+        menu.append("2. Display donee list \n");
+        menu.append("3. Search donee list \n");
+        menu.append("4. Delete donee list \n");
+        menu.append("5. Update donee list \n");
+        menu.append("6. Exit \n");
+
+        return menu.toString();
     }
 
     private void add(RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+            CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
 
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -53,53 +100,32 @@ class DoneeListPanel implements Panel {
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 do {
+                    Donee.doneeTable(doneeDB);
 
-                    do {
-                        hasDonee = true;
-                        Donee.doneeTable(doneeDB);
-                        System.out.println("Enter donee ID: ");
-                        doneeID = input.nextLine();
+                    if (doneeDB.getFront() != null) {
+                        System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                        doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
-                        if (doneeDB.contains(new Donee(doneeID))) {
-                            DoneeList[] doneeListArr = doneeListDB.getAllArrayList();
+                        System.out.println("Confirm add donee ? (Y/N)");
 
-                            for (int i = 0; i < doneeListArr.length; i++) {
-                                if (doneeListArr[i].getCampaign().equals(campaign) && doneeListArr[i].getDonee().equals(donee)) {
-                                    hasDonee = false;
-                                    break;
-                                }
-                            }
-                            if (hasDonee == false) {
-                                System.out.println("donee ID exist in the campaign already, try again the other donee");
-                            }
-                        } else {
-                            hasDonee = false;
-                            System.out.println("donee ID not found, try again");
+                        confirmation = input.nextLine();
+
+                        if (confirmation.toUpperCase().equals("Y")) {
+                            donee = doneeDB.dequeue();
+                            doneeInHelpDB.addLast(donee);
+                            doneeList.setDonee(donee);
+                            doneeList.setCampaign(campaign);
+                            doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                            doneeList.setStatus("Active");
+                            doneeList.setDoneeListID(doneeList.autoGenerateID());
+                            doneeListDB.addData(doneeList.getDateJoin(), doneeList);
                         }
-                    } while (hasDonee == false);
 
-                    donee = doneeDB.getAt(doneeDB.indexOf(new Donee(doneeID)));
-                    campaign = campaignDB.get(new Campaign(campaignID));
+                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
 
-                    doneeList.setCampaign(campaign);
-                    doneeList.setDonee(donee);
-                    System.out.println("Enter date join [dd. MMM. yyyy]: ");
-                    doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    doneeList.setStatus("Active");
-                    doneeList.setDoneeListID(doneeList.autoGenerateID());
-
-                    System.out.println("Confirm add donee to this campaign ? (Y/N)");
-                    confirmation = input.nextLine();
-
-                    if (confirmation.toUpperCase().equals("Y")) {
-                        doneeListDB.addData(doneeList.getDateJoin(), doneeList);
+                        System.out.println("Continue add donee to this campaign ? (Y/N)");
+                        option = input.nextLine();
                     }
-
-                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add Donee abort");
-
-                    System.out.println("Continue add donee to this campaign ? (Y/N)");
-                    option = input.nextLine();
                 } while (option.toUpperCase().equals("Y"));
             } else {
                 System.out.println("Campaign ID not found, add donee abort");
@@ -114,6 +140,7 @@ class DoneeListPanel implements Panel {
     }
 
     @Override
+
     public void display() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -123,17 +150,7 @@ class DoneeListPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String doneeListUpdateMenu() {
-        StringBuilder menu = new StringBuilder();
-
-        menu.append("1. Donee\n");
-        menu.append("2. Donee Join Date\n");
-
-        return menu.toString();
-
-    }
-
-    public void update(DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public void update(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -178,33 +195,7 @@ class DoneeListPanel implements Panel {
                         for (int i = 0; i < splitIndexInt.length; i++) {
                             switch (splitIndexInt[i]) {
                                 case 1:
-                                    do {
-                                        hasDonee = true;
-                                        Donee.doneeTable(doneeDB);
-                                        System.out.println("Enter donee ID: ");
-                                        doneeID = input.nextLine();
 
-                                        if (doneeDB.contains(new Donee(doneeID))) {
-                                            DoneeList[] doneeListArr = doneeListDB.getAllArrayList();
-
-                                            for (int j = 0; j < doneeListArr.length; j++) {
-                                                if (doneeListArr[j].getCampaign().equals(doneeList.getCampaign()) && doneeListArr[j].getDonee().equals(new Donee(doneeID))) {
-                                                    hasDonee = false;
-                                                    break;
-                                                }
-                                            }
-                                            if (hasDonee == false) {
-                                                System.out.println("Donee ID exist in the campaign already, try again the other donee");
-                                            }
-                                        } else {
-                                            hasDonee = false;
-                                            System.out.println("Donee ID not found, try again");
-                                        }
-                                    } while (hasDonee == false);
-                                    doneeList.setDonee(doneeDB.getAt(doneeDB.indexOf(new Donee(doneeID))));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 2:
                                     System.out.print("Enter the new donee join date [dd. MMM. yyyy]: ");
                                     doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                                     hasUpdateSomething = true;
@@ -247,7 +238,16 @@ class DoneeListPanel implements Panel {
         } while (option.toUpperCase().equals("Y"));
     }
 
-    public void delete(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public String doneeListUpdateMenu() {
+        StringBuilder menu = new StringBuilder();
+
+        menu.append("1. Donee Join Date\n");
+
+        return menu.toString();
+
+    }
+
+    public void delete(CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -260,19 +260,35 @@ class DoneeListPanel implements Panel {
             doneeListID = input.nextLine();
             DoublyLinkedList<DoneeList> doneeLists = doneeListDB.getAllList();
             if (doneeLists.contains(new DoneeList(doneeListID)) == true) {
-                System.out.println("Confirm deactive donee list ? (Y/N)");
-                confirmation = input.nextLine();
+                DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
+                DoneeList[] doneeListArr = new DoneeList[doneeLists.getLength()];
+                doneeListArr = doneeLists.toArray(doneeListArr);
+                boolean atLeastOne = false;
 
-                if (confirmation.toUpperCase().equals("Y")) {
-                    DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
-                    doneeList.setStatus("Inactive");
-                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    doneeListDB.updateData(doneeList.getDateJoin(), doneeList);
+                for (int i = 0; i < doneeListArr.length; i++) {
+                    if (doneeListArr[i].getCampaign().equals(doneeList.getCampaign()) && doneeListArr[i].getDoneeListID().equals(doneeList.getDoneeListID()) == false) {
+                        atLeastOne = true;
+                        break;
+                    }
+                }
+
+                if (atLeastOne == true) {
+
+                    System.out.println("Confirm delete donee list ? (Y/N)");
+                    confirmation = input.nextLine();
+
+                    if (confirmation.toUpperCase().equals("Y")) {
+                        doneeDB.enqueue(doneeList.getDonee());
+                        doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeList.getDonee()));
+                        doneeListDB.delData(doneeList.getDateJoin(), doneeList);
+                    }
+                } else {
+                    System.out.println("At least one donee require for a campaign...");
                 }
             } else {
-                System.out.println("Donee list ID not found, deactive donee list abort");
+                System.out.println("Donee list ID not found, delete donee list abort");
             }
-            System.out.println("Continue deactive donee list  ? (Y/N)");
+            System.out.println("Continue delete donee list  ? (Y/N)");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -297,6 +313,11 @@ class DoneeListPanel implements Panel {
 
     @Override
     public void add() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void controlPanel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

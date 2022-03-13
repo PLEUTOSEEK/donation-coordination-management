@@ -648,20 +648,22 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
         System.out.println();
     }
 
-    public T[] toArray() {
-        Node current = this.head;
+    public T[] toArray(T[] array) {
 
+        Node current = this.head;
         if (current != null) {
 
-            T[] array = (T[]) new Object[this.length];
             int index = 0;
 
             while (current != null) {
-                array[index] = ((T) current.element);
-                current = current.getNext();
-                index++;
+                try {
+                    array[index++] = ((T) current.element);
+                    current = current.getNext();
+                } catch (Exception e) {
+                    break;
+                }
             }
-            return array;
+            return (T[]) array;
         } else {
             return null;
         }
