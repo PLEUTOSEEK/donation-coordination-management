@@ -134,8 +134,7 @@ public class Donee extends Account implements Comparable<Donee> {
         String newDoneeID = "";
         int n = 0;
 
-        if (lastDoneeID.equals(
-                "")) {
+        if (lastDoneeID.equals("")) {
             newDoneeID = "DE1001";
         } else {
 
