@@ -86,8 +86,8 @@ public class Donee extends Account implements Comparable<Donee> {
     @Override
     public boolean equals(Object o) {
 
-        if (o instanceof Donor) {
-            Donor other = (Donor) o;
+        if (o instanceof Donee) {
+            Donee other = (Donee) o;
             if (this.accountID == other.getAccountID()) {
                 return true;
             } else {
@@ -183,7 +183,6 @@ public class Donee extends Account implements Comparable<Donee> {
             donee.setBankAcc(bankNo);
             donee.setStatus("Active");
             dummyDonee.enqueue(donee);
-            System.out.println(record + ". " + donee.getAccountID() + " " + donee.getName() + " " + dummyDonee.getLength());
 
         }
 
