@@ -36,7 +36,7 @@ public class DoneePanel implements Panel {
 
             switch (opt) {
                 case 1: {
-                    addNewDonee(doneeDB);
+                    doneeDB = addNewDonee(doneeDB);
                     break;
                 }
                 case 2: {
@@ -63,24 +63,16 @@ public class DoneePanel implements Panel {
         } while (opt != 6);
     }
 
-    public void addNewDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public CircularLinkedQueue<Donee> addNewDonee(CircularLinkedQueue<Donee> doneeDB) {
 
         String confirm, opt;
         char gender = ' ';
         double requestAmount;
 
-        Donee donee = new Donee();
         Scanner s = new Scanner(System.in);
 
-//        if (queue.isEmpty() == true) {
-//            id = "DE1001";
-//        } else {
-//            id = queue.getLast().getId();
-//            int n = Integer.parseInt(id.substring(2));
-//            n++;
-//            id = "DE" + n;
-//        }
         do {
+            Donee donee = new Donee();
             String id = donee.autoGenerateID();
             donee.setAccountID(id);
 
@@ -132,6 +124,8 @@ public class DoneePanel implements Panel {
             System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add donee" : " ");
 
         } while (opt.toUpperCase().equals("Y"));
+
+        return doneeDB;
     }
 
     public static CircularLinkedQueue<Donee> modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
@@ -182,7 +176,7 @@ public class DoneePanel implements Panel {
                     int[] splitIndexInt = new int[splitIndex.length];
 
                     donee = doneeDB.getFront();
-                    
+
                     for (int i = 0; i < splitIndex.length; i++) {
                         try {
                             splitIndexInt[i] = Integer.valueOf(splitIndex[i]);

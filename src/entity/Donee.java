@@ -116,7 +116,7 @@ public class Donee extends Account implements Comparable<Donee> {
     }
 
     private static String[] doneeHeaders() {
-        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account","Status"};
+        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account", "Status"};
 
         return doneeRows;
     }
@@ -124,15 +124,15 @@ public class Donee extends Account implements Comparable<Donee> {
     private String[] strArr() {
         String gend = String.valueOf(gender);
         String amt = Double.toString(requestAmount);
-        return new String[]{accountID, name, ic, gend, email, phoneNo, address, requestIssue, amt, bankType, bankAcc,status};
+        return new String[]{accountID, name, ic, gend, email, phoneNo, address, requestIssue, amt, bankType, bankAcc, status};
 
     }
 
     //change the list and apply toArray method.
     private static String[][] doneeRows(CircularLinkedQueue<Donee> doneeList) {
-        Donee[] donees = new Donee[doneeList.getLength()];
+        Donee[] donees = new Donee[doneeList.size()];
         donees = doneeList.toArray(donees);
-        String[][] doneeRows = new String[doneeList.getLength()][];
+        String[][] doneeRows = new String[doneeList.size()][];
         for (int i = 0; i < donees.length; i++) {
             doneeRows[i] = donees[i].strArr();
         }
@@ -148,8 +148,6 @@ public class Donee extends Account implements Comparable<Donee> {
 
     public String autoGenerateID1(CircularLinkedQueue<Donee> d) {
 
-        
-
 //        if (d.isEmpty() == true) {
 //            newDoneeID = "DE1001";
 //        } else {
@@ -158,7 +156,6 @@ public class Donee extends Account implements Comparable<Donee> {
 //            n++;
 //            newDoneeID = "DE" + n;
 //        }
-
         return lastDoneeID;
     }
 
@@ -216,7 +213,7 @@ public class Donee extends Account implements Comparable<Donee> {
         }
 
         lastDoneeID = newDoneeID;
-        
+
         return lastDoneeID;
     }
 }
