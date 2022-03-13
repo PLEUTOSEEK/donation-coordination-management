@@ -46,6 +46,10 @@ public class DonorList implements Comparable<DonorList> {
         this.status = status;
     }
 
+    public static void setLastDonorListID(String lastDonorListID) {
+        DonorList.lastDonorListID = lastDonorListID;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -136,7 +140,7 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {
-        DonorList[] donorList = new DonorList[donorListDB.getLength()];
+        DonorList[] donorList = new DonorList[donorListDB.getAllList().getLength()];
         donorList = donorListDB.getAllArrayList(donorList);
         String[][] donorListRows = new String[donorList.length][];
         for (int i = 0; i < donorList.length; i++) {
@@ -190,7 +194,7 @@ public class DonorList implements Comparable<DonorList> {
             int randomTtl = faker.number().numberBetween(1, 3);
 
             for (int record = 0; record < randomTtl; record++) {
-                DonorList[] donorListArr = new DonorList[dummyDonorList.getLength()];
+                DonorList[] donorListArr = new DonorList[dummyDonorList.getAllList().getLength()];
                 donorListArr = dummyDonorList.getAllArrayList(donorListArr);
                 Donor donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
 

@@ -38,10 +38,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
 
                 return (T) this.firstNode.data;
 
-            } else if (givenPos == this.dataCount) {
-
-                return (T) this.tail.data;
-
             } else {
 
                 Node current = this.firstNode;
@@ -181,17 +177,17 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         }
         System.out.println("");
     }
-    
+
     public void printSpec(T element) {
         Node curr = firstNode;
 
         while (curr != null) {
-            if(element.equals(curr.data))
-            System.out.print("[" + curr.getData() + "], ");
+            if (element.equals(curr.data)) {
+                System.out.print("[" + curr.getData() + "], ");
+            }
         }
         System.out.println("");
     }
-    
 
     public T[] toArray(T[] array) {
         Node curr = this.firstNode;

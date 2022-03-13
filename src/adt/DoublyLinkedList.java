@@ -30,6 +30,7 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
         return tail;
     }
 
+    @Override
     public int getLength() {
         return length;
     }
@@ -560,7 +561,7 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
 
         while (current != null) {
 
-            if (element.equals(current.getElement())) {
+            if (current.getElement().equals(element)) {
                 return counter;
             }
 

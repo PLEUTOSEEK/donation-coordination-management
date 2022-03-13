@@ -17,9 +17,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         this("", "", ' ', "", "", "", "", "");
     }
 
-    public Sponsor(String lastSponsorID) {
-
-        this.lastSponsorID = lastSponsorID;
+    public Sponsor(String accountID) {
+        this.accountID = accountID;
     }
 
     public Sponsor(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
@@ -58,7 +57,8 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
 
         if (o instanceof Sponsor) {
             Sponsor other = (Sponsor) o;
-            if (this.accountID == other.getAccountID()) {
+            if (this.accountID.equals(other.getAccountID())) {
+                System.out.println("zz");
                 return true;
             } else {
                 return false;

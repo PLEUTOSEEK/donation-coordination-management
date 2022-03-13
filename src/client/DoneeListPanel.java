@@ -97,36 +97,53 @@ class DoneeListPanel implements Panel {
 
             System.out.println("Enter campaign ID: ");
             campaignID = input.nextLine();
-
+            campaign = new Campaign();
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
-                do {
-                    Donee.doneeTable(doneeDB);
+                campaign = campaignDB.get(new Campaign(campaignID));
+                if (campaign.getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                    if (doneeDB.getFront() != null) {
-                        System.out.println("Enter date join [dd. MMM. yyyy]: ");
-                        doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                    do {
+                        doneeList = new DoneeList();
+                        Donee.doneeTable(doneeDB);
 
-                        System.out.println("Confirm add donee ? (Y/N)");
+                        if (doneeDB.getFront() != null) {
+                            System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                            doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
-                        confirmation = input.nextLine();
+                            System.out.println("Confirm add donee ? (Y/N)");
 
-                        if (confirmation.toUpperCase().equals("Y")) {
-                            donee = doneeDB.dequeue();
-                            doneeInHelpDB.addLast(donee);
-                            doneeList.setDonee(donee);
-                            doneeList.setCampaign(campaign);
-                            doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                            doneeList.setStatus("Active");
-                            doneeList.setDoneeListID(doneeList.autoGenerateID());
-                            doneeListDB.addData(doneeList.getDateJoin(), doneeList);
+                            confirmation = input.nextLine();
+
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                donee = new Donee();
+                                donee = doneeDB.dequeue();
+                                doneeInHelpDB.addLast(donee);
+                                doneeList.setDonee(donee);
+                                doneeList.setCampaign(campaign);
+                                doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                doneeList.setStatus("Active");
+                                doneeList.setDoneeListID(doneeList.autoGenerateID());
+                                doneeListDB.addData(doneeList.getDateJoin(), doneeList);
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
+
+                        } else {
+                            System.out.println("No donee need help, add donee abort");
                         }
-
-                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
 
                         System.out.println("Continue add donee to this campaign ? (Y/N)");
                         option = input.nextLine();
-                    }
-                } while (option.toUpperCase().equals("Y"));
+
+                        System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+
+                        System.out.println("At least one donee needed for a campaign...");
+                        option = "Y";
+
+                    } while (option.toUpperCase().equals("Y"));
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Campaign ID not found, add donee abort");
             }
@@ -170,63 +187,68 @@ class DoneeListPanel implements Panel {
 
             if (doneeListDB.contains(new DoneeList(doneeListID)) == true) {
                 doneeList = doneeListDB.get(new DoneeList(doneeListID));
-                oriJoinDate = doneeList.getDateJoin();
-                boolean validIndex = true;
-                do {
-                    System.out.println(doneeListUpdateMenu());
-                    validIndex = true;
-                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
-                    indexSelected = input.nextLine();
+                if (doneeList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                    String[] splitIndex = indexSelected.split("\\s+");
-                    int[] splitIndexInt = new int[splitIndex.length];
+                    oriJoinDate = doneeList.getDateJoin();
+                    boolean validIndex = true;
+                    do {
+                        System.out.println(doneeListUpdateMenu());
+                        validIndex = true;
+                        System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        indexSelected = input.nextLine();
 
-                    for (int i = 0; i < splitIndex.length; i++) {
-                        try {
-                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
-                        } catch (Exception e) {
-                            validIndex = false;
-                            break;
-                        }
-                    }
+                        String[] splitIndex = indexSelected.split("\\s+");
+                        int[] splitIndexInt = new int[splitIndex.length];
 
-                    if (validIndex == true) {
-                        boolean hasUpdateSomething = false;
-                        for (int i = 0; i < splitIndexInt.length; i++) {
-                            switch (splitIndexInt[i]) {
-                                case 1:
-
-                                    System.out.print("Enter the new donee join date [dd. MMM. yyyy]: ");
-                                    doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                                    hasUpdateSomething = true;
-                                    break;
-
-                                default:
-                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                        for (int i = 0; i < splitIndex.length; i++) {
+                            try {
+                                splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                            } catch (Exception e) {
+                                validIndex = false;
+                                break;
                             }
                         }
 
-                        if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update donee list ? (Y/N)");
-                            confirmation = input.nextLine();
+                        if (validIndex == true) {
+                            boolean hasUpdateSomething = false;
+                            for (int i = 0; i < splitIndexInt.length; i++) {
+                                switch (splitIndexInt[i]) {
+                                    case 1:
 
-                            if (confirmation.toUpperCase().equals("Y")) {
-                                doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                                if (oriJoinDate != doneeList.getDateJoin()) {
-                                    doneeListDB.delData(oriJoinDate, doneeList);
-                                    doneeListDB.addData(doneeList.getDateJoin(), doneeList);
-                                } else {
-                                    doneeListDB.updateData(doneeList.getDateJoin(), doneeList);
+                                        System.out.print("Enter the new donee join date [dd. MMM. yyyy]: ");
+                                        doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        hasUpdateSomething = true;
+                                        break;
+
+                                    default:
+                                        System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                                 }
                             }
 
-                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update donee list successfully" : "Update donee list abort");
-                        } else {
-                            System.out.println("No data selected to be update...");
-                        }
-                    }
+                            if (hasUpdateSomething == true) {
+                                System.out.println("Confirm update donee list ? (Y/N)");
+                                confirmation = input.nextLine();
 
-                } while (validIndex == false);
+                                if (confirmation.toUpperCase().equals("Y")) {
+                                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    if (oriJoinDate != doneeList.getDateJoin()) {
+                                        doneeListDB.delData(oriJoinDate, doneeList);
+                                        doneeListDB.addData(doneeList.getDateJoin(), doneeList);
+                                    } else {
+                                        doneeListDB.updateData(doneeList.getDateJoin(), doneeList);
+                                    }
+                                }
+
+                                System.out.println(confirmation.toUpperCase().equals("Y") ? "Update donee list successfully" : "Update donee list abort");
+                            } else {
+                                System.out.println("No data selected to be update...");
+                            }
+                        }
+
+                    } while (validIndex == false);
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Donee list ID not found, update donee list abort");
             }
@@ -252,48 +274,55 @@ class DoneeListPanel implements Panel {
         String option = "";
         String confirmation = "";
         String doneeListID = "";
+        if (doneeDB.getFront() != null) {
+            do {
+                DoneeList.doneeListTable(doneeListDB);
 
-        do {
-            DoneeList.doneeListTable(doneeListDB);
+                System.out.println("Enter donee list ID: ");
+                doneeListID = input.nextLine();
+                DoublyLinkedList<DoneeList> doneeLists = doneeListDB.getAllList();
+                if (doneeLists.contains(new DoneeList(doneeListID)) == true) {
+                    DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
+                    if (doneeList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-            System.out.println("Enter donee list ID: ");
-            doneeListID = input.nextLine();
-            DoublyLinkedList<DoneeList> doneeLists = doneeListDB.getAllList();
-            if (doneeLists.contains(new DoneeList(doneeListID)) == true) {
-                DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
-                DoneeList[] doneeListArr = new DoneeList[doneeLists.getLength()];
-                doneeListArr = doneeLists.toArray(doneeListArr);
-                boolean atLeastOne = false;
+                        DoneeList[] doneeListArr = new DoneeList[doneeLists.getLength()];
+                        doneeListArr = doneeLists.toArray(doneeListArr);
+                        boolean atLeastOne = false;
 
-                for (int i = 0; i < doneeListArr.length; i++) {
-                    if (doneeListArr[i].getCampaign().equals(doneeList.getCampaign()) && doneeListArr[i].getDoneeListID().equals(doneeList.getDoneeListID()) == false) {
-                        atLeastOne = true;
-                        break;
-                    }
-                }
+                        for (int i = 0; i < doneeListArr.length; i++) {
+                            if (doneeListArr[i].getCampaign().equals(doneeList.getCampaign()) && doneeListArr[i].getDoneeListID().equals(doneeList.getDoneeListID()) == false) {
+                                atLeastOne = true;
+                                break;
+                            }
+                        }
 
-                if (atLeastOne == true) {
+                        if (atLeastOne == true) {
 
-                    System.out.println("Confirm delete donee list ? (Y/N)");
-                    confirmation = input.nextLine();
+                            System.out.println("Confirm delete donee list ? (Y/N)");
+                            confirmation = input.nextLine();
 
-                    if (confirmation.toUpperCase().equals("Y")) {
-                        doneeDB.enqueue(doneeList.getDonee());
-                        doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeList.getDonee()));
-                        doneeListDB.delData(doneeList.getDateJoin(), doneeList);
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                doneeDB.enqueue(doneeList.getDonee());
+                                doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeList.getDonee()));
+                                doneeListDB.delData(doneeList.getDateJoin(), doneeList);
+                            }
+                        } else {
+                            System.out.println("At least one donee require for a campaign...");
+                        }
+                    } else {
+                        System.out.println("Campaign with permanent inactive status unable to perform modification");
                     }
                 } else {
-                    System.out.println("At least one donee require for a campaign...");
+                    System.out.println("Donee list ID not found, delete donee list abort");
                 }
-            } else {
-                System.out.println("Donee list ID not found, delete donee list abort");
-            }
-            System.out.println("Continue delete donee list  ? (Y/N)");
-            option = input.nextLine();
+                System.out.println("Continue delete donee list  ? (Y/N)");
+                option = input.nextLine();
 
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
-        } while (option.toUpperCase().equals("Y"));
-
+                System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+            } while (option.toUpperCase().equals("Y"));
+        } else {
+            System.out.println("No donee need help");
+        }
     }
 
     @Override

@@ -51,4 +51,6 @@ public interface ListInterface<T> {
 
     public void clear();
 
+    public int getLength();
+
 }
