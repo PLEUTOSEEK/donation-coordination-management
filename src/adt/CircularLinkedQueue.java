@@ -80,7 +80,16 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
 
         lastNode = newNode;
         lastNode.next = firstNode;
+        length++;
         return true;
+    }
+
+    public T requeue() {
+
+        T element = dequeue();
+        enqueue(element);
+
+        return element;
     }
 
     public T dequeue() {
@@ -97,6 +106,7 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
                 firstNode = firstNode.next;
                 lastNode.next = firstNode;
             }
+            length--;
             return front;
         }
     }
@@ -109,6 +119,16 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
             front = (T) firstNode.data;
         }
         return front;
+    }
+
+    public T getEnd() {
+        T end = null;
+        if (lastNode == null) {
+            return null;
+        } else {
+            end = (T) lastNode.data;
+        }
+        return end;
     }
 
     public boolean isEmpty() {
@@ -191,18 +211,20 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
         return array;
     }
 
-    public T[] toArray() {
+    public T[] toArray(T[] array) {
         Node current = this.firstNode;
 
         if (current != null) {
 
-            T[] array = (T[]) new Object[this.length];
             int index = 0;
-
             while (current != null) {
-                array[index] = ((T) current.data);
-                current = current.getNext();
-                index++;
+                try {
+                    array[index] = ((T) current.data);
+                    current = current.getNext();
+                    index++;
+                } catch (Exception e) {
+                    break;
+                }
             }
             return array;
         } else {

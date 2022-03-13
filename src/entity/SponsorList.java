@@ -193,9 +193,7 @@ public class SponsorList implements Comparable<SponsorList> {
 
             Campaign campaign = campaigns.getAt(counter);
             int randomTtl = faker.number().numberBetween(1, 3);
-            System.out.println(randomTtl + "rand");
             for (int record = 0; record < randomTtl; record++) {
-                System.out.println(dummySponsorList.getLength() + "top");
                 SponsorList[] sponsorListArr = new SponsorList[dummySponsorList.getLength()];
                 sponsorListArr = dummySponsorList.getAllArrayList(sponsorListArr);
                 Sponsor sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
@@ -222,7 +220,6 @@ public class SponsorList implements Comparable<SponsorList> {
                 sponsorList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));
                 sponsorList.setDateModified(Timestamp.valueOf(sponsorList.dateJoin.plusDays(faker.number().numberBetween(0, 6)).atStartOfDay()));
                 dummySponsorList.addData(sponsorList.getDateJoin(), sponsorList);
-                System.out.println(dummySponsorList.getLength() + "down");
 
             }
             counter++;

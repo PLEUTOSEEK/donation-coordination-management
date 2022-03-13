@@ -5,6 +5,7 @@
  */
 package entity;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import com.bethecoder.ascii_table.ASCIITable;
@@ -171,7 +172,7 @@ public class DoneeList implements Comparable<DoneeList> {
         return lastDoneeListID;
     }
 
-    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Donee> doneeDB) {
+    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(RedBlackTree<LocalDate, Campaign> campaignDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB) {
 
         RedBlackTree<LocalDate, DoneeList> dummyDoneeList = new RedBlackTree<>();
         //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
@@ -193,26 +194,14 @@ public class DoneeList implements Comparable<DoneeList> {
             int randomTtl = faker.number().numberBetween(1, 3);
 
             for (int record = 0; record < randomTtl; record++) {
+
                 DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getLength()];
                 doneeListArr = dummyDoneeList.getAllArrayList(doneeListArr);
-                Donee donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
-
+                Donee donee = doneeDB.dequeue();
+                doneeInHelpDB.addLast(donee);
                 doneeList = new DoneeList();
                 doneeList.setDoneeListID(autoGenerateID());
                 doneeList.setCampaign(campaign);
-                //<editor-fold defaultstate="collapsed" desc="sponsor check constraint">
-                if (doneeListArr != null) {
-
-                    for (int i = 0; i < doneeListArr.length; i++) {
-                        donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
-                        if (doneeListArr[i].getCampaign().equals(campaign) && doneeListArr[i].getDonee().equals(donee)) {
-                            donee = doneeDB.getAt(faker.number().numberBetween(1, doneeDB.getLength()));
-                            i = 0;
-                        }
-                    }
-                }
-
-                //</editor-fold>
                 doneeList.setDonee(donee);
                 doneeList.setStatus("Active");
                 doneeList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));

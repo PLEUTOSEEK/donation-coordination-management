@@ -89,11 +89,12 @@ public class Donor extends Account implements Comparable<Donor> {
 
     //change the list and apply toArray method.
     private static String[][] donorRows(SinglyLinkedList<Donor> donorList) {
-        Donor[] donors = donorList.toArray();
+        Donor[] donees = new Donor[donorList.getDataCount()];
+        donees = donorList.toArray(donees);
         String[][] donorRows = new String[donorList.getDataCount()][];
 
-        for (int i = 0; i < donors.length; i++) {
-            donorRows[i] = donors[i].strArr();
+        for (int i = 0; i < donees.length; i++) {
+            donorRows[i] = donees[i].strArr();
         }
         return donorRows;
     }
@@ -123,6 +124,7 @@ public class Donor extends Account implements Comparable<Donor> {
     }
 
     public SinglyLinkedList<Donor> generateDummyDonor() {
+        SinglyLinkedList<Donor> dummyDonors = new SinglyLinkedList< Donor>();
         Faker faker = new Faker();
         Donor donor = new Donor();
 
@@ -133,7 +135,7 @@ public class Donor extends Account implements Comparable<Donor> {
         String[] phoneNo = "012-8956682,03-20726766,011-12589562,012-5894562,012-9856483,03-33744119,016-5894562,019-5895632,03-91712260,011-12598632,013-5895235,03-78775873,012-8759862,013-5895235,03-79578362,013-2598625,011-12895625,012-0589532,03-21433192,018-5698215,017-8658612,03-69835698,03-56925813".split(",");
         String[] address = "A 532 Jln Cheras Batu 3 1/4,Bandar Mahkota Cheras,1 11 Lrg Tiara 1B Bandar Baru,2A-2-25 Lengkok Nipah,A 51 Lrg Meranti,37 Jln Manis 4 Taman Segar,12A Persiaran Wira Jaya Barat 44 Taman Jaya 1,B 649/1 Jln Batu 4 Wilayah Persekutuan, A 43 Jln Ss2/75 Ss2 Petaling Jaya,3402 Jln Ampang Hilir 2, Room 502 5Th Floor Wisma Daimam 64 Jalan Sulam Taman Sentosa Malays,238 Kawasan Perindustrian Ringan,4802 Jalan Bagan Luar,A 532 Jln Cheras Batu 3 1/4,Bandar Mahkota Cheras,1 11 Lrg Tiara 1B Bandar Baru,2A-2-25 Lengkok Nipah,A 51 Lrg Meranti,37 Jln Manis 4 Taman Segar,12A Persiaran Wira Jaya,Barat 44 Taman Jaya 1,B 649/1 Jln Batu 4 Wilayah Persekutuan, A 43 Jln Ss2/75 Ss2 Petaling Jaya,3402 Jln Ampang Hilir 2, Room 502 5Th Floor Wisma Daimam 64 Jalan Sulam Taman Sentosa Malaysia,238 Kawasan Perindustrian Ringan,4802 Jalan Bagan Luar,No. 94 A Lrg Samarinda 8 Kandis Permai,B 1 Jln Ss21/1A Ss21 Petaling Jaya,G9 Gerai Makan Pasar Jawa Jln Pasar Kaw 18,402 Jln Lama Batu 6 Wilayah Persekutuan,3 Wisma Berjaya Prudential Jln Abell Kuching,3 Central Park Commercial Centre 316 Jln Tun Ahmad Zaidi Adruce Central Park,30 Jln Mutiara Raya Taman Mutiara,No. 555 A Jln E3/5 Taman Ehsan Kepong,71 Jalan Setia Jaya Bukit Kapar Kapar,3 Jln Klln 3 Taman Koperatif Lln".split(",");
 
-        for (int data = 0; data < 40; data++) {
+        for (int data = 0; data < 100; data++) {
             donor = new Donor();
             donor.setAccountID(autoGenerateID());
             donor.setName(faker.name().fullName());
@@ -144,11 +146,10 @@ public class Donor extends Account implements Comparable<Donor> {
             donor.setPhoneNo(phoneNo[faker.random().nextInt(0, phoneNo.length - 1)]);
             donor.setAddress(address[faker.random().nextInt(0, address.length - 1)]);
             donor.setStatus("Active");
-
-            System.out.println(donor.getAccountID().toString());
+            dummyDonors.add(donor);
         }
 
-        return null;
+        return dummyDonors;
     }
 
 }
