@@ -40,23 +40,23 @@ public class DoneePanel implements Panel {
                     break;
                 }
                 case 2: {
-                    //modifyDonee();
+                    modifyDonee(doneeDB);
                     break;
                 }
                 case 3: {
-                    //displayDonee(queue);
+                    displayDonee(doneeDB);
                     break;
                 }
                 case 4: {
-                    //searchDonee(queue);
+                    searchDonee(doneeDB);
                     break;
                 }
                 case 5: {
-                    //deleteDonee(queue);
+                    deleteDonee(doneeDB);
                     break;
                 }
                 case 6: {
-                    //exit()
+                    //exit
                     break;
                 }
             }
@@ -129,11 +129,6 @@ public class DoneePanel implements Panel {
             System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add donee" : " ");
 
         } while (opt.toUpperCase().equals("Y"));
-    }
-
-    public static void display(CircularLinkedQueue<Donee> doneeDB) {
-        //System.out.println(queue.dequeue().getId());
-
     }
 
     public static void modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
@@ -257,7 +252,7 @@ public class DoneePanel implements Panel {
             } else {
                 System.out.println("Donee ID not found...");
             }
-            System.out.println("Continue update campaign ? (Y/N)");
+            System.out.println("Continue update donee ? (Y/N)");
             opt = s.nextLine();
 
         } while (opt.toUpperCase().equals("Y"));
@@ -280,7 +275,7 @@ public class DoneePanel implements Panel {
             String id = s.nextLine();
 
             if (doneeDB.contains(new Donee(doneeID)) == true) {
-                System.out.println("Confirm deactive campaign ? (Y/N)");
+                System.out.println("Confirm deactive donee ? (Y/N)");
                 confirm = s.nextLine();
 
                 if (confirm.toUpperCase().equals("Y")) {
@@ -290,7 +285,7 @@ public class DoneePanel implements Panel {
                 System.out.println("Donee ID not found...");
             }
             
-            System.out.println("Continue deactive campaign ? (Y/N)");
+            System.out.println("Continue deactive donee ? (Y/N)");
             opt = s.nextLine();
             
         } while(opt.toUpperCase().equals("Y"));   
