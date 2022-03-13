@@ -22,8 +22,8 @@ public class Donor extends Account implements Comparable<Donor> {
     public Donor() {
     }
 
-    public Donor(String lastDonorID) {
-        this.lastDonorID = lastDonorID;
+    public Donor(String accountID) {
+        this.accountID = accountID;
     }
 
     public Donor(String accountID, String name, String donorType, char gender, String ic, String email, String phoneNo, String address) {
@@ -65,7 +65,7 @@ public class Donor extends Account implements Comparable<Donor> {
 
         if (o instanceof Donor) {
             Donor other = (Donor) o;
-            if (this.accountID == other.getAccountID()) {
+            if (this.accountID.equals(other.getAccountID())) {
                 return true;
             } else {
                 return false;

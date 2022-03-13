@@ -128,17 +128,17 @@ public class SponsorList implements Comparable<SponsorList> {
     }
 
     private static String[] sponsorListHeaders() {
-        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID"};
+        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID", "Sponsor Name", "Sponsor Email", "Sponsor Phone No", "Campaign ID"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{sponsorListID, sponsor.accountID};
+        return new String[]{sponsorListID, sponsor.accountID, sponsor.name, sponsor.email, sponsor.phoneNo, campaign.getCampaignID()};
     }
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
-        SponsorList[] sponsorList = new SponsorList[sponsorListDB.getLength()];
+        SponsorList[] sponsorList = new SponsorList[sponsorListDB.getAllList().getLength()];
         sponsorList = sponsorListDB.getAllArrayList(sponsorList);
         String[][] sponsorListRows = new String[sponsorList.length][];
         for (int i = 0; i < sponsorList.length; i++) {
@@ -194,7 +194,7 @@ public class SponsorList implements Comparable<SponsorList> {
             Campaign campaign = campaigns.getAt(counter);
             int randomTtl = faker.number().numberBetween(1, 3);
             for (int record = 0; record < randomTtl; record++) {
-                SponsorList[] sponsorListArr = new SponsorList[dummySponsorList.getLength()];
+                SponsorList[] sponsorListArr = new SponsorList[dummySponsorList.getAllList().getLength()];
                 sponsorListArr = dummySponsorList.getAllArrayList(sponsorListArr);
                 Sponsor sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
 

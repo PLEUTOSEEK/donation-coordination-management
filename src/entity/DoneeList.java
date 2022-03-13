@@ -139,7 +139,7 @@ public class DoneeList implements Comparable<DoneeList> {
     }
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
-        DoneeList[] doneeLists = new DoneeList[doneeListDB.getLength()];
+        DoneeList[] doneeLists = new DoneeList[doneeListDB.getAllList().getLength()];
         doneeLists = doneeListDB.getAllArrayList(doneeLists);
         String[][] doneeListRows = new String[doneeLists.length][];
         for (int i = 0; i < doneeLists.length; i++) {
@@ -195,7 +195,7 @@ public class DoneeList implements Comparable<DoneeList> {
 
             for (int record = 0; record < randomTtl; record++) {
 
-                DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getLength()];
+                DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getAllList().getLength()];
                 doneeListArr = dummyDoneeList.getAllArrayList(doneeListArr);
                 Donee donee = doneeDB.dequeue();
                 doneeInHelpDB.addLast(donee);
