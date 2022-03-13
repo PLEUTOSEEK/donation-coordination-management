@@ -130,11 +130,8 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     private String[] strArr() {
-<<<<<<< HEAD
-        return new String[]{donorListID, donor.getAccountID()};
-=======
+
         return new String[]{donorListID, donor.accountID};
->>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {

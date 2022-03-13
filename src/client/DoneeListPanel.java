@@ -5,6 +5,7 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import entity.Campaign;
@@ -23,7 +24,7 @@ class DoneeListPanel implements Panel {
 
     public void controlPanel(
             RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donee> doneeDB,
+            CircularLinkedQueue<Donee> doneeDB,
             RedBlackTree<LocalDate, DoneeList> doneeListDB
     ) {
 
@@ -76,7 +77,7 @@ class DoneeListPanel implements Panel {
     }
 
     private void add(RedBlackTree<LocalDate, Campaign> campaignDB,
-            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+            CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
 
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -178,7 +179,7 @@ class DoneeListPanel implements Panel {
 
     }
 
-    public void update(DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public void update(CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";

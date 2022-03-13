@@ -5,8 +5,10 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
 import entity.Donee;
@@ -28,7 +30,7 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
-            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB,
+            CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB) {
         CampaignPanel campaignPanel = new CampaignPanel();

@@ -1,12 +1,14 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
 import entity.Donee;
@@ -30,7 +32,7 @@ public class CampaignPanel implements Panel {
     public void controlPanel(RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
-            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB,
+            CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB) {
 
@@ -135,7 +137,7 @@ public class CampaignPanel implements Panel {
         } while (option != 4);
     }
 
-    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -250,7 +252,7 @@ public class CampaignPanel implements Panel {
 
     }
 
-    public void addDonee(Campaign campaign, DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public void addDonee(Campaign campaign, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -298,7 +300,7 @@ public class CampaignPanel implements Panel {
 
     }
 
-    public void addDonor(Campaign campaign, DoublyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void addDonor(Campaign campaign, SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
