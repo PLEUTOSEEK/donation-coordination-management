@@ -17,6 +17,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
     private String requestIssue, status;
     private double requestAmount;
+    private double requestOriAmount;
     private String bankType, bankAcc;
     //private List<Donation> donations;
     private static String lastDoneeID = "";

@@ -324,7 +324,7 @@ class DonorListPanel implements Panel {
     public void delete(RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
-        String confirmation = "";
+//        String confirmation = "";
         String donorListID = "";
 
         do {
