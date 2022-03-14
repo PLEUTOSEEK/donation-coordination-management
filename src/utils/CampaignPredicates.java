@@ -23,8 +23,7 @@ public class CampaignPredicates implements Inputs {
     }
 
     public static Predicate<Campaign> isStartDateBeforeOrEquals(LocalDate date) {
-        Predicate<Campaign> predicate = x -> x.getCampaignStartDate().isAfter(date);
-        return predicate.negate();
+        return isStartDateAfter(date).negate();
     }
 
     public static Predicate<Campaign> isEndDateAfter(LocalDate date) {
@@ -32,8 +31,7 @@ public class CampaignPredicates implements Inputs {
     }
 
     public static Predicate<Campaign> isEndDateBeforeOrEquals(LocalDate date) {
-        Predicate<Campaign> predicate = x -> x.getCampaignEndDate().isAfter(date);
-        return predicate.negate();
+        return isEndDateAfter(date).negate();
     }
 
     public static Predicate<Campaign> isAddressContains(String address) {
@@ -53,8 +51,15 @@ public class CampaignPredicates implements Inputs {
     }
 
     public static Predicate<Campaign> isStatusEquals(String status) {
-        Predicate<Campaign> predicate = x -> x.getStatus().equalsIgnoreCase(status);
-        return predicate;
+        return x -> x.getStatus().equalsIgnoreCase(status);
+    }
+
+    public static Predicate<Campaign> isTargetAmtBiggerThan(double amount) {
+        return x -> x.getTargetAmount() > amount;
+    }
+
+    public static Predicate<Campaign> isTargetAmtSmallerOrEquals(double amount) {
+        return isTargetAmtBiggerThan(amount).negate();
     }
 
     public static Campaign[] filterCampaign(Campaign[] campaignArray, Predicate condition) {
@@ -72,6 +77,8 @@ public class CampaignPredicates implements Inputs {
         menu.append("07. campaign name contains \n");
         menu.append("08. campaign ID equal \n");
         menu.append("09. campaign status equal \n");
+        menu.append("10. campaign target amount bigger than \n");
+        menu.append("11. campaign target amount smaller or equal \n");
         return menu.toString();
     }
 
@@ -110,6 +117,13 @@ public class CampaignPredicates implements Inputs {
 
             case 9:
                 return filterCampaign(campaignArray, isStatusEquals(campaignPredicates.askStr()));
+
+            case 10:
+                return filterCampaign(campaignArray, isTargetAmtBiggerThan(campaignPredicates.askDouble()));
+
+            case 11:
+                return filterCampaign(campaignArray, isTargetAmtSmallerOrEquals(campaignPredicates.askDouble()));
+
             default:
                 System.out.println("Index not correct...");
                 return null;
