@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.DonorListPredicates;
 
 /**
  *
@@ -44,7 +45,7 @@ class DonorListPanel implements Panel {
                     DonorList.donorListTable(donorListDB);
                     break;
                 case 3:
-                    search();
+                    search(donorListDB);
                     break;
                 case 4:
                     delete(donorListDB);
@@ -326,6 +327,7 @@ class DonorListPanel implements Panel {
         String option = "";
 //        String confirmation = "";
         String donorListID = "";
+        String confirmation = "";
 
         do {
             DonorList.donorListTable(donorListDB);
@@ -363,6 +365,25 @@ class DonorListPanel implements Panel {
     @Override
     public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void search(RedBlackTree<LocalDate, DonorList> donorListDB) {
+        DonorList[] DonorListArr = new DonorList[donorListDB.getAllList().getLength()];
+        DonorListArr = donorListDB.getAllArrayList(DonorListArr);
+        RedBlackTree<LocalDate, DonorList> listForPrint = new RedBlackTree<>();
+        DonorList[] arrListForPrint = null;
+
+        arrListForPrint = DonorListPredicates.ControlPanel(DonorListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (DonorList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
+            }
+            DonorList.donorListTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
 
     @Override

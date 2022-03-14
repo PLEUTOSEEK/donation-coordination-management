@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.DemandListPredicates;
 
 /**
  *
@@ -37,7 +38,7 @@ class DemandListPanel implements Panel {
                     DemandList.demandTable(demandListDB);
                     break;
                 case 3:
-                    search();
+                    search(demandListDB);
                     break;
                 case 4:
                     delete(demandListDB);
@@ -92,6 +93,25 @@ class DemandListPanel implements Panel {
     @Override
     public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void search(RedBlackTree<LocalDate, DemandList> demandListDB) {
+        DemandList[] DemandListArr = new DemandList[demandListDB.getAllList().getLength()];
+        DemandListArr = demandListDB.getAllArrayList(DemandListArr);
+        RedBlackTree<LocalDate, DemandList> listForPrint = new RedBlackTree<>();
+        DemandList[] arrListForPrint = null;
+
+        arrListForPrint = DemandListPredicates.ControlPanel(DemandListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (DemandList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateRegister(), arrListForPrint1);
+            }
+            DemandList.demandTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
 
     @Override

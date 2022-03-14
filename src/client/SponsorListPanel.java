@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import utils.CampaignPredicates;
+import utils.SponsorListPredicates;
 
 /**
  *
@@ -373,11 +373,10 @@ class SponsorListPanel implements Panel {
         RedBlackTree<LocalDate, SponsorList> listForPrint = new RedBlackTree<>();
         SponsorList[] arrListForPrint = null;
 
-        SponsorList.sponsorListTable(sponsorListDB);
+        arrListForPrint = SponsorListPredicates.ControlPanel(sponsorListArr);;
 
-        CampaignPredicates.ControlPanel(campaignArray);
-
-        if (arrListForPrint != null) {
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
             for (SponsorList arrListForPrint1 : arrListForPrint) {
                 listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
             }

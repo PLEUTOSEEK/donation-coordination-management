@@ -56,7 +56,7 @@ public class CampaignPanel implements Panel {
                     Campaign.campaignTable(campaignDB);
                     break;
                 case 3:
-                    search();
+                    search(campaignDB);
                     break;
                 case 4:
                     delete(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
@@ -713,7 +713,7 @@ public class CampaignPanel implements Panel {
 
         arrListForPrint = CampaignPredicates.ControlPanel(campaignArray);
 
-        if (arrListForPrint != null) {
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
             for (Campaign arrListForPrint1 : arrListForPrint) {
                 listForPrint.addData(arrListForPrint1.getCampaignStartDate(), arrListForPrint1);
             }
