@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.DoneeListPredicates;
 
 /**
  *
@@ -45,7 +46,7 @@ class DoneeListPanel implements Panel {
                     DoneeList.doneeListTable(doneeListDB);
                     break;
                 case 3:
-                    search();
+                    search(doneeListDB);
                     break;
                 case 4:
                     delete(doneeDB, doneeInHelpDB, doneeListDB);
@@ -332,7 +333,25 @@ class DoneeListPanel implements Panel {
 
     @Override
     public void search() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void search(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+        DoneeList[] DoneeListArr = new DoneeList[doneeListDB.getAllList().getLength()];
+        DoneeListArr = doneeListDB.getAllArrayList(DoneeListArr);
+        RedBlackTree<LocalDate, DoneeList> listForPrint = new RedBlackTree<>();
+        DoneeList[] arrListForPrint = null;
+
+        arrListForPrint = DoneeListPredicates.ControlPanel(DoneeListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (DoneeList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
+            }
+            DoneeList.doneeListTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
 
     @Override
