@@ -150,10 +150,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         return -1;
     }
 
-    /*@Override
-    public boolean update(T element) {
-
-    }*/
     @Override
     public final void clear(T element) {
         firstNode = null;
@@ -209,6 +205,29 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean replace(T element, int inputPosition) {
+        Node firstNode = getFirstNode();
+        int counter = 0;
+        if ((inputPosition >= 1) && (inputPosition <= dataCount)) {
+
+            while (null != firstNode && counter++ < inputPosition - 1) {
+                firstNode = firstNode.getNext();
+            }
+
+            if (firstNode == null || firstNode.getNext() == null) {
+                return false;
+            }
+
+            Node newNode = new Node(element);
+            newNode.setNext(firstNode.getNext().getNext());
+            firstNode.setNext(newNode);
+            return true;
+        }
+        return false;
+
     }
 
     private class Node<T extends Comparable<T>> {
