@@ -25,9 +25,12 @@ public class DoneePredicates implements Inputs {
         return x -> x.getName().toLowerCase().contains(name.toLowerCase());
     }
 
-    public static Predicate<Donee> isRequestAmountContains(double requestAmount) {
-        Predicate<Donee> predicate = x -> x.getRequestAmount() > requestAmount;
-        return predicate.negate();
+    public static Predicate<Donee> isRequestAmountBiggerThan(double requestAmount) {
+        return x -> x.getRequestAmount() > requestAmount;
+    }
+
+    public static Predicate<Donee> isRequestAmountSmallOrEqual(double requestAmount) {
+        return isRequestAmountBiggerThan(requestAmount).negate();
     }
 
     public static Predicate<Donee> isBankEquals(String bankType) {
@@ -52,12 +55,15 @@ public class DoneePredicates implements Inputs {
         menu.append("03. Request Amount \n");
         menu.append("04. Bank Type\n");
         menu.append("05. Donee status\n");
+        menu.append("06. Donee request amount bigger than \n");
+        menu.append("07. Donee target amount smaller or equal \n");
         return menu.toString();
     }
 
     public static Donee[] ControlPanel(Donee[] doneeArray) {
         Scanner input = new Scanner(System.in);
         DoneePredicates doneePredicates = new DoneePredicates();
+        System.out.println("\n");
         System.out.println(DoneePredicates.doneeSearchMenu());
         int option = 0;
         System.out.print("Option: ");
@@ -66,23 +72,21 @@ public class DoneePredicates implements Inputs {
         switch (option) {
             case 1:
                 return filterDonee(doneeArray, isIDEquals(doneePredicates.askStr()));
-
             case 2:
                 return filterDonee(doneeArray, isNameContains(doneePredicates.askStr()));
-
             case 3:
-                return filterDonee(doneeArray, isRequestAmountContains(doneePredicates.askDouble()));
-
+                return filterDonee(doneeArray, isRequestAmountBiggerThan(doneePredicates.askDouble()));
             case 4:
                 return filterDonee(doneeArray, isBankEquals(doneePredicates.askStr()));
-
             case 5:
                 return filterDonee(doneeArray, isStatusEquals(doneePredicates.askStr()));
-
+            case 6:
+                break;
             default:
                 System.out.println("Index not correct...");
-                return null;
+
         }
+        return null;
     }
 
     @Override

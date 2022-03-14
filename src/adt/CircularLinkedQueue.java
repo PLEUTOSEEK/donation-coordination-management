@@ -252,32 +252,25 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
     public boolean contains(T element) {
         return indexOf(element) != -1;
     }
-    
-////    @Override
-////    public T[] getAllArrayList(T[] array) {
-////        CircularLinkedQueue<T> allList = new CircularLinkedQueue();
-////        getAllList(this.lastNode, allList);
-////        allList.quickSort();
-////
-////        return (T[]) allList.toArray(array);
-////    }
-////
-////    public DoublyLinkedList<T> getAllList() {
-////        DoublyLinkedList<T> allList = new DoublyLinkedList();
-////        getAllList(this.lastNode, allList);
-////        allList.quickSort();
-////
-////        return allList;
-////    }
-////
-////    public void getAllList(Node currentNode, DoublyLinkedList<T> allList) {
-////        if (currentNode != null) {
-////            getAllList(currentNode.left, allList);
-////
-////            allList.joinLast(currentNode.getListData());
-////
-////            getAllList(currentNode.right, allList);
-////        }
-////    }
-   
+
+    public T getAt(int givenPos) {
+        //givenPos is start from 1
+
+        if (givenPos >= 1 && givenPos <= length) {
+
+            if (givenPos == 1) {
+
+                return (T) this.firstNode.data;
+
+            } else {
+
+                Node current = this.firstNode;
+                for (int i = 2; i <= givenPos; i++) {
+                    current = current.getNext();
+                }
+                return (T) current.data;
+            }
+        }
+        return null;
+    }
 }

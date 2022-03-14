@@ -18,7 +18,8 @@ public interface SinglyLinkedListInterface<T> {
     public boolean remove(int inputPosition);
 
     public boolean contains(T element);
-    // public boolean replace(T element, int inputPosition);
+    
+    public boolean replace(T element, int inputPosition);
 
     public void clear(T selemnt);
 
