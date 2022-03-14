@@ -67,6 +67,34 @@ public class Donee extends Account implements Comparable<Donee> {
         Donee.lastDoneeID = lastDoneeID;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public void setIc(String ic) {
+        this.ic = ic;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public static void setLastId(String lastId) {
+        Account.lastId = lastId;
+    }
+
     
 
     public String getRequestIssue() {
@@ -107,7 +135,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
         if (o instanceof Donee) {
             Donee other = (Donee) o;
-            if (this.accountID == other.getAccountID()) {
+            if (this.accountID.equals(other.getAccountID())) {
                 return true;
             } else {
                 return false;
