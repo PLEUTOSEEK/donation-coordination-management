@@ -206,6 +206,7 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
             return null;
         }
     }
+    
 
     @Override
     public boolean replace(T element, int inputPosition) {
