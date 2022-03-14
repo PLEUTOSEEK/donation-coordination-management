@@ -155,7 +155,6 @@ public class DoneePanel implements Panel {
         String id = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
-        //CircularLinkedQueue<Donee> temp = new CircularLinkedQueue<Donee>();
 
         do {
             Donee.doneeTable(doneeDB);
@@ -251,8 +250,6 @@ public class DoneePanel implements Panel {
 
                             if (confirm.toUpperCase().equals("Y")) {
                                 doneeDB.modify(donee, donee);
-                            }else{
-                                
                             }
 
                             System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update failed...");
@@ -265,10 +262,10 @@ public class DoneePanel implements Panel {
                 System.out.println("Donee ID not found, update donee abort");
             }
             System.out.println("Continue update donee ? (Y/N)");
-            confirm = s.nextLine();
+            opt = s.nextLine();
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "" : "Return to previous step...");
-        } while (confirm.toUpperCase().equals("Y"));
+            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+        } while (opt.toUpperCase().equals("Y"));
     }
 
     public  void displayDonee(CircularLinkedQueue<Donee> doneeDB) {

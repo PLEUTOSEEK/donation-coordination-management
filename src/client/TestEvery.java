@@ -26,7 +26,7 @@ import java.time.LocalDate;
 public class TestEvery {
 
     public static void main(String[] args) {
-        //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
+        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         DoneePanel doneeP = new DoneePanel();
 
@@ -34,7 +34,6 @@ public class TestEvery {
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
 //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
 //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
