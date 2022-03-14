@@ -10,6 +10,7 @@ import adt.CircularLinkedQueue;
 import adt.QueueInterface;
 import entity.Donee;
 import java.util.Iterator;
+import utils.DoneePredicates;
 
 /**
  * @author Wong Jun Yao
@@ -49,6 +50,7 @@ public class DoneePanel implements Panel {
                 }
                 case 4: {
                     doneeDB = searchDonee(doneeDB);
+                    //searchDonee(doneeDB);
                     break;
                 }
                 case 5: {
@@ -70,11 +72,11 @@ public class DoneePanel implements Panel {
         double requestAmount;
 
         Scanner s = new Scanner(System.in);
+        String originalLastId = Donee.getLastDoneeID();
 
         do {
             Donee donee = new Donee();
-            String id = donee.autoGenerateID();
-            donee.setAccountID(id);
+            donee.setAccountID(donee.autoGenerateID());
 
             System.out.print("\nName:");
             donee.setName(s.nextLine());
@@ -114,14 +116,16 @@ public class DoneePanel implements Panel {
 
             if (confirm.toUpperCase().equals("Y")) {
                 doneeDB.enqueue(donee);
+            } else {
+                Donee.setLastDoneeID(originalLastId);
             }
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "\nAdded successfully" : "\nAdd failed..");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add failed...");
 
-            System.out.print("Continue add donee? (Y/N)");
+            System.out.print("\nContinue add donee? (Y/N)");
             opt = s.nextLine();
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add donee" : " ");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add..." : "Return to donee main page");
 
         } while (opt.toUpperCase().equals("Y"));
 
@@ -166,8 +170,9 @@ public class DoneePanel implements Panel {
                     System.out.println("6. Address");
                     System.out.println("7. Request Issue");
                     System.out.println("8. Request Amount");
-                    System.out.println("9. Bank Typn");
+                    System.out.println("9. Bank Type");
                     System.out.println("10. Bank Account");
+                    System.out.println("11. Status");
 
                     System.out.println("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
                     select = s.nextLine();
@@ -241,37 +246,41 @@ public class DoneePanel implements Panel {
                                     donee.setBankAcc(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
+                                case 11:
+                                    System.out.print("Enter the new status: ");
+                                    donee.setStatus(s.nextLine());
+                                    hasUpdateSomething = true;
+                                    break;
                                 default:
                                     System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                             }
                         }
 
                         if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update ? (Y/N)");
+                            System.out.print("Confirm update ? (Y/N)");
                             confirm = s.nextLine();
 
                             if (confirm.toUpperCase().equals("Y")) {
-
                                 doneeDB.modify(donee, donee);
                             }
 
-                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully" : "Update failed...");
+                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update failed...");
                             validIndex = false;
                         } else {
                             System.out.println("No data selected");
+
                         }
                     }
-                }
+                } //else {
+//                    System.out.println("Donee ID not found...");
+//                }
 
                 temp.enqueue(doneeDB.dequeue());
 
             }
-            //} else {
-//                System.out.println("Donee ID not found...");
-//            }
 
             doneeDB = temp;
-            System.out.println("Continue update donee ? (Y/N)");
+            System.out.print("Continue update donee ? (Y/N)");
             opt = s.nextLine();
 
         } while (opt.toUpperCase().equals("Y"));
@@ -322,7 +331,7 @@ public class DoneePanel implements Panel {
         return doneeDB;
     }
 
-    public static CircularLinkedQueue<Donee> searchDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public static CircularLinkedQueue searchDonee(CircularLinkedQueue<Donee> doneeDB) {
         //iterator = CircularQueue.getIterator();
         String opt;
         String doneeID = "";
@@ -331,10 +340,25 @@ public class DoneePanel implements Panel {
         Donee donee = new Donee();
         CircularLinkedQueue<Donee> temp = new CircularLinkedQueue<Donee>();
 
+//        Donee[] doneeArray = new Donee[doneeDB.getLength()];
+//        doneeArray = doneeDB.get(doneeArray);
+//        CircularLinkedQueue<Donee> listForPrint = new CircularLinkedQueue<>();
+//        Donee[] arrListForPrint = null;
+//
+//        arrListForPrint = DoneePredicates.ControlPanel(doneeArray);
+//        
+//        if (arrListForPrint != null) {
+//            Donee.doneeTable(listForPrint);
+//        } else {
+//            System.out.println("No Record Found...");
+//        }
         do {
-            System.out.print("Enter a Donee Id:");
-            String id = s.nextLine();
-            System.out.println("\n");
+//            System.out.print("Enter a Donee Id:");
+//            String id = s.nextLine();
+
+            System.out.print("Enter a data:");
+            String input = s.nextLine();
+            System.out.println("");
 
             for (int i = doneeDB.size(); i > 0; i--) {
                 //if (doneeDB.contains(new Donee(doneeID)) == true) {
@@ -351,7 +375,8 @@ public class DoneePanel implements Panel {
                 String bankAcc = doneeDB.getFront().getBankAcc();
                 String status = doneeDB.getFront().getStatus();
 
-                if (id.equals(id2)) {
+                if (input.equals(id2) || input.equals(name) || input.equals(status)) {
+                    System.out.println("ID:" + id2);
                     System.out.println("Name: " + name);
                     System.out.println("NRIC: " + ic);
                     System.out.println("Gender: " + gender);
@@ -365,11 +390,13 @@ public class DoneePanel implements Panel {
                     System.out.println("Status: " + status);
                 }
                 temp.enqueue(doneeDB.dequeue());
+
             }
 
             doneeDB = temp;
             System.out.print("Continue search donee ? (Y/N)");
             opt = s.nextLine();
+            System.out.println("");
 
         } while (opt.toUpperCase().equals("Y"));
         return doneeDB;

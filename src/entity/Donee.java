@@ -59,13 +59,15 @@ public class Donee extends Account implements Comparable<Donee> {
         this.bankAcc = bankAcc;
     }
 
-    public String getLastDoneeID() {
+    public static String getLastDoneeID() {
         return lastDoneeID;
     }
 
-    public void setLastDoneeID(String lastDoneeID) {
-        this.lastDoneeID = lastDoneeID;
+    public static void setLastDoneeID(String lastDoneeID) {
+        Donee.lastDoneeID = lastDoneeID;
     }
+
+    
 
     public String getRequestIssue() {
         return requestIssue;
