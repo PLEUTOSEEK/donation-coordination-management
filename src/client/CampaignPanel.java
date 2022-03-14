@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.CampaignPredicates;
 
 /**
  *
@@ -702,6 +703,24 @@ public class CampaignPanel implements Panel {
 
     @Override
     public void search() {
+    }
+
+    public void search(RedBlackTree<LocalDate, Campaign> campaignDB) {
+        Campaign[] campaignArray = new Campaign[campaignDB.getAllList().getLength()];
+        campaignArray = campaignDB.getAllArrayList(campaignArray);
+        RedBlackTree<LocalDate, Campaign> listForPrint = new RedBlackTree<>();
+        Campaign[] arrListForPrint = null;
+
+        arrListForPrint = CampaignPredicates.ControlPanel(campaignArray);
+
+        if (arrListForPrint != null) {
+            for (Campaign arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getCampaignStartDate(), arrListForPrint1);
+            }
+            Campaign.campaignTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
 
     @Override

@@ -14,8 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+import utils.CampaignPredicates;
 
 /**
  *
@@ -372,44 +371,12 @@ class SponsorListPanel implements Panel {
         SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
         sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
         RedBlackTree<LocalDate, SponsorList> listForPrint = new RedBlackTree<>();
-        Scanner input = new Scanner(System.in);
-        int option = 0;
-        String value = "";
         SponsorList[] arrListForPrint = null;
 
         SponsorList.sponsorListTable(sponsorListDB);
 
-        System.out.println(sponsorListSearchMenu());
-        System.out.print("Option: ");
-        option = input.nextInt();
-        input.nextLine();
-        switch (option) {
-            case 1:
-                System.out.print("Name: ");
-                String name = input.nextLine();
-                Predicate<SponsorList> byName = x -> x.getSponsor().getName().contains(name);
-                arrListForPrint = Stream.of(sponsorListArr).filter(byName).toArray(SponsorList[]::new);
-                break;
-            case 2:
-                Predicate<SponsorList> byEmail = x -> x.getSponsor().getEmail().contains(input.nextLine());
-                arrListForPrint = Stream.of(sponsorListArr).filter(byEmail).toArray(SponsorList[]::new);
-                break;
-            case 3:
-                Predicate<SponsorList> byPhoneNo = x -> x.getSponsor().getPhoneNo().contains(input.nextLine());
-                arrListForPrint = Stream.of(sponsorListArr).filter(byPhoneNo).toArray(SponsorList[]::new);
-                break;
-            case 4:
-                Predicate<SponsorList> byAddress = x -> x.getSponsor().getAddress().contains(input.nextLine());
-                arrListForPrint = Stream.of(sponsorListArr).filter(byAddress).toArray(SponsorList[]::new);
-                break;
-            case 5:
-                Predicate<SponsorList> byDateJoin = x -> x.getDateJoin().toString().contains(input.nextLine());
-                arrListForPrint = Stream.of(sponsorListArr).filter(byDateJoin).toArray(SponsorList[]::new);
-                break;
-            default:
-                System.out.println("Index not correct...");
-                break;
-        }
+        CampaignPredicates.ControlPanel(campaignArray);
+
         if (arrListForPrint != null) {
             for (SponsorList arrListForPrint1 : arrListForPrint) {
                 listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
