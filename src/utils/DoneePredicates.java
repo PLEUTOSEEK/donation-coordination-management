@@ -55,7 +55,8 @@ public class DoneePredicates implements Inputs {
         menu.append("03. Request Amount \n");
         menu.append("04. Bank Type\n");
         menu.append("05. Donee status\n");
-        menu.append("06. Exit\n");
+        menu.append("06. Donee request amount bigger than \n");
+        menu.append("07. Donee target amount smaller or equal \n");
         return menu.toString();
     }
 
