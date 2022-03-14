@@ -101,8 +101,8 @@ public class DoneeListPredicates implements Inputs {
         return menu.toString();
     }
 
-    public static DoneeList[] filterDoneeList(DoneeList[] DoneeListArray, Predicate condition) {
-        return (DoneeList[]) Stream.of(DoneeListArray).filter(condition).toArray(DoneeList[]::new);
+    public static DoneeList[] filterDoneeList(DoneeList[] doneeListArray, Predicate condition) {
+        return (DoneeList[]) Stream.of(doneeListArray).filter(condition).toArray(DoneeList[]::new);
     }
 
     public static DoneeList[] ControlPanel(DoneeList[] DoneeListArray) {
