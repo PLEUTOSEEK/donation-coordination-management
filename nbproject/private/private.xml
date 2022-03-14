@@ -3,12 +3,62 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/adt/DoublyLinkedList.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/mainPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/DonorListPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/SponsorList.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/Panel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorListPanel.java</file>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 389a2affdd0e66c8af3bd2049c02f4797c5f583f
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/client/DonorPanel.java</file>
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/adt/SinglyLinkedList.java</file>
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/entity/Donor.java</file>
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/client/CampaignPanel.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/client/DoneePanel.java</file>
             <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/adt/DoublyLinkedList.java</file>
+=======
+=======
+<<<<<<< HEAD
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/entity/SponsorList.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/adt/RedBlackTree.java</file>
+=======
+>>>>>>> 6e98873287966b51e0b87181e8ce007bfbffeaef
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/entity/DoneeList.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/client/CampaignPanel.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/client/SystemEntryPoint.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/entity/Donor.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/client/DoneeListPanel.java</file>
+            <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/entity/DonorList.java</file>
+<<<<<<< HEAD
+=======
+>>>>>>> d4ad615441b6956924ccea502427aa7add9b5217
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/entity/Donee.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/RedBlackTree.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/QueueInterface.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/TestEvery.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/DoneePanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/SinglyLinkedList.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/CircularLinkedQueue.java</file>
+<<<<<<< HEAD
+=======
+>>>>>>> 376aaf63cd71aa96abbfbf9a39da12caae5b9d50
+>>>>>>> 6a7b5077ba0fbd9c0787074e0cc355b81549e458
+=======
+>>>>>>> 6e98873287966b51e0b87181e8ce007bfbffeaef
+>>>>>>> 1558b86503a21ef0e441bd8e87c21198dd22009c
+>>>>>>> d4ad615441b6956924ccea502427aa7add9b5217
+>>>>>>> 389a2affdd0e66c8af3bd2049c02f4797c5f583f
         </group>
     </open-files>
 </project-private>

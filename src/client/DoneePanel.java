@@ -36,11 +36,11 @@ public class DoneePanel implements Panel {
 
             switch (opt) {
                 case 1: {
-                    addNewDonee(doneeDB);
+                    doneeDB = addNewDonee(doneeDB);
                     break;
                 }
                 case 2: {
-                    modifyDonee(doneeDB);
+                    doneeDB = modifyDonee(doneeDB);
                     break;
                 }
                 case 3: {
@@ -48,11 +48,11 @@ public class DoneePanel implements Panel {
                     break;
                 }
                 case 4: {
-                    searchDonee(doneeDB);
+                    doneeDB = searchDonee(doneeDB);
                     break;
                 }
                 case 5: {
-                    deleteDonee(doneeDB);
+                    doneeDB = deleteDonee(doneeDB);
                     break;
                 }
                 case 6: {
@@ -63,24 +63,19 @@ public class DoneePanel implements Panel {
         } while (opt != 6);
     }
 
-    public void addNewDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public CircularLinkedQueue<Donee> addNewDonee(CircularLinkedQueue<Donee> doneeDB) {
 
         String confirm, opt;
         char gender = ' ';
         double requestAmount;
 
-        Donee donee = new Donee();
         Scanner s = new Scanner(System.in);
 
-//        if (queue.isEmpty() == true) {
-//            id = "DE1001";
-//        } else {
-//            id = queue.getLast().getId();
-//            int n = Integer.parseInt(id.substring(2));
-//            n++;
-//            id = "DE" + n;
-//        }
         do {
+            Donee donee = new Donee();
+            String id = donee.autoGenerateID();
+            donee.setAccountID(id);
+
             System.out.print("\nName:");
             donee.setName(s.nextLine());
 
@@ -114,40 +109,55 @@ public class DoneePanel implements Panel {
             donee.setBankAcc(s.nextLine());
             donee.setStatus("Active");
 
-            System.out.println("Confirm add donee? (Y/N)");
+            System.out.print("Confirm add donee? (Y/N)");
             confirm = s.nextLine();
 
             if (confirm.toUpperCase().equals("Y")) {
                 doneeDB.enqueue(donee);
             }
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully" : "Add failed..");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "\nAdded successfully" : "\nAdd failed..");
 
-            System.out.println("Continue add donee? (Y/N)");
+            System.out.print("Continue add donee? (Y/N)");
             opt = s.nextLine();
 
             System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add donee" : " ");
 
         } while (opt.toUpperCase().equals("Y"));
+
+        return doneeDB;
     }
 
-    public static void modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public static CircularLinkedQueue<Donee> modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
 
         String opt, select, confirm;
         String doneeID = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
+        CircularLinkedQueue<Donee> temp = new CircularLinkedQueue<Donee>();
 
         do {
             Donee.doneeTable(doneeDB);
             System.out.print("Enter a Donee Id:");
             String id = s.nextLine();
 
-            if (doneeDB.contains(new Donee(doneeID)) == true) {
-                boolean validIndex = true;
-                do {
-                    validIndex = true;
+            //if (doneeDB.contains(new Donee(doneeID)) == true) {
+            for (int j = doneeDB.size(); j > 0; j--) {
+                String id2 = doneeDB.getFront().getAccountID();
+                String name = doneeDB.getFront().getName();
+                String ic = doneeDB.getFront().getIc();
+                String gender = String.valueOf(doneeDB.getFront().getGender());
+                String email = doneeDB.getFront().getEmail();
+                String phoneNo = doneeDB.getFront().getPhoneNo();
+                String addr = doneeDB.getFront().getAddress();
+                String reqIss = doneeDB.getFront().getRequestIssue();
+                String reqAmt = Double.toString(doneeDB.getFront().getRequestAmount());
+                String bankType = doneeDB.getFront().getBankType();
+                String bankAcc = doneeDB.getFront().getBankAcc();
 
+                boolean validIndex = true;
+
+                if (id.equals(id2)) {
                     System.out.println("1. Name");
                     System.out.println("2. NRIC");
                     System.out.println("3. Gender");
@@ -164,6 +174,8 @@ public class DoneePanel implements Panel {
 
                     String[] splitIndex = select.split("\\s+");
                     int[] splitIndexInt = new int[splitIndex.length];
+
+                    donee = doneeDB.getFront();
 
                     for (int i = 0; i < splitIndex.length; i++) {
                         try {
@@ -244,29 +256,39 @@ public class DoneePanel implements Panel {
                             }
 
                             System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully" : "Update failed...");
+                            validIndex = false;
                         } else {
                             System.out.println("No data selected");
                         }
                     }
-                } while (validIndex == false);
-            } else {
-                System.out.println("Donee ID not found...");
+                }
+
+                temp.enqueue(doneeDB.dequeue());
+
             }
+            //} else {
+//                System.out.println("Donee ID not found...");
+//            }
+
+            doneeDB = temp;
             System.out.println("Continue update donee ? (Y/N)");
             opt = s.nextLine();
 
         } while (opt.toUpperCase().equals("Y"));
+
+        return doneeDB;
     }
 
     public static void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
         Donee.doneeTable(doneeDB);
     }
 
-    public static void deleteDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public static CircularLinkedQueue<Donee> deleteDonee(CircularLinkedQueue<Donee> doneeDB) {
         String opt, select, confirm;
         String doneeID = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
+        CircularLinkedQueue<Donee> temp = new CircularLinkedQueue<Donee>();
 
         do {
             Donee.doneeTable(doneeDB);
@@ -274,74 +296,83 @@ public class DoneePanel implements Panel {
             System.out.print("Enter a Donee Id:");
             String id = s.nextLine();
 
-            if (doneeDB.contains(new Donee(doneeID)) == true) {
-                System.out.println("Confirm deactive donee ? (Y/N)");
-                confirm = s.nextLine();
+            for (int i = doneeDB.size(); i > 0; i--) {
+                String id2 = doneeDB.getFront().getAccountID();
 
-                if (confirm.toUpperCase().equals("Y")) {
-                    donee.setStatus("Inactive");
+                if (id.equals(id2)) {
+                    System.out.println("Confirm deactive donee ? (Y/N)");
+                    confirm = s.nextLine();
+                    donee = doneeDB.getFront();
+
+                    if (confirm.toUpperCase().equals("Y")) {
+                        donee.setStatus("Inactive");
+                    }
                 }
-            } else {
-                System.out.println("Donee ID not found...");
+                temp.enqueue(doneeDB.dequeue());
+
             }
-            
+
+            doneeDB = temp;
+
             System.out.println("Continue deactive donee ? (Y/N)");
             opt = s.nextLine();
-            
-        } while(opt.toUpperCase().equals("Y"));   
+
+        } while (opt.toUpperCase().equals("Y"));
+
+        return doneeDB;
     }
 
-    public static void searchDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public static CircularLinkedQueue<Donee> searchDonee(CircularLinkedQueue<Donee> doneeDB) {
         //iterator = CircularQueue.getIterator();
         String opt;
         String doneeID = "";
+
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
+        CircularLinkedQueue<Donee> temp = new CircularLinkedQueue<Donee>();
 
         do {
-            Donee.doneeTable(doneeDB);
-
             System.out.print("Enter a Donee Id:");
             String id = s.nextLine();
+            System.out.println("\n");
 
-            if (doneeDB.contains(new Donee(doneeID)) == true) {
-                
+            for (int i = doneeDB.size(); i > 0; i--) {
+                //if (doneeDB.contains(new Donee(doneeID)) == true) {
+                String id2 = doneeDB.getFront().getAccountID();
+                String name = doneeDB.getFront().getName();
+                String ic = doneeDB.getFront().getIc();
+                String gender = String.valueOf(doneeDB.getFront().getGender());
+                String email = doneeDB.getFront().getEmail();
+                String phoneNo = doneeDB.getFront().getPhoneNo();
+                String addr = doneeDB.getFront().getAddress();
+                String reqIss = doneeDB.getFront().getRequestIssue();
+                String reqAmt = Double.toString(doneeDB.getFront().getRequestAmount());
+                String bankType = doneeDB.getFront().getBankType();
+                String bankAcc = doneeDB.getFront().getBankAcc();
+                String status = doneeDB.getFront().getStatus();
+
+                if (id.equals(id2)) {
+                    System.out.println("Name: " + name);
+                    System.out.println("NRIC: " + ic);
+                    System.out.println("Gender: " + gender);
+                    System.out.println("Email: " + email);
+                    System.out.println("Phone No: " + phoneNo);
+                    System.out.println("Address: " + addr);
+                    System.out.println("Request Issue: " + reqIss);
+                    System.out.println("Request Amount: " + reqAmt);
+                    System.out.println("Bank Type: " + bankType);
+                    System.out.println("Bank Account: " + bankAcc);
+                    System.out.println("Status: " + status);
+                }
+                temp.enqueue(doneeDB.dequeue());
             }
-            
-            System.out.println("Continue deactive campaign ? (Y/N)");
-            opt = s.nextLine();
-            
-        } while(opt.toUpperCase().equals("Y"));
 
-        //iterator = CircularQueue.getIterator();
-//        while (iterator.hasNext()) {
-//            doneetosearch = iterator.next();
-//
-//        }
-//        if (!doneetosearch.getName().equalsIgnoreCase(id)) {
-//            doneetosearch = null;
-//        }
-//        if (doneetosearch == null) {
-//            System.out.printf("No record found!!\n\n");
-//        }
-//        return doneetosearch;
-//
-//
-//        for (int i = 0; i < temp.length; i++) {
-//            if (id.equals(temp[i].getId())) {
-//                System.out.println(temp[i].getId());
-//            }
-//        }
-//        for (int i = 0; i< queue.size(); i++){
-//            Donee temp = queue.get(queue, id);
-//            if (id.equals(temp.getId())){
-//                System.out.println(queue);
-//            }
-//            
-//            if (queue.isEmpty() == true){
-//                break;
-//            }
-//        }
+            doneeDB = temp;
+            System.out.print("Continue search donee ? (Y/N)");
+            opt = s.nextLine();
+
+        } while (opt.toUpperCase().equals("Y"));
+        return doneeDB;
     }
 
     @Override
