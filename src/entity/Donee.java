@@ -95,8 +95,6 @@ public class Donee extends Account implements Comparable<Donee> {
         Account.lastId = lastId;
     }
 
-    
-
     public String getRequestIssue() {
         return requestIssue;
     }

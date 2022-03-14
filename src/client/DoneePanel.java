@@ -271,11 +271,11 @@ public class DoneePanel implements Panel {
         } while (confirm.toUpperCase().equals("Y"));
     }
 
-    public static void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public  void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
         Donee.doneeTable(doneeDB);
     }
 
-    public static void searchDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public  void searchDonee(CircularLinkedQueue<Donee> doneeDB) {
 
         Donee[] doneeArray = new Donee[doneeDB.getLength()];
         doneeArray = doneeDB.toArray(doneeArray);
