@@ -7,10 +7,7 @@ package client;
 
 import java.util.Scanner;
 import adt.SinglyLinkedList;
-import adt.SinglyLinkedListInterface;
 import entity.Donor;
-import entity.Account;
-import java.util.Iterator;
 
 /**
  *
@@ -76,6 +73,7 @@ public class DonorPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         System.out.println("1.Add new Donor");
         System.out.println("2.View donor list");
         System.out.println("3.Update donor list");

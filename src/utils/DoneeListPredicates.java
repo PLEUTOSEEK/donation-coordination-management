@@ -82,6 +82,7 @@ public class DoneeListPredicates implements Inputs {
 
     public static String DoneeListSrchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. Donee list ID\n");
         menu.append("02. Donee list date join after\n");
         menu.append("03. Donee list date join before or equal\n");

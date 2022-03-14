@@ -82,6 +82,7 @@ public class DonorListPredicates implements Inputs {
     //</editor-fold>
     public static String donorListSrchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. donor list ID\n");
         menu.append("02. donor list date join after\n");
         menu.append("03. donor list date join before or equal\n");

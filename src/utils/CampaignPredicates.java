@@ -68,6 +68,7 @@ public class CampaignPredicates implements Inputs {
 
     public static String campaignSearchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. campaign start date after \n");
         menu.append("02. campaign start date before or equal \n");
         menu.append("03. campaign end date after \n");

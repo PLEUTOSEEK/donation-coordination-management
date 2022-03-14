@@ -35,7 +35,7 @@ class DoneeListPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -61,13 +61,13 @@ class DoneeListPanel implements Panel {
                     System.out.println("Index not correct...");
             }
 
-        } while (option != 7);
+        } while (option != 6);
     }
 
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new donee list \n");
         menu.append("2. Display donee list \n");
         menu.append("3. Search donee list \n");
@@ -96,7 +96,7 @@ class DoneeListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
             campaign = new Campaign();
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
@@ -108,10 +108,10 @@ class DoneeListPanel implements Panel {
                         Donee.doneeTable(doneeDB);
 
                         if (doneeDB.getFront() != null) {
-                            System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                            System.out.print("Enter date join [dd. MMM. yyyy]: ");
                             doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
-                            System.out.println("Confirm add donee ? (Y/N)");
+                            System.out.print("Confirm add donee ? (Y/N) ");
 
                             confirmation = input.nextLine();
 
@@ -133,7 +133,7 @@ class DoneeListPanel implements Panel {
                             System.out.println("No donee need help, add donee abort");
                         }
 
-                        System.out.println("Continue add donee to this campaign ? (Y/N)");
+                        System.out.print("Continue add donee to this campaign ? (Y/N) ");
                         option = input.nextLine();
 
                         System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -195,7 +195,7 @@ class DoneeListPanel implements Panel {
                     do {
                         System.out.println(doneeListUpdateMenu());
                         validIndex = true;
-                        System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
                         indexSelected = input.nextLine();
 
                         String[] splitIndex = indexSelected.split("\\s+");
@@ -263,7 +263,7 @@ class DoneeListPanel implements Panel {
 
     public String doneeListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Donee Join Date\n");
 
         return menu.toString();
