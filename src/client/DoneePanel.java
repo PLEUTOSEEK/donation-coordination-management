@@ -116,12 +116,12 @@ public class DoneePanel implements Panel {
                 doneeDB.enqueue(donee);
             }
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "\nAdded successfully" : "\nAdd failed..");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add failed...");
 
-            System.out.print("Continue add donee? (Y/N)");
+            System.out.print("\nContinue add donee? (Y/N)");
             opt = s.nextLine();
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add donee" : " ");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add..." : "Return to donee main page");
 
         } while (opt.toUpperCase().equals("Y"));
 
@@ -247,31 +247,30 @@ public class DoneePanel implements Panel {
                         }
 
                         if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update ? (Y/N)");
+                            System.out.print("Confirm update ? (Y/N)");
                             confirm = s.nextLine();
 
                             if (confirm.toUpperCase().equals("Y")) {
-
                                 doneeDB.modify(donee, donee);
                             }
 
-                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully" : "Update failed...");
+                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update failed...");
                             validIndex = false;
                         } else {
                             System.out.println("No data selected");
+                            
                         }
                     }
-                }
+                } //else {
+//                    System.out.println("Donee ID not found...");
+//                }
 
                 temp.enqueue(doneeDB.dequeue());
 
             }
-            //} else {
-//                System.out.println("Donee ID not found...");
-//            }
 
             doneeDB = temp;
-            System.out.println("Continue update donee ? (Y/N)");
+            System.out.print("Continue update donee ? (Y/N)");
             opt = s.nextLine();
 
         } while (opt.toUpperCase().equals("Y"));
