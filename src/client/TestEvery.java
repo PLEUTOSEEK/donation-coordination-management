@@ -16,14 +16,19 @@ import java.time.LocalDate;
 public class TestEvery {
 
     public static void main(String[] args) {
-        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
+        //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
-        //DoneePanel doneeP = new DoneePanel();
+        DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
-//        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
+        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+<<<<<<< HEAD
+=======
+
+//        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+>>>>>>> a3a3ad55997f25bd9d9c6bde15fe0494e8cf4bdc
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
 //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
 //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
@@ -53,8 +58,14 @@ public class TestEvery {
 //
 //        MainPanel mainPanel = new MainPanel();
 //        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
+<<<<<<< HEAD
 //      doneeP.doneePanel(doneeDB);
         //         donor.donorPanel(donorDB);
+=======
+      doneeP.doneePanel(doneeDB);
+ //         donor.donorPanel(donorDB);
+
+>>>>>>> a3a3ad55997f25bd9d9c6bde15fe0494e8cf4bdc
     }
 
 }

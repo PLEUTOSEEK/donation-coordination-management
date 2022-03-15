@@ -13,7 +13,7 @@ import com.github.javafaker.Faker;
  *
  * @author junyao
  */
-public class Donee extends Account implements Comparable<Donee> {
+public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     private String requestIssue, status;
     private double requestAmount;
@@ -243,5 +243,11 @@ public class Donee extends Account implements Comparable<Donee> {
         lastDoneeID = newDoneeID;
 
         return lastDoneeID;
+    }
+    
+        @Override
+    public Donee clone() throws CloneNotSupportedException {
+        Donee cloned = (Donee) super.clone();
+        return cloned;
     }
 }
