@@ -11,7 +11,7 @@ import com.github.javafaker.Faker;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Sponsor extends Account implements Comparable<Sponsor> {
+public class Sponsor extends Account implements Comparable<Sponsor>, Cloneable {
 
     private String companyName;
     private static String lastSponsorID = "";
@@ -37,6 +37,14 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public static String getLastSponsorID() {
+        return lastSponsorID;
+    }
+
+    public static void setLastSponsorID(String lastSponsorID) {
+        Sponsor.lastSponsorID = lastSponsorID;
     }
 
     @Override
@@ -148,6 +156,12 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
         }
 
         return dummySponsor;
+    }
+
+    @Override
+    public Sponsor clone() throws CloneNotSupportedException {
+        Sponsor cloned = (Sponsor) super.clone();
+        return cloned;
     }
 
     public boolean isInActive() {

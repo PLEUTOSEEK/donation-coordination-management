@@ -23,47 +23,43 @@ import java.time.LocalDate;
 public class TestEvery {
 
     public static void main(String[] args) throws CloneNotSupportedException {
-<<<<<<< HEAD
-        //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
+        //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 //        DoneePanel doneeP = new DoneePanel();
-        DonorPanel donor = new DonorPanel();
+        //DonorPanel donor = new DonorPanel();
+        SponsorPanel sponsor = new SponsorPanel();
 
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-=======
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
         DoneeListPanel doneeL = new DoneeListPanel();
 
-        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
-
+        //DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
->>>>>>> 2a9317aba9895c11a6cb3c8dab5ffc5e96c5bff3
-
-        
-        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+        DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
+//SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
-//        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S003", "AAA", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S004", "QQQ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S005", "TTT", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S006", "WWW", 'M', "0112", "cc@gmail1.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S007", "PPP", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S008", "agyj", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S009", "dfg", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
-//        sponsorDB.addLast(new Sponsor("S010", "yuio", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S003", "AAA", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S004", "QQQ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S005", "TTT", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S006", "WWW", 'M', "0112", "cc@gmail1.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S007", "PPP", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S008", "agyj", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S009", "dfg", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
+        //        sponsorDB.addLast(new Sponsor("S010", "yuio", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //</editor-fold>
-//        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
-//
+        //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
+        //
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
 //
 //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
@@ -80,15 +76,14 @@ public class TestEvery {
 //        MainPanel mainPanel = new MainPanel();
 //        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
 //      doneeP.doneePanel(doneeDB);
-<<<<<<< HEAD
-          donor.donorPanel(donorDB);
-=======
-        //         donor.donorPanel(donorDB);
-        doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
-//        doneeP.controlPanel(doneeDB);
-        //         donor.donorPanel(donorDB);
->>>>>>> 2a9317aba9895c11a6cb3c8dab5ffc5e96c5bff3
 
+        //donor.donorPanel(donorDB);
+        sponsor.controlPanel(sponsorDB);
+
+        //         donor.donorPanel(donorDB);
+        //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
+        //        doneeP.controlPanel(doneeDB);
+        //         donor.donorPanel(donorDB);
     }
 
 }
