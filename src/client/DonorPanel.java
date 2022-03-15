@@ -186,16 +186,20 @@ public class DonorPanel implements Panel {
                 boolean optvalidation = true;
 
                 do {
+                    
                     System.out.println(updateDataMenu().toString());
                     optvalidation = true;
-                    System.out.println("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
+                    System.out.print("\nEnter the number want to update, if multiple index leave space at between [1 5 6]: ");
                     opt = sc.nextLine();
 
                     String[] splitOpt = opt.split("\\s+");
                     int[] optSplit = new int[splitOpt.length];
 
                     for (int i = 0; i < splitOpt.length; i++) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> d0649dbd035524025c1ed5a72416cca6e9cd3b03
                         try {
                             optSplit[i] = Integer.valueOf(splitOpt[i]);
                         } catch (Exception e) {
@@ -259,11 +263,11 @@ public class DonorPanel implements Panel {
                                     donorType = donor.getDonorType();
                                     sc.nextLine();
                                     if (donorType == "organization") {
-                                        System.out.println("Register No  :");
+                                        System.out.print("\nRegister No  :");
                                         donor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     } else {
-                                        System.out.println("NRIC           :");
+                                        System.out.print("\nNRIC           :");
                                         donor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     }
@@ -271,7 +275,7 @@ public class DonorPanel implements Panel {
 
                                 case 5:
                                     sc.nextLine();
-                                    System.out.println("Email        :");
+                                    System.out.print("\nEmail        :");
                                     donor.setEmail(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
@@ -306,7 +310,7 @@ public class DonorPanel implements Panel {
                             System.out.print("\nConfirm update (Y/N)");
                             option = sc.next().charAt(0);
                             if (option == 'Y' || option == 'y') {
-                                donorDB.replace(donor, donorDB.getDataCount());
+                                donorDB.replace(donor, donorDB.indexOf(donor));
                                 System.out.println("\nUpdate successfully...");
                             } else {
                                 System.out.println("\nUpdate abort...");
@@ -317,6 +321,7 @@ public class DonorPanel implements Panel {
                 } while (optvalidation == false);
             }
             System.out.print("\nContinue update (Y/N):");
+<<<<<<< HEAD
 
             switch (optSplit[i]) {
                 case 1: {
@@ -444,6 +449,8 @@ public class DonorPanel implements Panel {
 }
 while (optvalidation == false);
             System.out.print("Continue update campaign ? (Y/N) ");
+=======
+>>>>>>> d0649dbd035524025c1ed5a72416cca6e9cd3b03
             option = sc.next().charAt(0);
         } while (option == 'Y' || option == 'y');
 
