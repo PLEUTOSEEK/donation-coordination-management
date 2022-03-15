@@ -89,6 +89,7 @@ class SponsorListPanel implements Panel {
         SponsorList sponsorList = new SponsorList();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         boolean hasSponsor = true;
+        String oriLastID = SponsorList.getLastSponsorListID();
 
         do {
 
@@ -104,6 +105,7 @@ class SponsorListPanel implements Panel {
 
                     do {
                         do {
+                            oriLastID = SponsorList.getLastSponsorListID();
                             sponsorList = new SponsorList();
                             hasSponsor = true;
                             Sponsor.sponsorTable(sponsorDB);
@@ -149,6 +151,8 @@ class SponsorListPanel implements Panel {
 
                             if (confirmation.toUpperCase().equals("Y")) {
                                 sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                            } else {
+                                SponsorList.setLastSponsorListID(oriLastID);
                             }
 
                             System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");

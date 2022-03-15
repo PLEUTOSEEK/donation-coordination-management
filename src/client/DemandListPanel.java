@@ -129,6 +129,7 @@ class DemandListPanel implements Panel {
         Campaign campaign = new Campaign();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("H:mm:ss");
+        String originalLastID = DemandList.getLastDemandID();
 
         do {
 
@@ -142,7 +143,7 @@ class DemandListPanel implements Panel {
                 if (campaign.isPermanentDelete() == false) {
 
                     do {
-
+                        originalLastID = DemandList.getLastDemandID();
                         demandList.setCampaign(campaign);
                         System.out.print("Enter demand name: ");
                         demandList.setDemandName(input.nextLine());
@@ -166,6 +167,8 @@ class DemandListPanel implements Panel {
 
                         if (confirmation.toUpperCase().equals("Y")) {
                             demandListDB.addData(demandList.getDateRegister(), demandList);
+                        } else {
+                            DemandList.setLastDemandID(originalLastID);
                         }
 
                         System.out.println(confirmation.toUpperCase().equals("Y") ? "Added demand successfully" : "Add demand abort");
@@ -323,6 +326,8 @@ class DemandListPanel implements Panel {
                         demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
                         demandListDB.updateData(demandList.getDateRegister(), demandList);
                     }
+                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Demand Inactive Successfully" : "Inactive demand abort");
+
                 } else {
                     System.out.println("Campaign with permanent inactive status unable to perform modification");
                 }
