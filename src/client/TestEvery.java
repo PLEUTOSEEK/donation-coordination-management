@@ -26,15 +26,16 @@ import java.time.LocalDate;
 public class TestEvery {
 
     public static void main(String[] args) {
-        //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
+        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
-        DoneePanel doneeP = new DoneePanel();
+        //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
+        DoneeListPanel doneeL = new DoneeListPanel();
 
-//        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
+        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
-//        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
-//         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
+         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
 
 //        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
@@ -51,7 +52,7 @@ public class TestEvery {
         //</editor-fold>
 //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
 //
-//        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
+        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
 //
 //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
 //        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
@@ -66,8 +67,9 @@ public class TestEvery {
 //
 //        MainPanel mainPanel = new MainPanel();
 //        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
-      doneeP.doneePanel(doneeDB);
+//      doneeP.doneePanel(doneeDB);
  //         donor.donorPanel(donorDB);
+        doneeL.controlPanel(campaignDB,doneeDB,doneeInHelpDB,doneeListDB);
 
     }
 

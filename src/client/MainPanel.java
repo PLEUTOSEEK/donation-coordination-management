@@ -25,7 +25,7 @@ import java.util.Scanner;
  * @author Tee Zhuo Xuan
  */
 public class MainPanel implements Panel {
-
+    
     public void controlPanel(
             RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
@@ -34,15 +34,16 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
         CampaignPanel campaignPanel = new CampaignPanel();
-
+        DoneePanel doneePa = new DoneePanel();
+        
         Scanner input = new Scanner(System.in);
         int option = 0;
-
+        
         do {
             System.out.println(menu());
             System.out.print("Option: ");
             option = input.nextInt();
-
+            
             switch (option) {
                 case 1:
                     System.out.println();
@@ -51,6 +52,7 @@ public class MainPanel implements Panel {
                     System.out.println("TRY");
                     break;
                 case 3:
+                    doneePa.doneePanel(doneeDB);
                     break;
                 case 4:
                     campaignPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
@@ -63,10 +65,10 @@ public class MainPanel implements Panel {
                 default:
                     System.out.println("Index not correct...");
             }
-
+            
         } while (option != 7);
     }
-
+    
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
@@ -77,43 +79,43 @@ public class MainPanel implements Panel {
         menu.append("4. Campaign\n");
         menu.append("5. Sponsor\n");
         menu.append("6. Exit\n");
-
+        
         return menu.toString();
     }
-
+    
     @Override
     public void add() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void display() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void exit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void controlPanel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
