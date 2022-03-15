@@ -186,7 +186,7 @@ public class DonorPanel implements Panel {
                 boolean optvalidation = true;
 
                 do {
-                    
+
                     System.out.println(updateDataMenu().toString());
                     optvalidation = true;
                     System.out.print("\nEnter the number want to update, if multiple index leave space at between [1 5 6]: ");
