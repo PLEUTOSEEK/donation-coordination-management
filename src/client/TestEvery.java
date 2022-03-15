@@ -33,7 +33,6 @@ public class TestEvery {
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-<<<<<<< HEAD
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         //DoneePanel doneeP = new DoneePanel();
@@ -47,22 +46,17 @@ public class TestEvery {
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
 //SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-=======
-//        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
+//        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
 //        DoneeListPanel doneeL = new DoneeListPanel();
-
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
-
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
- //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
+        //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         //       SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-
-        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
->>>>>>> d0649dbd035524025c1ed5a72416cca6e9cd3b03
+        //SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
         //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
@@ -75,15 +69,13 @@ public class TestEvery {
         //        sponsorDB.addLast(new Sponsor("S009", "dfg", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //        sponsorDB.addLast(new Sponsor("S010", "yuio", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //</editor-fold>
-<<<<<<< HEAD
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
-=======
+
 //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
 //
 //        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
->>>>>>> d0649dbd035524025c1ed5a72416cca6e9cd3b03
 //
 //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
 //        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
@@ -97,19 +89,13 @@ public class TestEvery {
 //        DemandList.demandTable(demandListDB);
 //
 //        MainPanel mainPanel = new MainPanel();
-//        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
-<<<<<<< HEAD
 //      doneeP.doneePanel(doneeDB);
-=======
 //      doneeP.doneePanel(doneeDB
-        donor.donorPanel(donorDB);
-
+        //donor.donorPanel(donorDB);
         //         donor.donorPanel(donorDB);
- //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
+        //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
->>>>>>> d0649dbd035524025c1ed5a72416cca6e9cd3b03
-
         //donor.donorPanel(donorDB);
         sponsor.controlPanel(sponsorDB);
 
