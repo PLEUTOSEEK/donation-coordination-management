@@ -196,10 +196,6 @@ public class DonorPanel implements Panel {
                     int[] optSplit = new int[splitOpt.length];
 
                     for (int i = 0; i < splitOpt.length; i++) {
-                         << << << < HEAD
-
-  == == ==
-                                =  >>> >>> > d0649dbd035524025c1ed5a72416cca6e9cd3b03
                         try {
                             optSplit[i] = Integer.valueOf(splitOpt[i]);
                         } catch (Exception e) {
@@ -321,46 +317,12 @@ public class DonorPanel implements Panel {
                 } while (optvalidation == false);
             }
             System.out.print("\nContinue update (Y/N):");
-            while (optvalidation == false);
-            System.out.print("Continue update campaign ? (Y/N) ");
-
             option = sc.next().charAt(0);
         } while (option == 'Y' || option == 'y');
 
     }
 
-    @Override
-    public void add() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void search() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void exit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-}
-
-public void delete(SinglyLinkedList<Donor> donorDB) {
+    public void delete(SinglyLinkedList<Donor> donorDB) {
         Scanner sc = new Scanner(System.in);
         String id = "";
         String donorID = "";
@@ -421,33 +383,32 @@ public void delete(SinglyLinkedList<Donor> donorDB) {
     }
 
     @Override
-        public void exit() {
+    public void add() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void add() {
+    public void display() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void display() {
+    public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void update() {
+    public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void delete() {
+    public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public void search() {
+    public void exit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
