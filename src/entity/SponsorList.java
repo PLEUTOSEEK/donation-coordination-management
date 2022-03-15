@@ -5,16 +5,21 @@
  */
 package entity;
 
+import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import com.bethecoder.ascii_table.ASCIITable;
+import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 /**
  *
  * @author Tee Zhuo Xuan
  */
-public class SponsorList implements Comparable<SponsorList> {
+public class SponsorList implements Comparable<SponsorList>, Cloneable {
 
     private String sponsorListID;
     private Sponsor sponsor;
@@ -22,7 +27,7 @@ public class SponsorList implements Comparable<SponsorList> {
     private LocalDate dateJoin;
     private Timestamp dateModified;
     private String status;
-    private static String lastSponsorListID;
+    private static String lastSponsorListID = "";
 
     public SponsorList() {
     }
@@ -112,7 +117,7 @@ public class SponsorList implements Comparable<SponsorList> {
 
         if (o instanceof SponsorList) {
             SponsorList other = (SponsorList) o;
-            if (this.sponsorListID == other.getSponsorListID()) {
+            if (this.sponsorListID.equalsIgnoreCase(other.getSponsorListID())) {
                 return true;
             } else {
                 return false;
@@ -123,17 +128,18 @@ public class SponsorList implements Comparable<SponsorList> {
     }
 
     private static String[] sponsorListHeaders() {
-        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID"};
+        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID", "Sponsor Name", "Sponsor Email", "Sponsor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Sponsor Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{sponsorListID, sponsor.accountID};
+        return new String[]{sponsorListID, sponsor.accountID, sponsor.name, sponsor.email, sponsor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
-        SponsorList[] sponsorList = sponsorListDB.getAllArrayList();
+        SponsorList[] sponsorList = new SponsorList[sponsorListDB.getAllList().getLength()];
+        sponsorList = sponsorListDB.getAllArrayList(sponsorList);
         String[][] sponsorListRows = new String[sponsorList.length][];
         for (int i = 0; i < sponsorList.length; i++) {
             sponsorListRows[i] = sponsorList[i].strArr();
@@ -165,8 +171,66 @@ public class SponsorList implements Comparable<SponsorList> {
         return lastSponsorListID;
     }
 
-    public RedBlackTree<LocalDate, SponsorList> generateDummySponsorList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RedBlackTree<LocalDate, SponsorList> generateDummySponsorList(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB) {
+
+        RedBlackTree<LocalDate, SponsorList> dummySponsorList = new RedBlackTree<>();
+        //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
+        Faker faker = new Faker();
+        LocalDateTimeRangeRandomizer randomLDTR;
+        LocalDateTime randomLDT;
+        LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
+        //</editor-fold>
+        int counter = 1;
+        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+
+        SponsorList sponsorList = new SponsorList();
+
+        while (counter <= campaigns.getLength()) {
+
+            Campaign campaign = campaigns.getAt(counter);
+            int randomTtl = faker.number().numberBetween(1, 3);
+            for (int record = 0; record < randomTtl; record++) {
+                SponsorList[] sponsorListArr = new SponsorList[dummySponsorList.getAllList().getLength()];
+                sponsorListArr = dummySponsorList.getAllArrayList(sponsorListArr);
+                Sponsor sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
+
+                sponsorList = new SponsorList();
+                sponsorList.setSponsorListID(autoGenerateID());
+                sponsorList.setCampaign(campaign);
+                //<editor-fold defaultstate="collapsed" desc="sponsor check constraint">
+
+                if (sponsorListArr != null) {
+
+                    for (int i = 0; i < sponsorListArr.length; i++) {
+                        sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
+                        if (sponsorListArr[i].getCampaign().equals(campaign) && sponsorListArr[i].getSponsor().equals(sponsor)) {
+                            sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
+                            i = 0;
+                        }
+                    }
+                }
+
+                //</editor-fold>
+                sponsorList.setSponsor(sponsor);
+                sponsorList.setStatus("Active");
+                sponsorList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));
+                sponsorList.setDateModified(Timestamp.valueOf(sponsorList.dateJoin.plusDays(faker.number().numberBetween(0, 6)).atStartOfDay()));
+                dummySponsorList.addData(sponsorList.getDateJoin(), sponsorList);
+
+            }
+            counter++;
+        }
+
+        return dummySponsorList;
     }
 
+    @Override
+    public SponsorList clone() throws CloneNotSupportedException {
+        SponsorList cloned = (SponsorList) super.clone();
+        return cloned;
+    }
 }

@@ -5,8 +5,10 @@
  */
 package client;
 
+import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
 import entity.Donee;
@@ -28,17 +30,19 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
-            DoublyLinkedList<Donee> doneeDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, DoublyLinkedList<Donor> donorDB,
+            CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) {
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
         CampaignPanel campaignPanel = new CampaignPanel();
+
+        DoneePanel doneePanel = new DoneePanel();
 
         Scanner input = new Scanner(System.in);
         int option = 0;
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -49,9 +53,10 @@ public class MainPanel implements Panel {
                     System.out.println("TRY");
                     break;
                 case 3:
+                    doneePanel.controlPanel(doneeDB);
                     break;
                 case 4:
-                    campaignPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeListDB, donorDB, donorListDB, demandListDB);
+                    campaignPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
                     break;
                 case 5:
                     break;
@@ -68,7 +73,7 @@ public class MainPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Sponsor\n");
         menu.append("2. Donor\n");
         menu.append("3. Donee\n");

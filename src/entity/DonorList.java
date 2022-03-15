@@ -5,16 +5,22 @@
  */
 package entity;
 
+import adt.DoublyLinkedList;
 import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
+import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 /**
  *
  * @author Tee Zhuo Xuan
  */
-public class DonorList implements Comparable<DonorList> {
+public class DonorList implements Comparable<DonorList>, Cloneable {
 
     private String donorListID;
     private Donor donor;
@@ -22,7 +28,7 @@ public class DonorList implements Comparable<DonorList> {
     private LocalDate dateJoin;
     private Timestamp dateModified;
     private String status;
-    private static String lastDonorListID;
+    private static String lastDonorListID = "";
 
     public DonorList() {
     }
@@ -38,6 +44,10 @@ public class DonorList implements Comparable<DonorList> {
         this.dateJoin = dateJoin;
         this.dateModified = dateModified;
         this.status = status;
+    }
+
+    public static void setLastDonorListID(String lastDonorListID) {
+        DonorList.lastDonorListID = lastDonorListID;
     }
 
     public String getStatus() {
@@ -108,7 +118,7 @@ public class DonorList implements Comparable<DonorList> {
 
         if (o instanceof DonorList) {
             DonorList other = (DonorList) o;
-            if (this.donorListID == other.getDonorListID()) {
+            if (this.donorListID.equalsIgnoreCase(other.getDonorListID())) {
                 return true;
             } else {
                 return false;
@@ -119,17 +129,19 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     private static String[] donorListHeaders() {
-        String[] campaignHeaders = {"Donor List ID", "Donor ID"};
+        String[] campaignHeaders = {"Donor List ID", "Donor ID", "Donor Name", "Donor Email", "Donor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donor Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{donorListID, donor.getDonorID()};
+
+        return new String[]{donorListID, donor.accountID, donor.name, donor.email, donor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {
-        DonorList[] donorList = donorListDB.getAllArrayList();
+        DonorList[] donorList = new DonorList[donorListDB.getAllList().getLength()];
+        donorList = donorListDB.getAllArrayList(donorList);
         String[][] donorListRows = new String[donorList.length][];
         for (int i = 0; i < donorList.length; i++) {
             donorListRows[i] = donorList[i].strArr();
@@ -138,10 +150,10 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     public static void donorListTable(RedBlackTree<LocalDate, DonorList> donorDB) {
-        String[] doneeListHeader = DonorList.donorListHeaders();
-        String[][] doneeListData = DonorList.donorListRows(donorDB);
+        String[] donorListHeader = DonorList.donorListHeaders();
+        String[][] donorListData = DonorList.donorListRows(donorDB);
 
-        ASCIITable.getInstance().printTable(doneeListHeader, doneeListData);
+        ASCIITable.getInstance().printTable(donorListHeader, donorListData);
     }
 
     public String autoGenerateID() {
@@ -161,12 +173,62 @@ public class DonorList implements Comparable<DonorList> {
         return lastDonorListID;
     }
 
-    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList(RedBlackTree<LocalDate, Campaign> campaignDB, SinglyLinkedList<Donor> donorDB) {
+        RedBlackTree<LocalDate, DonorList> dummyDonorList = new RedBlackTree<>();
+        //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
+        Faker faker = new Faker();
+        LocalDateTimeRangeRandomizer randomLDTR;
+        LocalDateTime randomLDT;
+        LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
+        //</editor-fold>
+        int counter = 1;
+        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+
+        DonorList donorList = new DonorList();
+
+        while (counter <= campaigns.getLength()) {
+
+            Campaign campaign = campaigns.getAt(counter);
+            int randomTtl = faker.number().numberBetween(1, 3);
+
+            for (int record = 0; record < randomTtl; record++) {
+                DonorList[] donorListArr = new DonorList[dummyDonorList.getAllList().getLength()];
+                donorListArr = dummyDonorList.getAllArrayList(donorListArr);
+                Donor donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
+
+                donorList = new DonorList();
+                donorList.setDonorListID(autoGenerateID());
+                donorList.setCampaign(campaign);
+                //<editor-fold defaultstate="collapsed" desc="sponsor check constraint">
+                if (donorListArr != null) {
+
+                    for (int i = 0; i < donorListArr.length; i++) {
+                        donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
+                        if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(donor)) {
+                            donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
+                            i = 0;
+                        }
+                    }
+                }
+
+                //</editor-fold>
+                donorList.setDonor(donor);
+                donorList.setStatus("Active");
+                donorList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));
+                donorList.setDateModified(Timestamp.valueOf(donorList.dateJoin.plusDays(faker.number().numberBetween(0, 6)).atStartOfDay()));
+                dummyDonorList.addData(donorList.getDateJoin(), donorList);
+            }
+            counter++;
+        }
+
+        return dummyDonorList;
     }
 
-    public RedBlackTree<LocalDate, DemandList> generateDummyDemandList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public DonorList clone() throws CloneNotSupportedException {
+        DonorList cloned = (DonorList) super.clone();
+        return cloned;
     }
-
 }

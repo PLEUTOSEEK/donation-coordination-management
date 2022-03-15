@@ -5,16 +5,22 @@
  */
 package entity;
 
+import adt.CircularLinkedQueue;
+import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import com.bethecoder.ascii_table.ASCIITable;
+import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 /**
  *
  * @author Tee Zhuo Xuan
  */
-public class DoneeList implements Comparable<DoneeList> {
+public class DoneeList implements Comparable<DoneeList>, Cloneable {
 
     private String doneeListID;
     private Donee donee;
@@ -22,7 +28,7 @@ public class DoneeList implements Comparable<DoneeList> {
     private LocalDate dateJoin;
     private Timestamp dateModified;
     private String status;
-    private static String lastDoneeListID;
+    private static String lastDoneeListID = "";
 
     public DoneeList() {
     }
@@ -112,7 +118,7 @@ public class DoneeList implements Comparable<DoneeList> {
 
         if (o instanceof DoneeList) {
             DoneeList other = (DoneeList) o;
-            if (this.doneeListID == other.getDoneeListID()) {
+            if (this.doneeListID.equalsIgnoreCase(other.getDoneeListID())) {
                 return true;
             } else {
                 return false;
@@ -123,17 +129,18 @@ public class DoneeList implements Comparable<DoneeList> {
     }
 
     private static String[] doneeListHeaders() {
-        String[] campaignHeaders = {"Donee List ID", "Donee ID"};
+        String[] campaignHeaders = {"Donee List ID", "Donee ID", "Donee Name", "Donee Email", "Donee Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donee Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{doneeListID, donee.getDoneeID()};
+        return new String[]{doneeListID, donee.accountID, donee.name, donee.email, donee.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
-        DoneeList[] doneeLists = doneeListDB.getAllArrayList();
+        DoneeList[] doneeLists = new DoneeList[doneeListDB.getAllList().getLength()];
+        doneeLists = doneeListDB.getAllArrayList(doneeLists);
         String[][] doneeListRows = new String[doneeLists.length][];
         for (int i = 0; i < doneeLists.length; i++) {
             doneeListRows[i] = doneeLists[i].strArr();
@@ -165,7 +172,52 @@ public class DoneeList implements Comparable<DoneeList> {
         return lastDoneeListID;
     }
 
-    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(RedBlackTree<LocalDate, Campaign> campaignDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB) {
+
+        RedBlackTree<LocalDate, DoneeList> dummyDoneeList = new RedBlackTree<>();
+        //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
+        Faker faker = new Faker();
+        LocalDateTimeRangeRandomizer randomLDTR;
+        LocalDateTime randomLDT;
+        LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
+        //</editor-fold>
+        int counter = 1;
+        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+
+        DoneeList doneeList = new DoneeList();
+
+        while (counter <= campaigns.getLength()) {
+
+            Campaign campaign = campaigns.getAt(counter);
+            int randomTtl = faker.number().numberBetween(1, 3);
+
+            for (int record = 0; record < randomTtl; record++) {
+
+                DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getAllList().getLength()];
+                doneeListArr = dummyDoneeList.getAllArrayList(doneeListArr);
+                Donee donee = doneeDB.dequeue();
+                doneeInHelpDB.addLast(donee);
+                doneeList = new DoneeList();
+                doneeList.setDoneeListID(autoGenerateID());
+                doneeList.setCampaign(campaign);
+                doneeList.setDonee(donee);
+                doneeList.setStatus("Active");
+                doneeList.setDateJoin(campaign.getCampaignRegisterDate().plusDays(faker.number().numberBetween(4, 14)));
+                doneeList.setDateModified(Timestamp.valueOf(doneeList.dateJoin.plusDays(faker.number().numberBetween(0, 6)).atStartOfDay()));
+                dummyDoneeList.addData(doneeList.getDateJoin(), doneeList);
+            }
+            counter++;
+        }
+
+        return dummyDoneeList;
     }
+
+    @Override
+    public DoneeList clone() throws CloneNotSupportedException {
+        DoneeList cloned = (DoneeList) super.clone();
+        return cloned;
+    }
+
 }

@@ -15,19 +15,21 @@ public abstract class Account {
     protected String phoneNo;
     protected String address;
     protected static String lastId;
+    protected String status;
 
     public Account() {
 
     }
 
-    public Account(String name, char gender, String ic, String email, String phoneNo, String address) {
-        this.accountID = autoGenerateID();
+    public Account(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String status) {
+        this.accountID = accountID;
         this.name = name;
         this.gender = gender;
         this.ic = ic;
         this.email = email;
         this.phoneNo = phoneNo;
         this.address = address;
+        this.status = status;
     }
 
     public String getAccountID() {
@@ -84,6 +86,18 @@ public abstract class Account {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Account(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     // need to have auto generate ID

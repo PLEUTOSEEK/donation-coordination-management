@@ -29,4 +29,12 @@ public interface QueueInterface<T> {
     public Iterator<T> getIterator();
 
     public void modify(T oldEntry, T newEntry);
+
+    public T[] get(CircularLinkedQueue q);
+
+    public T[] toArray(T[] array);
+
+    public int indexOf(T element);
+
+    public boolean contains(T element);
 }
