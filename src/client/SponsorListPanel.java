@@ -26,7 +26,7 @@ class SponsorListPanel implements Panel {
             RedBlackTree<LocalDate, Campaign> campaignDB,
             DoublyLinkedList<Sponsor> sponsorDB,
             RedBlackTree<LocalDate, SponsorList> sponsorListDB
-    ) {
+    ) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -89,6 +89,7 @@ class SponsorListPanel implements Panel {
         SponsorList sponsorList = new SponsorList();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         boolean hasSponsor = true;
+        String oriLastID = SponsorList.getLastSponsorListID();
 
         do {
 
@@ -100,13 +101,13 @@ class SponsorListPanel implements Panel {
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 campaign = campaignDB.get(new Campaign(campaignID));
-                if (campaign.getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                if (campaign.isPermanentDelete() == false) {
 
                     do {
                         do {
+                            oriLastID = SponsorList.getLastSponsorListID();
                             sponsorList = new SponsorList();
                             hasSponsor = true;
-                            SponsorList.sponsorListTable(sponsorListDB);
                             Sponsor.sponsorTable(sponsorDB);
                             System.out.print("Enter sponsor ID: ");
                             lastSponsorID = input.nextLine();
@@ -135,25 +136,30 @@ class SponsorListPanel implements Panel {
                         } while (hasSponsor == false);
 
                         sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
+                        if (sponsor.isInActive() == false) {
 
-                        sponsorList.setCampaign(campaign);
-                        sponsorList.setSponsor(sponsor);
-                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
-                        sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                        sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                        sponsorList.setStatus("Active");
-                        sponsorList.setSponsorListID(sponsorList.autoGenerateID());
+                            sponsorList.setCampaign(campaign);
+                            sponsorList.setSponsor(sponsor);
+                            System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                            sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                            sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                            sponsorList.setStatus("Active");
+                            sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
-                        System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
-                        confirmation = input.nextLine();
+                            System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
+                            confirmation = input.nextLine();
 
-                        if (confirmation.toUpperCase().equals("Y")) {
-                            sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                            } else {
+                                SponsorList.setLastSponsorListID(oriLastID);
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
+                        } else {
+                            System.out.println("Sponsor is in inactive status, please try again the other sponsor...");
                         }
-
-                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
-
-                        System.out.println("Continue add sponsor to this campaign ? (Y/N)");
+                        System.out.print("Continue add sponsor to this campaign ? (Y/N) ");
                         option = input.nextLine();
 
                     } while (option.trim().toUpperCase().equals("Y"));
@@ -164,7 +170,7 @@ class SponsorListPanel implements Panel {
                 System.out.println("Campaign ID not found, add sponsor abort");
             }
 
-            System.out.println("Continue add sponsor ? (Y/N)");
+            System.out.print("Continue add sponsor ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -185,14 +191,13 @@ class SponsorListPanel implements Panel {
     public String sponsorListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
         System.out.println();
-        menu.append("1. Sponsor\n");
-        menu.append("2. Sponsor Join Date\n");
+        menu.append("1. Sponsor Join Date\n");
 
         return menu.toString();
 
     }
 
-    public void update(DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
+    public void update(DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB) throws CloneNotSupportedException {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -207,12 +212,12 @@ class SponsorListPanel implements Panel {
         do {
             SponsorList.sponsorListTable(sponsorListDB);
 
-            System.out.println("Enter sponsor list ID: ");
+            System.out.print("Enter sponsor list ID: ");
             sponsorListID = input.nextLine();
 
             if (sponsorListDB.contains(new SponsorList(sponsorListID)) == true) {
-                sponsorList = sponsorListDB.get(new SponsorList(sponsorListID));
-                if (sponsorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                sponsorList = sponsorListDB.get(new SponsorList(sponsorListID)).clone();
+                if (sponsorList.getCampaign().isPermanentDelete() == false) {
 
                     oriJoinDate = sponsorList.getDateJoin();
                     boolean validIndex = true;
@@ -239,33 +244,6 @@ class SponsorListPanel implements Panel {
                             for (int i = 0; i < splitIndexInt.length; i++) {
                                 switch (splitIndexInt[i]) {
                                     case 1:
-                                        do {
-                                            hasSponsor = true;
-                                            Sponsor.sponsorTable(sponsorDB);
-                                            System.out.print("Enter Sponsor ID: ");
-                                            lastSponsorID = input.nextLine();
-
-                                            if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
-                                                SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
-                                                sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
-                                                for (int j = 0; j < sponsorListArr.length; j++) {
-                                                    if (sponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && sponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
-                                                        hasSponsor = false;
-                                                        break;
-                                                    }
-                                                }
-                                                if (hasSponsor == false) {
-                                                    System.out.println("Sponsor ID exist in the campaign already, try again the other Sponsor");
-                                                }
-                                            } else {
-                                                hasSponsor = false;
-                                                System.out.println("Sponsor ID not found, try again");
-                                            }
-                                        } while (hasSponsor == false);
-                                        sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID))));
-                                        hasUpdateSomething = true;
-                                        break;
-                                    case 2:
                                         System.out.print("Enter the new Sponsor join date [dd. MMM. yyyy]: ");
                                         sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
@@ -276,8 +254,8 @@ class SponsorListPanel implements Panel {
                                 }
                             }
 
-                            if (splitIndexInt.length != 0) {
-                                System.out.println("Confirm update sponsor list ? (Y/N)");
+                            if (splitIndexInt.length != 0 && hasUpdateSomething == true) {
+                                System.out.print("Confirm update sponsor list ? (Y/N)");
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
@@ -304,7 +282,7 @@ class SponsorListPanel implements Panel {
                 System.out.println("Sponsor list ID not found, update Sponsor list abort");
             }
 
-            System.out.println("Continue update sponsor list ? (Y/N)");
+            System.out.print("Continue update sponsor list ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -320,14 +298,14 @@ class SponsorListPanel implements Panel {
         do {
             SponsorList.sponsorListTable(sponsorListDB);
 
-            System.out.println("Enter sponsor list ID: ");
+            System.out.print("Enter sponsor list ID: ");
             sponsorListID = input.nextLine();
             DoublyLinkedList<SponsorList> sponsorLists = sponsorListDB.getAllList();
             if (sponsorLists.contains(new SponsorList(sponsorListID)) == true) {
                 SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
-                if (sponsorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                if (sponsorList.getCampaign().isPermanentDelete() == false) {
 
-                    System.out.println("Confirm deactive sponsor list ? (Y/N)");
+                    System.out.print("Confirm deactive sponsor list ? (Y/N) ");
                     confirmation = input.nextLine();
 
                     if (confirmation.toUpperCase().equals("Y")) {
@@ -341,7 +319,7 @@ class SponsorListPanel implements Panel {
             } else {
                 System.out.println("Sponsor list ID not found, deactive Sponsor list abort");
             }
-            System.out.println("Continue deactive sponsor list  ? (Y/N)");
+            System.out.print("Continue deactive sponsor list  ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");

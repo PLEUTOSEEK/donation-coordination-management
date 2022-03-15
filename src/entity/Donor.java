@@ -16,7 +16,7 @@ import com.github.javafaker.Faker;
 public class Donor extends Account implements Comparable<Donor>,Cloneable {
 
     private String donorType;
-    private String status;
+
     private static String lastDonorID = "";
 
     public Donor() {
@@ -26,9 +26,9 @@ public class Donor extends Account implements Comparable<Donor>,Cloneable {
         this.accountID = accountID;
     }
 
-    public Donor(String accountID, String name, String donorType, char gender, String ic, String email, String phoneNo, String address) {
+    public Donor(String accountID, String name, String donorType, char gender, String ic, String email, String phoneNo, String address, String status) {
         //String name, char gender, String ic, String email, String phoneNo, String address,
-        super(accountID, name, gender, ic, email, phoneNo, address);
+        super(accountID, name, gender, ic, email, phoneNo, address, status);
         this.donorType = donorType;
     }
 
@@ -73,7 +73,7 @@ public class Donor extends Account implements Comparable<Donor>,Cloneable {
 
         if (o instanceof Donor) {
             Donor other = (Donor) o;
-            if (this.accountID.equals(other.getAccountID())) {
+            if (this.accountID.equalsIgnoreCase(other.getAccountID())) {
                 return true;
             } else {
                 return false;
@@ -166,10 +166,16 @@ public class Donor extends Account implements Comparable<Donor>,Cloneable {
         return dummyDonors;
     }
 
+<<<<<<< HEAD
     @Override
     public Donor clone() throws CloneNotSupportedException {
         Donor cloned = (Donor) super.clone();
         return cloned;
     }
 
+=======
+    public boolean isInActive() {
+        return status.equalsIgnoreCase("Inactive");
+    }
+>>>>>>> 2a9317aba9895c11a6cb3c8dab5ffc5e96c5bff3
 }

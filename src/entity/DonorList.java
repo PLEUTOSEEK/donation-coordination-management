@@ -20,7 +20,7 @@ import java.time.Month;
  *
  * @author Tee Zhuo Xuan
  */
-public class DonorList implements Comparable<DonorList> {
+public class DonorList implements Comparable<DonorList>, Cloneable {
 
     private String donorListID;
     private Donor donor;
@@ -118,7 +118,7 @@ public class DonorList implements Comparable<DonorList> {
 
         if (o instanceof DonorList) {
             DonorList other = (DonorList) o;
-            if (this.donorListID == other.getDonorListID()) {
+            if (this.donorListID.equalsIgnoreCase(other.getDonorListID())) {
                 return true;
             } else {
                 return false;
@@ -129,14 +129,14 @@ public class DonorList implements Comparable<DonorList> {
     }
 
     private static String[] donorListHeaders() {
-        String[] campaignHeaders = {"Donor List ID", "Donor ID"};
+        String[] campaignHeaders = {"Donor List ID", "Donor ID", "Donor Name", "Donor Email", "Donor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donor Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
 
-        return new String[]{donorListID, donor.accountID};
+        return new String[]{donorListID, donor.accountID, donor.name, donor.email, donor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {
@@ -226,4 +226,9 @@ public class DonorList implements Comparable<DonorList> {
         return dummyDonorList;
     }
 
+    @Override
+    public DonorList clone() throws CloneNotSupportedException {
+        DonorList cloned = (DonorList) super.clone();
+        return cloned;
+    }
 }
