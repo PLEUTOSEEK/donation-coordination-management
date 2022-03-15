@@ -7,9 +7,8 @@ package client;
 
 import java.util.Scanner;
 import adt.SinglyLinkedList;
-import adt.SinglyLinkedListInterface;
 import entity.Donor;
-import java.util.Iterator;
+
 import utils.DonorPredicates;
 
 /**
@@ -76,12 +75,14 @@ public class DonorPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-        System.out.println("1. Add new Donor");
-        System.out.println("2. View donor list");
-        System.out.println("3. Update donor list");
-        System.out.println("4. Delete Donor");
-        System.out.println("5. Search donor");
-        System.out.println("6. Exit");
+
+        System.out.println();
+        System.out.println("1.Add new Donor");
+        System.out.println("2.View donor list");
+        System.out.println("3.Update donor list");
+        System.out.println("4.Delete Donor");
+        System.out.println("5.Search donor");
+        System.out.println("6.Exit");
 
         return menu.toString();
     }
@@ -105,7 +106,6 @@ public class DonorPanel implements Panel {
         String donorType = "";
         char option = ' ';
         int opt = 0;
-       
 
         do {
             Donor donor = new Donor();
@@ -150,8 +150,6 @@ public class DonorPanel implements Panel {
 
             donor.setStatus("active");
 
-            
-            
             System.out.print("\nConfirm add Donor(Y/N) :");
             option = sc.next().charAt(0);
             if (option == 'Y' || option == 'y') {
@@ -317,7 +315,7 @@ public class DonorPanel implements Panel {
 
             Donor[] donorArray = new Donor[donorDB.getDataCount()];
             donorArray = donorDB.toArray(donorArray);
-            
+
             //GET SPECIFIC DATA
             if (donorDB.contains(new Donor(id)) == true) {
                 Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(id)));
@@ -328,7 +326,7 @@ public class DonorPanel implements Panel {
                 if (option.toUpperCase().equals("Y")) {
                     donor.setStatus("Inactive");
                     System.out.println(donor.getStatus());
-                }else{
+                } else {
                     System.out.println("fail");
                 }
 
@@ -338,8 +336,8 @@ public class DonorPanel implements Panel {
 
             System.out.print("\nContinue Deactive Donor (Y/N):");
             option = sc.nextLine();
-            
-        } while(option.toUpperCase().equals("Y"));
+
+        } while (option.toUpperCase().equals("Y"));
 
     }
 

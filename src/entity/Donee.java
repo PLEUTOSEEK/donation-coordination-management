@@ -203,7 +203,6 @@ public class Donee extends Account implements Comparable<Donee> {
         Donee donee = new Donee();
 
         for (int record = 0; record < 100; record++) {
-            System.out.println(record);
             String bankNo = (int) faker.number().randomDouble(0, 1000, 9000) + " "
                     + (int) faker.number().randomDouble(0, 1000, 9000) + " "
                     + (int) faker.number().randomDouble(0, 10, 99);

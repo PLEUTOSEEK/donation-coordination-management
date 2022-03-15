@@ -19,7 +19,7 @@ import java.time.Month;
  *
  * @author Tee Zhuo Xuan
  */
-public class Campaign implements Comparable<Campaign> {
+public class Campaign implements Comparable<Campaign>, Cloneable {
 
     private String campaignID;
     private String campaignName;
@@ -328,4 +328,9 @@ public class Campaign implements Comparable<Campaign> {
         return dummyCampaign;
     }
 
+    @Override
+    public Campaign clone() throws CloneNotSupportedException {
+        Campaign cloned = (Campaign) super.clone();
+        return cloned;
+    }
 }

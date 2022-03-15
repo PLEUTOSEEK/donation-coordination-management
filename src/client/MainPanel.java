@@ -40,7 +40,7 @@ public class MainPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -70,7 +70,7 @@ public class MainPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Sponsor\n");
         menu.append("2. Donor\n");
         menu.append("3. Donee\n");

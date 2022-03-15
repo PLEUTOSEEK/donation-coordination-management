@@ -88,6 +88,7 @@ public class DemandListPredicates implements Inputs {
 
     public static String DemandListSrchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. Demand list ID equal\n");
         menu.append("02. Demand list name equal\n");
         menu.append("03. Demand list quantity bigger than\n");

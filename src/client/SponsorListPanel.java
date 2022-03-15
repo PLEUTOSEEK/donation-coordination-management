@@ -33,7 +33,7 @@ class SponsorListPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -59,13 +59,13 @@ class SponsorListPanel implements Panel {
                     System.out.println("Index not correct...");
             }
 
-        } while (option != 7);
+        } while (option != 6);
     }
 
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new sponsor list \n");
         menu.append("2. Display sponsor list \n");
         menu.append("3. Search sponsor list \n");
@@ -94,7 +94,7 @@ class SponsorListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
             campaign = new Campaign();
 
@@ -108,7 +108,7 @@ class SponsorListPanel implements Panel {
                             hasSponsor = true;
                             SponsorList.sponsorListTable(sponsorListDB);
                             Sponsor.sponsorTable(sponsorDB);
-                            System.out.println("Enter sponsor ID: ");
+                            System.out.print("Enter sponsor ID: ");
                             lastSponsorID = input.nextLine();
 
                             if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
@@ -138,13 +138,13 @@ class SponsorListPanel implements Panel {
 
                         sponsorList.setCampaign(campaign);
                         sponsorList.setSponsor(sponsor);
-                        System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
                         sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                         sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
                         sponsorList.setStatus("Active");
                         sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
-                        System.out.println("Confirm add sponsor to this campaign ? (Y/N)");
+                        System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
                         confirmation = input.nextLine();
 
                         if (confirmation.toUpperCase().equals("Y")) {
@@ -184,7 +184,7 @@ class SponsorListPanel implements Panel {
 
     public String sponsorListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Sponsor\n");
         menu.append("2. Sponsor Join Date\n");
 
@@ -219,7 +219,7 @@ class SponsorListPanel implements Panel {
                     do {
                         System.out.println(sponsorListUpdateMenu());
                         validIndex = true;
-                        System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
                         indexSelected = input.nextLine();
 
                         String[] splitIndex = indexSelected.split("\\s+");
@@ -242,7 +242,7 @@ class SponsorListPanel implements Panel {
                                         do {
                                             hasSponsor = true;
                                             Sponsor.sponsorTable(sponsorDB);
-                                            System.out.println("Enter Sponsor ID: ");
+                                            System.out.print("Enter Sponsor ID: ");
                                             lastSponsorID = input.nextLine();
 
                                             if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
@@ -356,6 +356,7 @@ class SponsorListPanel implements Panel {
 
     public String sponsorListSearchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         Sponsor sponsor = new Sponsor();
         menu.append("1. Sponsor Name\n");
         menu.append("2. Sponsor email\n");

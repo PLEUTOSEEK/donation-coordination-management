@@ -38,14 +38,14 @@ public class CampaignPanel implements Panel {
             RedBlackTree<LocalDate, DoneeList> doneeListDB,
             SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) {
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         int option = 0;
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -85,18 +85,20 @@ public class CampaignPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("1. Add new campaign \n");
         menu.append("2. Display campaign \n");
         menu.append("3. Search campaign \n");
         menu.append("4. Deactive campaign \n");
         menu.append("5. Update campaign \n");
-        menu.append("6. Campaign support list maintenance");
+        menu.append("6. Campaign support list maintenance \n");
         menu.append("7. Exit \n");
         return menu.toString();
     }
 
     public String supportListMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("1. Sponsor List \n");
         menu.append("2. Donee List \n");
         menu.append("3. Donor List \n");
@@ -231,7 +233,7 @@ public class CampaignPanel implements Panel {
                 DoublyLinkedList<DoneeList> memoDonees = addDonee(campaign, doneeDB, doneeInHelpDB, doneeListDB, campaignDB);
                 DoublyLinkedList<DonorList> memoDonors = addDonor(campaign, donorDB, donorListDB);
 
-                System.out.println("Confirm add campaign ? (Y/N)");
+                System.out.print("Confirm add campaign ? (Y/N) ");
                 confirmation = input.nextLine();
 
                 if (confirmation.toUpperCase().equals("Y")) {
@@ -258,7 +260,7 @@ public class CampaignPanel implements Panel {
 
                 System.out.println(confirmation.toUpperCase().equals("Y") ? "Added campaign successfully" : "Add campaign abort");
 
-                System.out.println("Continue add campaign ? (Y/N)");
+                System.out.print("Continue add campaign ? (Y/N) ");
                 option = input.nextLine();
 
                 System.out.println(confirmation.toUpperCase().equals("Y") ? "Return to previous page..." : "");
@@ -285,9 +287,9 @@ public class CampaignPanel implements Panel {
             do {
                 sponsorList = new SponsorList();
                 hasSponsor = true;
-                SponsorList.sponsorListTable(sponsorListDB);
+                System.out.println();
                 Sponsor.sponsorTable(sponsorDB);
-                System.out.println("Enter sponsor ID: ");
+                System.out.print("Enter sponsor ID: ");
                 lastSponsorID = input.nextLine();
 
                 if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
@@ -317,13 +319,13 @@ public class CampaignPanel implements Panel {
 
             sponsorList.setCampaign(campaign);
             sponsorList.setSponsor(sponsor);
-            System.out.println("Enter date join [dd. MMM. yyyy]: ");
+            System.out.print("Enter date join [dd. MMM. yyyy]: ");
             sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
             sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
             sponsorList.setStatus("Active");
             sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
-            System.out.println("Confirm add sponsor to this campaign ? (Y/N)");
+            System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
             confirmation = input.nextLine();
 
             if (confirmation.toUpperCase().equals("Y")) {
@@ -337,7 +339,7 @@ public class CampaignPanel implements Panel {
                 System.out.println("At least one sponsor require...");
                 option = "Y";
             } else {
-                System.out.println("Continue add sponsor to this campaign ? (Y/N)");
+                System.out.print("Continue add sponsor to this campaign ? (Y/N) ");
                 option = input.nextLine();
             }
 
@@ -368,10 +370,10 @@ public class CampaignPanel implements Panel {
             Donee.doneeTable(memoDoneeDB);
 
             if (doneeDB.getFront() != null) {
-                System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                System.out.print("Enter date join [dd. MMM. yyyy]: ");
                 doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
-                System.out.println("Confirm add donee ? (Y/N)");
+                System.out.print("Confirm add donee ? (Y/N) ");
 
                 confirmation = input.nextLine();
 
@@ -394,7 +396,7 @@ public class CampaignPanel implements Panel {
                 System.out.println("No donee need help, add donee abort");
             }
 
-            System.out.println("Continue add donee to this campaign ? (Y/N)");
+            System.out.print("Continue add donee to this campaign ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -425,7 +427,7 @@ public class CampaignPanel implements Panel {
                 donorList = new DonorList();
                 hasDonor = true;
                 Donor.donorTable(donorDB);
-                System.out.println("Enter donor ID: ");
+                System.out.print("Enter donor ID: ");
                 donorID = input.nextLine();
 
                 if (donorDB.contains(new Donor(donorID))) {
@@ -453,13 +455,13 @@ public class CampaignPanel implements Panel {
 
             donorList.setCampaign(campaign);
             donorList.setDonor(donor);
-            System.out.println("Enter date join [dd. MMM. yyyy]: ");
+            System.out.print("Enter date join [dd. MMM. yyyy]: ");
             donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
             donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
             donorList.setStatus("Active");
             donorList.setDonorListID(donorList.autoGenerateID());
 
-            System.out.println("Confirm add donor to this campaign ? (Y/N)");
+            System.out.print("Confirm add donor to this campaign ? (Y/N) ");
             confirmation = input.nextLine();
 
             if (confirmation.toUpperCase().equals("Y")) {
@@ -473,7 +475,7 @@ public class CampaignPanel implements Panel {
                 System.out.println("At least one donor require...");
                 option = "Y";
             } else {
-                System.out.println("Continue add donor to this campaign ? (Y/N)");
+                System.out.print("Continue add donor to this campaign ? (Y/N) ");
                 option = input.nextLine();
             }
 
@@ -484,7 +486,7 @@ public class CampaignPanel implements Panel {
 
     public String campaignUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Campaign Name\n");
         menu.append("2. Campaign Start Date\n");
         menu.append("3. Campaign Start Time\n");
@@ -501,7 +503,7 @@ public class CampaignPanel implements Panel {
 
     }
 
-    public void update(RedBlackTree<LocalDate, Campaign> campaignDB) {
+    public void update(RedBlackTree<LocalDate, Campaign> campaignDB) throws CloneNotSupportedException {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -515,123 +517,131 @@ public class CampaignPanel implements Panel {
         do {
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
 
             if (campaignDB.getAllList().contains(new Campaign(campaignID)) == true) {
                 DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
-                campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
-                oriStartDate = campaign.getCampaignStartDate();
-                boolean validIndex = true;
-                do {
-                    System.out.println(campaignUpdateMenu());
-                    validIndex = true;
-                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
-                    indexSelected = input.nextLine();
+                campaign = new Campaign();
+                campaign = campaignDB.get(new Campaign(campaignID)).clone();
 
-                    String[] splitIndex = indexSelected.split("\\s+");
-                    int[] splitIndexInt = new int[splitIndex.length];
+                if (campaign.getStatus().equalsIgnoreCase("Permanent Inactive") == false) {
+                    oriStartDate = campaign.getCampaignStartDate();
 
-                    for (int i = 0; i < splitIndex.length; i++) {
-                        try {
-                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
-                        } catch (Exception e) {
-                            validIndex = false;
-                            break;
-                        }
-                    }
+                    boolean validIndex = true;
+                    do {
+                        System.out.println(campaignUpdateMenu());
+                        validIndex = true;
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        indexSelected = input.nextLine();
 
-                    if (validIndex == true) {
-                        boolean hasUpdateSomething = false;
-                        for (int i = 0; i < splitIndexInt.length; i++) {
-                            switch (splitIndexInt[i]) {
-                                case 1:
-                                    System.out.print("Enter the new campaign name: ");
-                                    campaign.setCampaignName(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 2:
-                                    System.out.print("Enter the new campaign start date [dd. MMM. yyyy]: ");
-                                    campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 3:
-                                    System.out.print("Enter the new campaign start time [H:mm:ss]: ");
-                                    campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 4:
-                                    System.out.print("Enter the new campaign end date [dd. MMM. yyyy]: ");
-                                    campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 5:
-                                    System.out.print("Enter the new campaign end time [H:mm:ss]: ");
-                                    campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 6:
-                                    System.out.print("Enter the new target amount: ");
-                                    campaign.setTargetAmount(input.nextDouble());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 7:
-                                    System.out.print("Enter the new campaign email: ");
-                                    campaign.setCampaignEmail(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 8:
-                                    System.out.print("Enter the new campaign mobile no: ");
-                                    campaign.setCampaignMobileNo(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 9:
+                        String[] splitIndex = indexSelected.split("\\s+");
+                        int[] splitIndexInt = new int[splitIndex.length];
 
-                                    System.out.print("Enter the new campaign campaign address: ");
-                                    campaign.setCampagnAddress(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 10:
-                                    System.out.print("Enter the new campaign bank no: ");
-                                    campaign.setCampaignBankNo(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 11:
-                                    System.out.print("Enter the new campaign description: ");
-                                    campaign.setDescription(input.nextLine());
-                                    hasUpdateSomething = true;
-                                    break;
-                                default:
-                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                        for (int i = 0; i < splitIndex.length; i++) {
+                            try {
+                                splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                            } catch (Exception e) {
+                                validIndex = false;
+                                break;
                             }
                         }
 
-                        if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update campaign ? (Y/N)");
-                            confirmation = input.nextLine();
+                        if (validIndex == true) {
+                            boolean hasUpdateSomething = false;
+                            for (int i = 0; i < splitIndexInt.length; i++) {
+                                switch (splitIndexInt[i]) {
+                                    case 1:
+                                        System.out.print("Enter the new campaign name: ");
+                                        campaign.setCampaignName(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 2:
+                                        System.out.print("Enter the new campaign start date [dd. MMM. yyyy]: ");
+                                        campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 3:
+                                        System.out.print("Enter the new campaign start time [H:mm:ss]: ");
+                                        campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 4:
+                                        System.out.print("Enter the new campaign end date [dd. MMM. yyyy]: ");
+                                        campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 5:
+                                        System.out.print("Enter the new campaign end time [H:mm:ss]: ");
+                                        campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 6:
+                                        System.out.print("Enter the new target amount: ");
+                                        campaign.setTargetAmount(input.nextDouble());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 7:
+                                        System.out.print("Enter the new campaign email: ");
+                                        campaign.setCampaignEmail(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 8:
+                                        System.out.print("Enter the new campaign mobile no: ");
+                                        campaign.setCampaignMobileNo(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 9:
 
-                            if (confirmation.toUpperCase().equals("Y")) {
-                                campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
-                                if (oriStartDate != campaign.getCampaignStartDate()) {
-                                    campaignDB.delData(oriStartDate, campaign);
-                                    campaignDB.addData(campaign.getCampaignStartDate(), campaign);
-                                } else {
-                                    campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
+                                        System.out.print("Enter the new campaign campaign address: ");
+                                        campaign.setCampagnAddress(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 10:
+                                        System.out.print("Enter the new campaign bank no: ");
+                                        campaign.setCampaignBankNo(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 11:
+                                        System.out.print("Enter the new campaign description: ");
+                                        campaign.setDescription(input.nextLine());
+                                        hasUpdateSomething = true;
+                                        break;
+                                    default:
+                                        System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                                 }
                             }
 
-                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update campaign successfully" : "Update campaign abort");
-                        } else {
-                            System.out.println("No data selected to be update...");
-                        }
-                    }
+                            if (hasUpdateSomething == true) {
+                                System.out.print("Confirm update campaign ? (Y/N) ");
+                                confirmation = input.nextLine();
 
-                } while (validIndex == false);
+                                if (confirmation.toUpperCase().equals("Y")) {
+                                    campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    if (oriStartDate != campaign.getCampaignStartDate()) {
+                                        campaignDB.delData(oriStartDate, campaign);
+                                        campaignDB.addData(campaign.getCampaignStartDate(), campaign);
+                                    } else {
+                                        campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
+                                        System.out.println("hi");
+                                    }
+                                }
+
+                                System.out.println(confirmation.toUpperCase().equals("Y") ? "Update campaign successfully" : "Update campaign abort");
+                            } else {
+                                System.out.println("No data selected to be update...");
+                            }
+                        }
+
+                    } while (validIndex == false);
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to make modification.");
+                }
             } else {
                 System.out.println("Campaign ID not found, update campaign abort");
             }
 
-            System.out.println("Continue update campaign ? (Y/N)");
+            System.out.print("Continue update campaign ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -648,7 +658,7 @@ public class CampaignPanel implements Panel {
         do {
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
             DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
             if (campaigns.contains(new Campaign(campaignID)) == true) {
@@ -662,9 +672,12 @@ public class CampaignPanel implements Panel {
                     }
 
                     System.out.println(statusMenu.toString());
+                    System.out.print("Option: ");
                     statusSelect = input.nextInt();
 
-                    System.out.println("Confirm " + status[statusSelect - 1] + " campaign ? (Y/N)");
+                    input.nextLine();
+
+                    System.out.print("Confirm " + status[statusSelect - 1] + " campaign ? (Y/N) ");
                     confirmation = input.nextLine();
 
                     if (confirmation.toUpperCase().equals("Y")) {
@@ -675,8 +688,6 @@ public class CampaignPanel implements Panel {
                         if (status[statusSelect - 1].toUpperCase().equals("PERMANENT INACTIVE")) {
                             DoneeList[] doneeListArr = new DoneeList[doneeListDB.getAllList().getLength()];
                             doneeListArr = doneeListDB.getAllArrayList(doneeListArr);
-
-                            DoneeList.doneeListTable(doneeListDB);
 
                             for (int i = 0; i < doneeListArr.length; i++) {
                                 if (doneeListArr[i].getCampaign().equals(campaign)) {
@@ -693,7 +704,7 @@ public class CampaignPanel implements Panel {
             } else {
                 System.out.println("Campaign ID not found, update campaign abort");
             }
-            System.out.println("Continue deactive campaign ? (Y/N)");
+            System.out.println("Continue change campaign's status ? (Y/N)");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");

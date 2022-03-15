@@ -34,7 +34,7 @@ class DonorListPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -60,13 +60,13 @@ class DonorListPanel implements Panel {
                     System.out.println("Index not correct...");
             }
 
-        } while (option != 7);
+        } while (option != 6);
     }
 
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new donor list \n");
         menu.append("2. Display donor list \n");
         menu.append("3. Search donor list \n");
@@ -100,7 +100,7 @@ class DonorListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
             campaign = new Campaign();
 
@@ -114,7 +114,7 @@ class DonorListPanel implements Panel {
                             donorList = new DonorList();
                             hasDonor = true;
                             Donor.donorTable(donorDB);
-                            System.out.println("Enter donor ID: ");
+                            System.out.print("Enter donor ID: ");
                             donorID = input.nextLine();
 
                             if (donorDB.contains(new Donor(donorID))) {
@@ -144,13 +144,13 @@ class DonorListPanel implements Panel {
 
                         donorList.setCampaign(campaign);
                         donorList.setDonor(donor);
-                        System.out.println("Enter date join [dd. MMM. yyyy]: ");
+                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
                         donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                         donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
                         donorList.setStatus("Active");
                         donorList.setDonorListID(donorList.autoGenerateID());
 
-                        System.out.println("Confirm add donor to this campaign ? (Y/N)");
+                        System.out.print("Confirm add donor to this campaign ? (Y/N) ");
                         confirmation = input.nextLine();
 
                         if (confirmation.toUpperCase().equals("Y")) {
@@ -159,7 +159,7 @@ class DonorListPanel implements Panel {
 
                         System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
-                        System.out.println("Continue add donor to this campaign ? (Y/N)");
+                        System.out.print("Continue add donor to this campaign ? (Y/N) ");
                         option = input.nextLine();
 
                     } while (option.toUpperCase().equals("Y"));
@@ -186,7 +186,7 @@ class DonorListPanel implements Panel {
 
     public String donorListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Donor\n");
         menu.append("2. Donor Join Date\n");
 
@@ -223,7 +223,7 @@ class DonorListPanel implements Panel {
                     do {
                         System.out.println(donorListUpdateMenu());
                         validIndex = true;
-                        System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
                         indexSelected = input.nextLine();
 
                         String[] splitIndex = indexSelected.split("\\s+");
@@ -246,7 +246,7 @@ class DonorListPanel implements Panel {
                                         do {
                                             hasDonor = true;
                                             Donor.donorTable(donorDB);
-                                            System.out.println("Enter donor ID: ");
+                                            System.out.print("Enter donor ID: ");
                                             donorID = input.nextLine();
 
                                             if (donorDB.contains(new Donor(donorID))) {

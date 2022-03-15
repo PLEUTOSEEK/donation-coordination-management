@@ -31,6 +31,10 @@ public class SponsorListPredicates implements Inputs {
         return isSponsorListDateJoinAfter(date).negate();
     }
 
+    public static Predicate<SponsorList> isSPonsorListEquals(String status) {
+        return x -> x.getStatus().equalsIgnoreCase(status);
+    }
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="campaign predicates">
     public static Predicate<SponsorList> isCampaignIDEquals(String id) {
@@ -82,6 +86,7 @@ public class SponsorListPredicates implements Inputs {
     //</editor-fold>
     public static String sponsorListSrchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. sponsor list ID\n");
         menu.append("02. sponsor list date join after\n");
         menu.append("03. sponsor list date join before or equal\n");
@@ -92,11 +97,11 @@ public class SponsorListPredicates implements Inputs {
         menu.append("08. campaign start date before or equal\n");
         menu.append("09. campaign end date after\n");
         menu.append("10. campaign end date before or equal\n");
-        menu.append("10. campaign status equal n");
-        menu.append("11. sponsor ID equal\n");
-        menu.append("12. sponsor name equal\n");
-        menu.append("13. sponsor email equal\n");
-        menu.append("14. sponsor phone no. equal\n");
+        menu.append("11. campaign status equal n");
+        menu.append("12. sponsor ID equal\n");
+        menu.append("13. sponsor name equal\n");
+        menu.append("14. sponsor email equal\n");
+        menu.append("15. sponsor phone no. equal\n");
 
         return menu.toString();
     }
@@ -124,36 +129,39 @@ public class SponsorListPredicates implements Inputs {
                 return filterSponsorList(sponsorListArray, isSponsorListDateJoinBeforeOrEquals(sponsorListPredicates.askDate()));
 
             case 4:
-                return filterSponsorList(sponsorListArray, isCampaignIDEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isSPonsorListEquals(sponsorListPredicates.askStr()));
 
             case 5:
-                return filterSponsorList(sponsorListArray, isCampaignNameContains(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isCampaignIDEquals(sponsorListPredicates.askStr()));
 
             case 6:
-                return filterSponsorList(sponsorListArray, isCampaignStartDateAfter(sponsorListPredicates.askDate()));
+                return filterSponsorList(sponsorListArray, isCampaignNameContains(sponsorListPredicates.askStr()));
 
             case 7:
-                return filterSponsorList(sponsorListArray, isCampaignStartDateBeforeOrEquals(sponsorListPredicates.askDate()));
+                return filterSponsorList(sponsorListArray, isCampaignStartDateAfter(sponsorListPredicates.askDate()));
 
             case 8:
-                return filterSponsorList(sponsorListArray, isCampaignEndDateAfter(sponsorListPredicates.askDate()));
+                return filterSponsorList(sponsorListArray, isCampaignStartDateBeforeOrEquals(sponsorListPredicates.askDate()));
 
             case 9:
-                return filterSponsorList(sponsorListArray, isCampaignEndDateBeforeOrEquals(sponsorListPredicates.askDate()));
+                return filterSponsorList(sponsorListArray, isCampaignEndDateAfter(sponsorListPredicates.askDate()));
 
             case 10:
-                return filterSponsorList(sponsorListArray, isCampaignStatusEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isCampaignEndDateBeforeOrEquals(sponsorListPredicates.askDate()));
 
             case 11:
-                return filterSponsorList(sponsorListArray, isSponsorIDEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isCampaignStatusEquals(sponsorListPredicates.askStr()));
 
             case 12:
-                return filterSponsorList(sponsorListArray, isSponsorNameEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isSponsorIDEquals(sponsorListPredicates.askStr()));
 
             case 13:
-                return filterSponsorList(sponsorListArray, isSponsorEmailEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isSponsorNameEquals(sponsorListPredicates.askStr()));
 
             case 14:
+                return filterSponsorList(sponsorListArray, isSponsorEmailEquals(sponsorListPredicates.askStr()));
+
+            case 15:
                 return filterSponsorList(sponsorListArray, isSponsorPhoneNoEquals(sponsorListPredicates.askStr()));
 
             default:

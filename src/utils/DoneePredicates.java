@@ -5,7 +5,6 @@
  */
 package utils;
 
-import entity.Campaign;
 import entity.Donee;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -50,6 +49,7 @@ public class DoneePredicates implements Inputs {
 
     public static String doneeSearchMenu() {
         StringBuilder menu = new StringBuilder();
+        System.out.println();
         menu.append("01. Donee ID \n");
         menu.append("02. Donee Name \n");
         menu.append("03. Request Amount \n");
