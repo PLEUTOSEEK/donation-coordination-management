@@ -49,8 +49,8 @@ public class DonorPredicates implements Inputs {
         return x -> x.getStatus().toLowerCase().contains(status.toLowerCase());
     }
      
-      public static Donor[] filterDonor (Donor[] campaignArray, Predicate condition) {
-        return (Donor[]) Stream.of(campaignArray).filter(condition).toArray(Donor[]::new);
+      public static Donor[] filterDonor (Donor[] donorArray, Predicate condition) {
+        return (Donor[]) Stream.of(donorArray).filter(condition).toArray(Donor[]::new);
     }
     
      public static String donorSearchMenu() {
@@ -97,6 +97,7 @@ public class DonorPredicates implements Inputs {
                 return filterDonor(donorArray, isNameContains(donorPredicates.askStr()));
 
             case 8:
+                System.out.println("halo");
                 return filterDonor(donorArray, isStatusContains(donorPredicates.askStr()));
            
             default:
@@ -112,7 +113,9 @@ public class DonorPredicates implements Inputs {
 
     @Override
     public String askStr() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter string value : ");
+        return input.nextLine();
     }
 
     @Override
