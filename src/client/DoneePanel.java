@@ -120,12 +120,12 @@ public class DoneePanel implements Panel {
                 Donee.setLastDoneeID(originalLastId);
             }
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add failed...");
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add donee failed...");
 
             System.out.print("\nContinue add donee? (Y/N)");
             opt = s.nextLine();
 
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Continue add..." : "Return to donee main page");
+            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to donee main page..");
 
         } while (opt.toUpperCase().equals("Y"));
 
@@ -155,7 +155,7 @@ public class DoneePanel implements Panel {
         String id = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
-
+        
         do {
             Donee.doneeTable(doneeDB);
             System.out.print("Enter a Donee Id:");
@@ -168,7 +168,7 @@ public class DoneePanel implements Panel {
                 do {
                     System.out.println(doneeUpdateMenu());
                     validIndex = true;
-                    System.out.println("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
+                    System.out.print("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
                     select = s.nextLine();
 
                     String[] splitIndex = select.split("\\s+");
@@ -249,22 +249,22 @@ public class DoneePanel implements Panel {
                             confirm = s.nextLine();
 
                             if (confirm.toUpperCase().equals("Y")) {
-                                doneeDB.modify(donee, donee);
+                                doneeDB.modify(donees.getAt(donees.indexOf(new Donee(donee.getAccountID()))), donee);
                             }
 
-                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update failed...");
+                            System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update donee failed...\n");
                         } else {
                             System.out.println("No data selected");
                         }
                     }
                 } while (validIndex == false);
             } else {
-                System.out.println("Donee ID not found, update donee abort");
+                System.out.println("Donee ID not found..");
             }
             System.out.print("Continue update donee ? (Y/N) ");
             opt = s.nextLine();
 
-            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to previous step...");
+            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to donee main page...");
         } while (opt.toUpperCase().equals("Y"));
     }
 

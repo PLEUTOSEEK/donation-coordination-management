@@ -77,7 +77,7 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
     }
 
     @Override
-    public boolean add(int newPosition, T newElement) {
+    public boolean add(T newElement, int newPosition) {
         boolean addNode = true;
 
         if ((newPosition >= 1) && (newPosition <= dataCount + 1)) {
@@ -209,6 +209,7 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
 
     @Override
     public boolean replace(T element, int inputPosition) {
+<<<<<<< HEAD
         Node currentNode = getFirstNode();
         int counter = 1;
         if (this.firstNode == null) {
@@ -232,9 +233,28 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
                 currentNode.setNext(newNode);
                 return true;
             }
+=======
+        Node currNode = this.firstNode;
+        int counter = 1;
+        
+        if(this.firstNode == null){
+            this.firstNode = new Node(element);
+        }
+        
+        if ((inputPosition >= 1) && (inputPosition <= dataCount)) {
+
+            while (null != currNode && counter < inputPosition) {
+                currNode = currNode.getNext();
+                counter++;
+            }
+            
+            Node newNode = new Node(element);
+            newNode.setNext(currNode.getNext());
+            currNode.setNext(newNode);
+            return true;
+>>>>>>> 98cda9f8b94d8e63c8cfb5500fd1e0afc77de311
         }
         return false;
-
     }
 
     private class Node<T extends Comparable<T>> {
