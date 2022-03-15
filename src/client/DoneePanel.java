@@ -17,7 +17,7 @@ import utils.DoneePredicates;
  */
 public class DoneePanel implements Panel {
 
-    public void doneePanel(CircularLinkedQueue<Donee> doneeDB) throws CloneNotSupportedException {
+    public void controlPanel(CircularLinkedQueue<Donee> doneeDB) throws CloneNotSupportedException {
 
         QueueInterface<Donee> doneeQueue;
         Iterator<Donee> iterator;
