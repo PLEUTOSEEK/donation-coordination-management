@@ -93,11 +93,11 @@ public class DonorListPredicates implements Inputs {
         menu.append("08. campaign start date before or equal\n");
         menu.append("09. campaign end date after\n");
         menu.append("10. campaign end date before or equal\n");
-        menu.append("10. campaign status equal n");
-        menu.append("11. donor ID equal\n");
-        menu.append("12. donor name equal\n");
-        menu.append("13. donor email equal\n");
-        menu.append("14. donor phone no. equal\n");
+        menu.append("11. campaign status equal \n");
+        menu.append("12. donor ID equal\n");
+        menu.append("13. donor name equal\n");
+        menu.append("14. donor email equal\n");
+        menu.append("15. donor phone no. equal\n");
 
         return menu.toString();
     }
