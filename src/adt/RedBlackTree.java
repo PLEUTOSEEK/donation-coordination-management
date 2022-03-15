@@ -382,7 +382,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         Node node = getNode(label);
         boolean deleted = false;
         if (node != null) {
-            node.getListData().delAt(node.getListData().indexOf(label));
+            node.getListData().delAt(node.getListData().indexOf(data));
             if (node.getListData().isEmpty()) {
                 this.deleteNode((U) node.getLabel());
                 deleted = true;
@@ -868,7 +868,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             // dont have node, cannot update
         }
 
-        System.out.println(updated);
         return updated;
     }
 
