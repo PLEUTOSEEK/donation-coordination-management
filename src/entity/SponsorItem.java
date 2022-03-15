@@ -178,11 +178,12 @@ public class SponsorItem implements Comparable<SponsorItem> {
         return sponsorItemRow;
     }
 
-    public static void sponsorItemTable(DoublyLinkedList<SponsorItem> sponsorItemList) {
+    public static void sponsorItemTable(DoublyLinkedList<SponsorItem> sponsorItemDB) {
         String[] header = SponsorItem.sponsorItemHeaders();
-        String[][] sponsorItemData = SponsorItem.sponsorItemRows(sponsorItemList);
+        String[][] sponsorItemData = SponsorItem.sponsorItemRows(sponsorItemDB);
 
         ASCIITable.getInstance().printTable(header, sponsorItemData);
+
     }
 
     public String autoGenerateID() {
@@ -252,6 +253,12 @@ public class SponsorItem implements Comparable<SponsorItem> {
         }
 
         return dummySponsorItem;
+    }
+
+    @Override
+    public SponsorItem clone() throws CloneNotSupportedException {
+        SponsorItem cloned = (SponsorItem) super.clone();
+        return cloned;
     }
 
     public boolean isInActive() {
