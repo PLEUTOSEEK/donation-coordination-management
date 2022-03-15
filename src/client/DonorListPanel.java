@@ -247,33 +247,44 @@ class DonorListPanel implements Panel {
                             for (int i = 0; i < splitIndexInt.length; i++) {
                                 switch (splitIndexInt[i]) {
                                     case 1:
+                                        boolean setDonorSuccess = false;
                                         do {
-                                            hasDonor = true;
-                                            Donor.donorTable(donorDB);
-                                            System.out.print("Enter donor ID: ");
-                                            donorID = input.nextLine();
+                                            setDonorSuccess = false;
+                                            do {
+                                                hasDonor = true;
+                                                Donor.donorTable(donorDB);
+                                                System.out.print("Enter donor ID: ");
+                                                donorID = input.nextLine();
 
-                                            if (donorDB.contains(new Donor(donorID))) {
-                                                DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
-                                                donorListArr = donorListDB.getAllArrayList(donorListArr);
+                                                if (donorDB.contains(new Donor(donorID))) {
+                                                    DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
+                                                    donorListArr = donorListDB.getAllArrayList(donorListArr);
 
-                                                //check
-                                                for (int j = 0; j < donorListArr.length; j++) {
-                                                    if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
-                                                        hasDonor = false;
-                                                        break;
+                                                    //check
+                                                    for (int j = 0; j < donorListArr.length; j++) {
+                                                        if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
+                                                            hasDonor = false;
+                                                            break;
+                                                        }
                                                     }
+                                                    if (hasDonor == false) {
+                                                        System.out.println("donor ID exist in the campaign already, try again the other donor");
+                                                    }
+                                                } else {
+                                                    hasDonor = false;
+                                                    System.out.println("donor ID not found, try again");
                                                 }
-                                                if (hasDonor == false) {
-                                                    System.out.println("donor ID exist in the campaign already, try again the other donor");
-                                                }
+                                            } while (hasDonor == false);
+
+                                            Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
+                                            if (donor.isInActive() == false) {
+                                                donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
+                                                hasUpdateSomething = true;
+                                                setDonorSuccess = true;
                                             } else {
-                                                hasDonor = false;
-                                                System.out.println("donor ID not found, try again");
+                                                System.out.println("Donor is in inactive status, please try again the other donor...");
                                             }
-                                        } while (hasDonor == false);
-                                        donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
-                                        hasUpdateSomething = true;
+                                        } while (setDonorSuccess == false);
                                         break;
                                     case 2:
                                         System.out.print("Enter the new donor join date [dd. MMM. yyyy]: ");
@@ -284,6 +295,7 @@ class DonorListPanel implements Panel {
                                     default:
                                         System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                                 }
+
                             }
 
                             if (splitIndexInt.length != 0 && hasUpdateSomething == true) {
@@ -322,6 +334,7 @@ class DonorListPanel implements Panel {
     }
 
     @Override
+
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
