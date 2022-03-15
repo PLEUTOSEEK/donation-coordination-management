@@ -129,14 +129,14 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
     }
 
     private static String[] donorListHeaders() {
-        String[] campaignHeaders = {"Donor List ID", "Donor ID", "Donor Name", "Donor Email", "Donor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Status", "Date Modified"};
+        String[] campaignHeaders = {"Donor List ID", "Donor ID", "Donor Name", "Donor Email", "Donor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donor Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
 
-        return new String[]{donorListID, donor.accountID, donor.name, donor.email, donor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), status, dateModified.toLocalDateTime().toString()};
+        return new String[]{donorListID, donor.accountID, donor.name, donor.email, donor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {

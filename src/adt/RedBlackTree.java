@@ -868,7 +868,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             // dont have node, cannot update
         }
 
-        System.out.println(updated);
         return updated;
     }
 

@@ -129,13 +129,13 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
     }
 
     private static String[] doneeListHeaders() {
-        String[] campaignHeaders = {"Donee List ID", "Donee ID", "Donee Name", "Donee Email", "Donee Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Status", "Date Modified"};
+        String[] campaignHeaders = {"Donee List ID", "Donee ID", "Donee Name", "Donee Email", "Donee Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donee Date Join", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{doneeListID, donee.accountID, donee.name, donee.email, donee.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), status, dateModified.toLocalDateTime().toString()};
+        return new String[]{doneeListID, donee.accountID, donee.name, donee.email, donee.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {

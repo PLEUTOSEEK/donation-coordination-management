@@ -22,7 +22,7 @@ import utils.DemandListPredicates;
 class DemandListPanel implements Panel {
 
     public void controlPanel(RedBlackTree<LocalDate, Campaign> campaignDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) {
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
         Scanner input = new Scanner(System.in);
         int option = 0;
 
@@ -144,23 +144,24 @@ class DemandListPanel implements Panel {
                     do {
 
                         demandList.setCampaign(campaign);
-                        System.out.println("Enter demand name: ");
+                        System.out.print("Enter demand name: ");
                         demandList.setDemandName(input.nextLine());
-                        System.out.println("Enter demand description: ");
+                        System.out.print("Enter demand description: ");
                         demandList.setDescription(input.nextLine());
-                        System.out.println("Enter demand quantity: ");
+                        System.out.print("Enter demand quantity: ");
                         int qty = input.nextInt();
                         demandList.setQuantity(qty);
                         demandList.setOrgiQty(qty);
-                        System.out.println("Enter demand price per unit: ");
+                        System.out.print("Enter demand price per unit: ");
                         demandList.setPricePerUnit(input.nextDouble());
-                        System.out.println("Enter demand register date [dd. MMM. yyyy]: ");
+                        input.nextLine();
+                        System.out.print("Enter demand register date [dd. MMM. yyyy]: ");
                         demandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
                         demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
                         demandList.setStatus("Active");
                         demandList.setDemandListID(demandList.autoGenerateID());
 
-                        System.out.println("Confirm add demand list to this campaign? (Y/N)");
+                        System.out.print("Confirm add demand list to this campaign? (Y/N) ");
                         confirmation = input.nextLine();
 
                         if (confirmation.toUpperCase().equals("Y")) {
@@ -169,7 +170,7 @@ class DemandListPanel implements Panel {
 
                         System.out.println(confirmation.toUpperCase().equals("Y") ? "Added demand successfully" : "Add demand abort");
 
-                        System.out.print("Continue add demand to this campaign ? (Y/N) ");
+                        System.out.print("Continue add demand list to this campaign ? (Y/N) ");
                         option = input.nextLine();
                     } while (option.toUpperCase().equals("Y"));
                 } else {
@@ -196,7 +197,7 @@ class DemandListPanel implements Panel {
         return menu.toString();
     }
 
-    private void update(RedBlackTree<LocalDate, DemandList> demandListDB) {
+    private void update(RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -214,7 +215,7 @@ class DemandListPanel implements Panel {
             demandListID = input.nextLine();
 
             if (demandListDB.contains(new DemandList(demandListID)) == true) {
-                demandList = demandListDB.get(new DemandList(demandListID));
+                demandList = demandListDB.get(new DemandList(demandListID)).clone();
                 if (demandList.getCampaign().isPermanentDelete() == false) {
 
                     oriRegisterDate = demandList.getDateRegister();
@@ -242,18 +243,18 @@ class DemandListPanel implements Panel {
                             for (int i = 0; i < splitIndexInt.length; i++) {
                                 switch (splitIndexInt[i]) {
                                     case 1:
-                                        System.out.println("Enter demand name: ");
+                                        System.out.print("Enter demand name: ");
                                         demandList.setDemandName(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 2:
-                                        System.out.println("Enter demand description: ");
+                                        System.out.print("Enter demand description: ");
                                         demandList.setDescription(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 3:
 
-                                        System.out.println("Enter demand register date [dd. MMM. yyyy]: ");
+                                        System.out.print("Enter demand register date [dd. MMM. yyyy]: ");
                                         demandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
                                         break;
 
