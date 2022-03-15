@@ -9,28 +9,75 @@ package adt;
  *
  * @author JiaToong
  */
-public class CircularLinkedList <T> implements LinkedListInterface<T> {
+public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     private Node firstNode, lastNode;
-    
+    private int length;
+
+    public CircularLinkedList() {
+        this.firstNode = null;
+        this.lastNode = null;
+    }
+
     @Override
     public boolean addLastNode(T element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = new Node(element);
+
+        if (isEmpty() == true) {
+            firstNode = newNode;
+        } else {
+            lastNode.next = newNode;
+            lastNode = newNode;
+            newNode.next = firstNode;
+        }
+
+        length++;
+        return true;
     }
 
     @Override
     public boolean addFirstNode(T element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = new Node(element);
+
+        if (isEmpty() == true) {
+            firstNode = newNode;
+        } else {
+            newNode.next = firstNode;
+            lastNode.next = newNode;
+            firstNode = newNode;
+        }
+
+        length++;
+        return true;
     }
 
     @Override
     public boolean addAtAnyNode(T element, int position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = new Node(element);
+        if (position >= 1 && position <= length + 1) {
+
+            if (position == 1) {
+                return addFirstNode(element);
+            } else if (position == this.length + 1) {
+                return addLastNode(element);
+            } else {
+
+                Node currentNode = null;
+                for (int i = 2; i <= position; i++) {
+                    currentNode = currentNode.next;
+                }
+
+                newNode.next = currentNode.next;
+                currentNode.next = newNode;
+            }
+            length++;
+        }
+        return true;
     }
 
     @Override
     public int countNodes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return length;
     }
 
     @Override
@@ -40,17 +87,21 @@ public class CircularLinkedList <T> implements LinkedListInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (firstNode == null && lastNode == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public Object getFirstNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return firstNode;
     }
 
     @Override
     public Object getLastNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return lastNode;
     }
 
     @Override
@@ -86,6 +137,7 @@ public class CircularLinkedList <T> implements LinkedListInterface<T> {
     @Override
     public boolean replaceAnyNode(int position) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private class Node {
@@ -103,5 +155,5 @@ public class CircularLinkedList <T> implements LinkedListInterface<T> {
             this.next = next;
         }
     }
-    
+
 }
