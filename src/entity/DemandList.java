@@ -18,7 +18,7 @@ import java.time.Month;
  *
  * @author Tee Zhuo Xuan
  */
-public class DemandList implements Comparable<DemandList> {
+public class DemandList implements Comparable<DemandList>, Cloneable {
 
     private String demandListID;
     private Campaign campaign;
@@ -156,7 +156,7 @@ public class DemandList implements Comparable<DemandList> {
 
         if (o instanceof DemandList) {
             DemandList other = (DemandList) o;
-            if (this.demandListID == other.getDemandListID()) {
+            if (this.demandListID.equalsIgnoreCase(other.getDemandListID())) {
                 return true;
             } else {
                 return false;
@@ -167,13 +167,13 @@ public class DemandList implements Comparable<DemandList> {
     }
 
     private static String[] demandHeaders() {
-        String[] campaignHeaders = {"Demand List ID", "Demand Name", "Quantity"};
+        String[] campaignHeaders = {"Demand List ID", "Demand Name", "Quantity", "Date Register", "Campaign ID", "Campaign Name", "Campaign Status", "Demand Reister Date", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{demandListID, demandName, String.valueOf(quantity)};
+        return new String[]{demandListID, demandName, String.valueOf(quantity), dateRegister.toString(), campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateRegister.toString(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {
@@ -248,6 +248,12 @@ public class DemandList implements Comparable<DemandList> {
         }
 
         return dummyDemandList;
+    }
+
+    @Override
+    public DemandList clone() throws CloneNotSupportedException {
+        DemandList cloned = (DemandList) super.clone();
+        return cloned;
     }
 
 }

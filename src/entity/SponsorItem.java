@@ -126,7 +126,7 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
         if (o instanceof SponsorItem) {
             SponsorItem other = (SponsorItem) o;
-            if (this.sponsoredID == other.getSponsoredID()) {
+            if (this.sponsoredID.equalsIgnoreCase(other.getSponsoredID())) {
                 return true;
             } else {
                 return false;
