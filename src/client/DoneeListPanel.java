@@ -107,7 +107,23 @@ class DoneeListPanel implements Panel {
                         doneeList = new DoneeList();
                         Donee.doneeTable(doneeDB);
 
-                        if (doneeDB.getFront() != null) {
+                        hasDonee = true;
+                        Donee initialFront = doneeDB.getFront();
+
+                        if (doneeDB.getFront() != null && doneeDB.getFront().isInActive() == true) {
+                            for (int i = 1; i <= doneeDB.getLength(); i++) {
+                                if (doneeDB.getFront().isInActive() == true) {
+                                    doneeDB.enqueue(doneeDB.dequeue());
+                                }
+
+                                if (doneeDB.getFront() == initialFront) {
+                                    hasDonee = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (doneeDB.getFront() != null && hasDonee == true) {
                             System.out.print("Enter date join [dd. MMM. yyyy]: ");
                             doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
 
