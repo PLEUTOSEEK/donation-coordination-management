@@ -186,16 +186,16 @@ public class DonorPanel implements Panel {
                 boolean optvalidation = true;
 
                 do {
+                    
                     System.out.println(updateDataMenu().toString());
                     optvalidation = true;
-                    System.out.println("Enter the number want to update, if multiple index leave space at between [1 5 6]: ");
+                    System.out.print("\nEnter the number want to update, if multiple index leave space at between [1 5 6]: ");
                     opt = sc.nextLine();
 
                     String[] splitOpt = opt.split("\\s+");
                     int[] optSplit = new int[splitOpt.length];
 
                     for (int i = 0; i < splitOpt.length; i++) {
-<<<<<<< HEAD
                         try {
                             optSplit[i] = Integer.valueOf(splitOpt[i]);
                         } catch (Exception e) {
@@ -259,11 +259,11 @@ public class DonorPanel implements Panel {
                                     donorType = donor.getDonorType();
                                     sc.nextLine();
                                     if (donorType == "organization") {
-                                        System.out.println("Register No  :");
+                                        System.out.print("\nRegister No  :");
                                         donor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     } else {
-                                        System.out.println("NRIC           :");
+                                        System.out.print("\nNRIC           :");
                                         donor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     }
@@ -271,7 +271,7 @@ public class DonorPanel implements Panel {
 
                                 case 5:
                                     sc.nextLine();
-                                    System.out.println("Email        :");
+                                    System.out.print("\nEmail        :");
                                     donor.setEmail(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
@@ -306,7 +306,7 @@ public class DonorPanel implements Panel {
                             System.out.print("\nConfirm update (Y/N)");
                             option = sc.next().charAt(0);
                             if (option == 'Y' || option == 'y') {
-                                donorDB.replace(donor, donorDB.getDataCount());
+                                donorDB.replace(donor, donorDB.indexOf(donor));
                                 System.out.println("\nUpdate successfully...");
                             } else {
                                 System.out.println("\nUpdate abort...");
@@ -317,100 +317,6 @@ public class DonorPanel implements Panel {
                 } while (optvalidation == false);
             }
             System.out.print("\nContinue update (Y/N):");
-=======
-                        switch (optSplit[i]) {
-                            case 1: {
-                                System.out.print("\nDonor name   :");
-                                donor.setName(sc.nextLine());
-                                update = true;
-                            }
-                            case 2: {
-                                System.out.println("Donor type   :");
-                                System.out.println("1.Organization");
-                                System.out.println("2.Individual");
-                                int selection = sc.nextInt();
-
-                                if (selection == 1) {
-                                    donor.setDonorType("organization");
-
-                                    donor.setGender(' ');
-
-                                    System.out.print("\nRegister No  :");
-                                    donor.setIc(sc.nextLine());
-
-                                } else {
-                                    donor.setDonorType("individual");
-
-                                    System.out.print("\nGender(M/F)  :");
-                                    //donor.setGender(' ');
-
-                                    System.out.print("\nIC           :");
-                                    donor.setIc(sc.nextLine());
-
-                                }
-                            }
-                            case 3: {
-                                String donorType = donor.getDonorType();
-                                if (donorType == "organization") {
-                                    donor.setGender(' ');
-                                    System.out.print("\nThe donor type is organization");
-                                } else {
-                                    System.out.print("\nGender(M/F)  :");
-                                    //donor.setGender(' ');
-                                }
-                                update = true;
-                            }
-                            case 4: {
-                                String donorType = donor.getDonorType();
-
-                                if (donorType == "organization") {
-                                    System.out.println("Register No  :");
-                                    donor.setIc(sc.nextLine());
-                                } else {
-                                    System.out.println("IC           :");
-                                    donor.setIc(sc.nextLine());
-                                }
-
-                                update = true;
-                            }
-                            case 5: {
-                                System.out.println("Email        :");
-                                donor.setEmail(sc.nextLine());
-                                update = true;
-                            }
-                            case 6: {
-                                System.out.println("Phone number :");
-                                donor.setPhoneNo(sc.nextLine());
-                                update = true;
-                            }
-                            case 7: {
-                                System.out.println("Address      :");
-                                donor.setAddress(sc.nextLine());
-                                update = true;
-                            }
-                            case 8: {
-                                System.out.println("Status       :");
-                                donor.setStatus(sc.nextLine());
-                                update = true;
-                            }
-                            default:
-                                System.out.println(optSplit[i] + " not found...");
-                        }
-                    }
-                    if (update == true) {
-                        System.out.print("Confirm update Donor (Y/N) ");
-                        option = sc.next().charAt(0);
-                        if (option == 'Y' || option == 'y') {
-                            System.out.println("Update successfully...");
-                        } else {
-                            System.out.println("Update abort...");
-                        }
-                    }
-
-                }
-            } while (optvalidation == false);
-            System.out.print("Continue update campaign ? (Y/N) ");
->>>>>>> 2a9317aba9895c11a6cb3c8dab5ffc5e96c5bff3
             option = sc.next().charAt(0);
         } while (option == 'Y' || option == 'y');
 
