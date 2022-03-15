@@ -27,7 +27,7 @@ class DonorListPanel implements Panel {
             RedBlackTree<LocalDate, Campaign> campaignDB,
             SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB
-    ) {
+    ) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -106,7 +106,7 @@ class DonorListPanel implements Panel {
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 campaign = campaignDB.get(new Campaign(campaignID));
-                if (campaign.getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                if (campaign.isPermanentDelete() == false) {
 
                     do {
 
@@ -170,7 +170,7 @@ class DonorListPanel implements Panel {
                 System.out.println("Campaign ID not found, add donor abort");
             }
 
-            System.out.println("Continue add donor ? (Y/N)");
+            System.out.print("Continue add donor ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -194,7 +194,7 @@ class DonorListPanel implements Panel {
 
     }
 
-    public void update(SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void update(SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) throws CloneNotSupportedException {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -210,13 +210,13 @@ class DonorListPanel implements Panel {
         do {
             DonorList.donorListTable(donorListDB);
 
-            System.out.println("Enter donor list ID: ");
+            System.out.print("Enter donor list ID: ");
             donorListID = input.nextLine();
             donorList = new DonorList();
 
             if (donorListDB.contains(new DonorList(donorListID)) == true) {
-                donorList = donorListDB.get(new DonorList(donorListID));
-                if (donorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                donorList = donorListDB.get(new DonorList(donorListID)).clone();
+                if (donorList.getCampaign().isPermanentDelete() == false) {
 
                     oriJoinDate = donorList.getDateJoin();
                     boolean validIndex = true;
@@ -282,8 +282,8 @@ class DonorListPanel implements Panel {
                                 }
                             }
 
-                            if (hasUpdateSomething == true) {
-                                System.out.println("Confirm update donor list ? (Y/N)");
+                            if (splitIndexInt.length != 0 && hasUpdateSomething == true) {
+                                System.out.print("Confirm update donor list ? (Y/N) ");
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
@@ -310,7 +310,7 @@ class DonorListPanel implements Panel {
                 System.out.println("Donor list ID not found, update campaign abort");
             }
 
-            System.out.println("Continue update donor list ? (Y/N)");
+            System.out.print("Continue update donor list ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -332,14 +332,14 @@ class DonorListPanel implements Panel {
         do {
             DonorList.donorListTable(donorListDB);
 
-            System.out.println("Enter donor list ID: ");
+            System.out.print("Enter donor list ID: ");
             donorListID = input.nextLine();
             DoublyLinkedList<DonorList> donorLists = donorListDB.getAllList();
             if (donorLists.contains(new DonorList(donorListID)) == true) {
                 DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
-                if (donorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
+                if (donorList.getCampaign().isPermanentDelete() == false) {
 
-                    System.out.println("Confirm deactive donor list ? (Y/N)");
+                    System.out.print("Confirm deactive donor list ? (Y/N) ");
                     confirmation = input.nextLine();
 
                     if (confirmation.toUpperCase().equals("Y")) {
@@ -354,7 +354,7 @@ class DonorListPanel implements Panel {
             } else {
                 System.out.println("Donor list ID not found, deactive donor list abort");
             }
-            System.out.println("Continue deactive donor list  ? (Y/N)");
+            System.out.print("Continue deactive donor list ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");

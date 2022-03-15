@@ -5,10 +5,9 @@
  */
 package client;
 
-import java.util.Scanner;
 import adt.SinglyLinkedList;
 import entity.Donor;
-
+import java.util.Scanner;
 import utils.DonorPredicates;
 
 /**
@@ -283,7 +282,7 @@ public class DonorPanel implements Panel {
                         }
                     }
                     if (update == true) {
-                        System.out.println("Confirm update Donor (Y/N) (Y/N)");
+                        System.out.print("Confirm update Donor (Y/N) ");
                         option = sc.next().charAt(0);
                         if (option == 'Y' || option == 'y') {
                             System.out.println("Update successfully...");
@@ -294,7 +293,7 @@ public class DonorPanel implements Panel {
 
                 }
             } while (optvalidation == false);
-            System.out.println("Continue update campaign ? (Y/N)");
+            System.out.print("Continue update campaign ? (Y/N) ");
             option = sc.next().charAt(0);
             display(donorDB);
         } while (option == 'Y' || option == 'y');
@@ -320,7 +319,7 @@ public class DonorPanel implements Panel {
             if (donorDB.contains(new Donor(id)) == true) {
                 Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(id)));
 
-                System.out.print("\nConfirm deactive Donor " + id + " (Y/N):");
+                System.out.print("\nConfirm deactive Donor " + id + " (Y/N): ");
                 option = sc.nextLine();
 
                 if (option.toUpperCase().equals("Y")) {
@@ -334,7 +333,7 @@ public class DonorPanel implements Panel {
                 System.out.println("Donor ID not found,update donor abort");
             }
 
-            System.out.print("\nContinue Deactive Donor (Y/N):");
+            System.out.print("\nContinue Deactive Donor (Y/N): ");
             option = sc.nextLine();
 
         } while (option.toUpperCase().equals("Y"));

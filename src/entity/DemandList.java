@@ -156,7 +156,7 @@ public class DemandList implements Comparable<DemandList> {
 
         if (o instanceof DemandList) {
             DemandList other = (DemandList) o;
-            if (this.demandListID == other.getDemandListID()) {
+            if (this.demandListID.equalsIgnoreCase(other.getDemandListID())) {
                 return true;
             } else {
                 return false;
@@ -167,13 +167,13 @@ public class DemandList implements Comparable<DemandList> {
     }
 
     private static String[] demandHeaders() {
-        String[] campaignHeaders = {"Demand List ID", "Demand Name", "Quantity"};
+        String[] campaignHeaders = {"Demand List ID", "Demand Name", "Quantity", "Date Register", "Campaign ID", "Campaign Name", "Campaign Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{demandListID, demandName, String.valueOf(quantity)};
+        return new String[]{demandListID, demandName, String.valueOf(quantity), this.dateRegister.toString(), this.campaign.getCampaignID(), this.campaign.getCampaignName(), this.campaign.getStatus(), this.dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {

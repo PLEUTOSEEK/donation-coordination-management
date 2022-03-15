@@ -216,7 +216,7 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
 
         if (o instanceof Campaign) {
             Campaign other = (Campaign) o;
-            if (this.campaignID.equals(other.getCampaignID())) {
+            if (this.campaignID.equalsIgnoreCase(other.getCampaignID())) {
                 return true;
             } else {
                 return false;
@@ -227,13 +227,13 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     }
 
     private static String[] campaignHeaders() {
-        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date", "Status"};
+        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date", "Email", "Bank No.", "Target Amount", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString(), this.status};
+        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString(), this.campaignEmail, this.campaignBankNo, String.valueOf(this.targetAmount), this.status, this.dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
@@ -332,5 +332,9 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     public Campaign clone() throws CloneNotSupportedException {
         Campaign cloned = (Campaign) super.clone();
         return cloned;
+    }
+
+    public boolean isPermanentDelete() {
+        return status.equalsIgnoreCase("Permanent Inactive");
     }
 }

@@ -115,7 +115,7 @@ public class CampaignPanel implements Panel {
             RedBlackTree<LocalDate, DoneeList> doneeListDB,
             SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) {
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         int option = 0;
@@ -127,6 +127,7 @@ public class CampaignPanel implements Panel {
 
         do {
             System.out.println(supportListMenu());
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -525,7 +526,7 @@ public class CampaignPanel implements Panel {
                 campaign = new Campaign();
                 campaign = campaignDB.get(new Campaign(campaignID)).clone();
 
-                if (campaign.getStatus().equalsIgnoreCase("Permanent Inactive") == false) {
+                if (campaign.isPermanentDelete() == false) {
                     oriStartDate = campaign.getCampaignStartDate();
 
                     boolean validIndex = true;
@@ -664,7 +665,7 @@ public class CampaignPanel implements Panel {
             if (campaigns.contains(new Campaign(campaignID)) == true) {
                 Campaign campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
 
-                if (campaign.getStatus().toUpperCase().equals("PERMANENT INACTIVE") == false) {
+                if (campaign.isPermanentDelete() == false) {
 
                     StringBuilder statusMenu = new StringBuilder();
                     for (int i = 0; i < status.length; i++) {
@@ -704,7 +705,7 @@ public class CampaignPanel implements Panel {
             } else {
                 System.out.println("Campaign ID not found, update campaign abort");
             }
-            System.out.println("Continue change campaign's status ? (Y/N)");
+            System.out.print("Continue change campaign's status ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");

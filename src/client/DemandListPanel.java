@@ -174,7 +174,7 @@ class DemandListPanel implements Panel {
                 System.out.println("Campaign ID not found, add demand abort");
             }
 
-            System.out.println("Continue add demand ? (Y/N)");
+            System.out.print("Continue add demand ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -256,7 +256,7 @@ class DemandListPanel implements Panel {
                         }
 
                         if (splitIndexInt.length != 0) {
-                            System.out.println("Confirm update Demand list ? (Y/N)");
+                            System.out.print("Confirm update Demand list ? (Y/N) ");
                             confirmation = input.nextLine();
 
                             if (confirmation.toUpperCase().equals("Y")) {
@@ -280,7 +280,7 @@ class DemandListPanel implements Panel {
                 System.out.println("Demand list ID not found, update Demand list abort");
             }
 
-            System.out.println("Continue update Demand list ? (Y/N)");
+            System.out.print("Continue update Demand list ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
@@ -301,7 +301,7 @@ class DemandListPanel implements Panel {
             demandListID = input.nextLine();
             DoublyLinkedList<DemandList> demandLists = demandListDB.getAllList();
             if (demandLists.contains(new DemandList(demandListID)) == true) {
-                System.out.println("Confirm deactive demand list ? (Y/N)");
+                System.out.print("Confirm deactive demand list ? (Y/N) ");
                 confirmation = input.nextLine();
 
                 if (confirmation.toUpperCase().equals("Y")) {
@@ -313,7 +313,7 @@ class DemandListPanel implements Panel {
             } else {
                 System.out.println("Demand list ID not found, update campaign abort");
             }
-            System.out.println("Continue deactive Demand list  ? (Y/N)");
+            System.out.print("Continue deactive Demand list  ? (Y/N) ");
             option = input.nextLine();
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");

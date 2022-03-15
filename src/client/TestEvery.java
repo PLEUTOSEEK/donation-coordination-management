@@ -5,18 +5,8 @@
  */
 package client;
 
-import adt.CircularLinkedQueue;
-import adt.DoublyLinkedList;
 import adt.RedBlackTree;
-import adt.SinglyLinkedList;
 import entity.Campaign;
-import entity.DemandList;
-import entity.Donee;
-import entity.DoneeList;
-import entity.Donor;
-import entity.DonorList;
-import entity.Sponsor;
-import entity.SponsorList;
 import java.time.LocalDate;
 
 /**
@@ -30,16 +20,10 @@ public class TestEvery {
 
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
-
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
-<<<<<<< HEAD
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-
-=======
-//        SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
->>>>>>> a69aad33c6bc2f108eedbcb3fba22d0766b7fadd
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
 //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
 //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
@@ -70,8 +54,7 @@ public class TestEvery {
 //        MainPanel mainPanel = new MainPanel();
 //        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
 //      doneeP.doneePanel(doneeDB);
- //         donor.donorPanel(donorDB);
-
+        //         donor.donorPanel(donorDB);
     }
 
 }

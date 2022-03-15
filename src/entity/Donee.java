@@ -133,7 +133,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
         if (o instanceof Donee) {
             Donee other = (Donee) o;
-            if (this.accountID.equals(other.getAccountID())) {
+            if (this.accountID.equalsIgnoreCase(other.getAccountID())) {
                 return true;
             } else {
                 return false;

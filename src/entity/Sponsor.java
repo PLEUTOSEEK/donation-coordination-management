@@ -57,7 +57,7 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
 
         if (o instanceof Sponsor) {
             Sponsor other = (Sponsor) o;
-            if (this.accountID.equals(other.getAccountID())) {
+            if (this.accountID.equalsIgnoreCase(other.getAccountID())) {
                 return true;
             } else {
                 return false;

@@ -19,7 +19,7 @@ import java.time.Month;
  *
  * @author Tee Zhuo Xuan
  */
-public class SponsorList implements Comparable<SponsorList> {
+public class SponsorList implements Comparable<SponsorList>, Cloneable {
 
     private String sponsorListID;
     private Sponsor sponsor;
@@ -117,7 +117,7 @@ public class SponsorList implements Comparable<SponsorList> {
 
         if (o instanceof SponsorList) {
             SponsorList other = (SponsorList) o;
-            if (this.sponsorListID == other.getSponsorListID()) {
+            if (this.sponsorListID.equalsIgnoreCase(other.getSponsorListID())) {
                 return true;
             } else {
                 return false;
@@ -128,13 +128,13 @@ public class SponsorList implements Comparable<SponsorList> {
     }
 
     private static String[] sponsorListHeaders() {
-        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID", "Sponsor Name", "Sponsor Email", "Sponsor Phone No", "Campaign ID"};
+        String[] campaignHeaders = {"Sponsor List ID", "Sponsor ID", "Sponsor Name", "Sponsor Email", "Sponsor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Status", "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{sponsorListID, sponsor.accountID, sponsor.name, sponsor.email, sponsor.phoneNo, campaign.getCampaignID()};
+        return new String[]{sponsorListID, sponsor.accountID, sponsor.name, sponsor.email, sponsor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), status, dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
@@ -228,4 +228,9 @@ public class SponsorList implements Comparable<SponsorList> {
         return dummySponsorList;
     }
 
+    @Override
+    public SponsorList clone() throws CloneNotSupportedException {
+        SponsorList cloned = (SponsorList) super.clone();
+        return cloned;
+    }
 }

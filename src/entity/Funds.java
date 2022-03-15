@@ -107,7 +107,7 @@ public class Funds implements Comparable<Funds> {
 
         if (o instanceof Funds) {
             Funds other = (Funds) o;
-            if (this.fundsID == other.getFundsID()) {
+            if (this.fundsID.equalsIgnoreCase(other.getFundsID())) {
                 return true;
             } else {
                 return false;
