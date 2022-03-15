@@ -38,10 +38,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
 
                 return (T) this.firstNode.data;
 
-            } else if (givenPos == this.dataCount) {
-
-                return (T) this.tail.data;
-
             } else {
 
                 Node current = this.firstNode;
@@ -154,10 +150,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         return -1;
     }
 
-    /*@Override
-    public boolean update(T element) {
-
-    }*/
     @Override
     public final void clear(T element) {
         firstNode = null;
@@ -181,17 +173,17 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         }
         System.out.println("");
     }
-    
+
     public void printSpec(T element) {
         Node curr = firstNode;
 
         while (curr != null) {
-            if(element.equals(curr.data))
-            System.out.print("[" + curr.getData() + "], ");
+            if (element.equals(curr.data)) {
+                System.out.print("[" + curr.getData() + "], ");
+            }
         }
         System.out.println("");
     }
-    
 
     public T[] toArray(T[] array) {
         Node curr = this.firstNode;
@@ -213,6 +205,30 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         } else {
             return null;
         }
+    }
+    
+
+    @Override
+    public boolean replace(T element, int inputPosition) {
+        Node firstNode = getFirstNode();
+        int counter = 0;
+        if ((inputPosition >= 1) && (inputPosition <= dataCount)) {
+
+            while (null != firstNode && counter++ < inputPosition - 1) {
+                firstNode = firstNode.getNext();
+            }
+
+            if (firstNode == null || firstNode.getNext() == null) {
+                return false;
+            }
+
+            Node newNode = new Node(element);
+            newNode.setNext(firstNode.getNext().getNext());
+            firstNode.setNext(newNode);
+            return true;
+        }
+        return false;
+
     }
 
     private class Node<T extends Comparable<T>> {

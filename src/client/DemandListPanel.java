@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.DemandListPredicates;
 
 /**
  *
@@ -27,6 +28,7 @@ class DemandListPanel implements Panel {
 
         do {
             System.out.println(menu());
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -37,7 +39,7 @@ class DemandListPanel implements Panel {
                     DemandList.demandTable(demandListDB);
                     break;
                 case 3:
-                    search();
+                    search(demandListDB);
                     break;
                 case 4:
                     delete(demandListDB);
@@ -58,7 +60,7 @@ class DemandListPanel implements Panel {
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new demand list \n");
         menu.append("2. Display demand list \n");
         menu.append("3. Search demand list \n");
@@ -94,6 +96,25 @@ class DemandListPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void search(RedBlackTree<LocalDate, DemandList> demandListDB) {
+        DemandList[] DemandListArr = new DemandList[demandListDB.getAllList().getLength()];
+        DemandListArr = demandListDB.getAllArrayList(DemandListArr);
+        RedBlackTree<LocalDate, DemandList> listForPrint = new RedBlackTree<>();
+        DemandList[] arrListForPrint = null;
+
+        arrListForPrint = DemandListPredicates.ControlPanel(DemandListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (DemandList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateRegister(), arrListForPrint1);
+            }
+            DemandList.demandTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
+    }
+
     @Override
     public void exit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -113,7 +134,7 @@ class DemandListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
@@ -146,7 +167,7 @@ class DemandListPanel implements Panel {
 
                     System.out.println(confirmation.toUpperCase().equals("Y") ? "Added demand successfully" : "Add demand abort");
 
-                    System.out.println("Continue add demand to this campaign ? (Y/N)");
+                    System.out.print("Continue add demand to this campaign ? (Y/N) ");
                     option = input.nextLine();
                 } while (option.toUpperCase().equals("Y"));
             } else {
@@ -163,7 +184,7 @@ class DemandListPanel implements Panel {
 
     public String demandListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Demand name\n");
         menu.append("2. Demand description\n");
         menu.append("3. Demand register date\n");
@@ -194,7 +215,7 @@ class DemandListPanel implements Panel {
                 do {
                     System.out.println(demandListUpdateMenu());
                     validIndex = true;
-                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                    System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
                     indexSelected = input.nextLine();
 
                     String[] splitIndex = indexSelected.split("\\s+");

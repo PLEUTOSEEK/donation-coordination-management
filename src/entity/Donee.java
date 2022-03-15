@@ -17,6 +17,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
     private String requestIssue, status;
     private double requestAmount;
+    private double requestOriAmount;
     private String bankType, bankAcc;
     //private List<Donation> donations;
     private static String lastDoneeID = "";
@@ -27,6 +28,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
     public Donee(String accountID, String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc) {
         super(accountID, name, gender, ic, email, phoneNo, address);
+        this.accountID = lastDoneeID;
         this.requestIssue = requestIssue;
         this.requestAmount = requestAmount;
         this.bankType = bankType;
@@ -35,11 +37,6 @@ public class Donee extends Account implements Comparable<Donee> {
 
     public Donee(String doneeID) {
         this.accountID = doneeID;
-    }
-
-    public Donee(String doneeID, String doneeName) {
-        this.accountID = doneeID;
-        this.name = doneeName;
     }
 
     public void setRequestIssue(String requestIssue) {
@@ -62,12 +59,60 @@ public class Donee extends Account implements Comparable<Donee> {
         this.bankAcc = bankAcc;
     }
 
-    public String getLastDoneeID() {
+    public static String getLastDoneeID() {
         return lastDoneeID;
     }
 
-    public void setLastDoneeID(String lastDoneeID) {
-        this.lastDoneeID = lastDoneeID;
+    public static void setLastDoneeID(String lastDoneeID) {
+        Donee.lastDoneeID = lastDoneeID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public void setIc(String ic) {
+        this.ic = ic;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public static void setLastId(String lastId) {
+        Account.lastId = lastId;
+    }
+
+    public String getRequestIssue() {
+        return requestIssue;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public double getRequestAmount() {
+        return requestAmount;
+    }
+
+    public String getBankType() {
+        return bankType;
+    }
+
+    public String getBankAcc() {
+        return bankAcc;
     }
 
     @Override
@@ -88,7 +133,7 @@ public class Donee extends Account implements Comparable<Donee> {
 
         if (o instanceof Donee) {
             Donee other = (Donee) o;
-            if (this.accountID == other.getAccountID()) {
+            if (this.accountID.equals(other.getAccountID())) {
                 return true;
             } else {
                 return false;
@@ -100,22 +145,23 @@ public class Donee extends Account implements Comparable<Donee> {
     }
 
     private static String[] doneeHeaders() {
-        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account"};
+        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account", "Status"};
 
         return doneeRows;
     }
 
     private String[] strArr() {
-
-        return new String[]{accountID, name};
+        String gend = String.valueOf(gender);
+        String amt = Double.toString(requestAmount);
+        return new String[]{accountID, name, ic, gend, email, phoneNo, address, requestIssue, amt, bankType, bankAcc, status};
 
     }
 
     //change the list and apply toArray method.
     private static String[][] doneeRows(CircularLinkedQueue<Donee> doneeList) {
-        Donee[] donees = new Donee[doneeList.getLength()];
+        Donee[] donees = new Donee[doneeList.size()];
         donees = doneeList.toArray(donees);
-        String[][] doneeRows = new String[doneeList.getLength()][];
+        String[][] doneeRows = new String[doneeList.size()][];
         for (int i = 0; i < donees.length; i++) {
             doneeRows[i] = donees[i].strArr();
         }
@@ -129,22 +175,16 @@ public class Donee extends Account implements Comparable<Donee> {
         ASCIITable.getInstance().printTable(header, doneeData);
     }
 
-    public String autoGenerateID() {
+    public String autoGenerateID1(CircularLinkedQueue<Donee> d) {
 
-        String newDoneeID = "";
-        int n = 0;
-
-        if (lastDoneeID.equals("")) {
-            newDoneeID = "DE1001";
-        } else {
-
-            n = Integer.parseInt(lastDoneeID.substring(2));
-            n += 1;
-            newDoneeID = "DE" + n;
-        }
-
-        lastDoneeID = newDoneeID;
-
+//        if (d.isEmpty() == true) {
+//            newDoneeID = "DE1001";
+//        } else {
+//            newDoneeID = d.getEnd().getLastDoneeID();
+//            n = Integer.parseInt(newDoneeID.substring(2));
+//            n++;
+//            newDoneeID = "DE" + n;
+//        }
         return lastDoneeID;
     }
 
@@ -153,7 +193,7 @@ public class Donee extends Account implements Comparable<Donee> {
         Faker faker = new Faker();
         String[] doneeIC = "1114152543,0904050315,0402005577,1004163133,0111147799,1101365780,0122554455,0302010441,0113224412,0730221541".split(",");
         int[] gender = {77, 70};
-        //String[] doneeEmail = "Uzair@gmail.com,Keaton@gmail.com,Kajal@Salas.com,Susie@gmail.com,Sullivan@Bean.com,Ralph@Yates.com,Ashlyn@Cooke.com,Habib@gmail.com,JeffReese@gmail.com,Corben@Donald.com".split(",");
+        String[] doneeEmail = "Uzair@gmail.com,Keaton@gmail.com,Kajal@Salas.com,Susie@gmail.com,Sullivan@Bean.com,Ralph@Yates.com,Ashlyn@Cooke.com,Habib@gmail.com,JeffReese@gmail.com,Corben@Donald.com".split(",");
         String[] doneePhone = "0197682204,0143268085,0122323462,0164242625,0143268022,0146741265,0122072540,0195893047,0139285361,0198837324".split(",");
         String[] doneeAddress = "No. 9M-36, Jalan Utama 3/7G,No. L-84-59, Jln Zaaba 9,No. 9Z-04, Jalan Bukit Tunku 7/9,Lot 9, Jln 4,No. 720, Jalan Bangsar 3/69F,5, Lorong Pahang 22Y,No. 19, Jln Damansara 8Q,816, Jalan Pudu 6/4,9N-43, Jalan Kedah 3/9V,19, Lorong Keliling 3/20".split(",");
         String[] doneeRequestIssue = "Request for nursing home,Request for orphanage,Request for flood,Request for earthquake,Request for famine,Request for the food bank,Request for daughter's leukemia,Request for cancer medical expenses,Request for supplies, food, and education to African children,Request for leukemia patients".split(",");
@@ -163,7 +203,6 @@ public class Donee extends Account implements Comparable<Donee> {
         Donee donee = new Donee();
 
         for (int record = 0; record < 100; record++) {
-            System.out.println(record);
             String bankNo = (int) faker.number().randomDouble(0, 1000, 9000) + " "
                     + (int) faker.number().randomDouble(0, 1000, 9000) + " "
                     + (int) faker.number().randomDouble(0, 10, 99);
@@ -183,9 +222,26 @@ public class Donee extends Account implements Comparable<Donee> {
             donee.setBankAcc(bankNo);
             donee.setStatus("Active");
             dummyDonee.enqueue(donee);
+        }
+        return dummyDonee;
+    }
 
+    @Override
+    public String autoGenerateID() {
+        String newDoneeID = "";
+        int n;
+
+        if (lastDoneeID.equals("")) {
+            newDoneeID = "DE1001";
+        } else {
+
+            n = Integer.parseInt(lastDoneeID.substring(2));
+            n += 1;
+            newDoneeID = "DE" + n;
         }
 
-        return dummyDonee;
+        lastDoneeID = newDoneeID;
+
+        return lastDoneeID;
     }
 }

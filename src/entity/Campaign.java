@@ -19,7 +19,7 @@ import java.time.Month;
  *
  * @author Tee Zhuo Xuan
  */
-public class Campaign implements Comparable<Campaign> {
+public class Campaign implements Comparable<Campaign>, Cloneable {
 
     private String campaignID;
     private String campaignName;
@@ -62,6 +62,10 @@ public class Campaign implements Comparable<Campaign> {
         this.status = status;
         this.campaignRegisterDate = campaignRegisterDate;
         this.dateModified = dateModified;
+    }
+
+    public static void setLastCampaignID(String lastCampaignID) {
+        Campaign.lastCampaignID = lastCampaignID;
     }
 
     public String getCampaignAddress() {
@@ -212,7 +216,7 @@ public class Campaign implements Comparable<Campaign> {
 
         if (o instanceof Campaign) {
             Campaign other = (Campaign) o;
-            if (this.campaignID == other.getCampaignID()) {
+            if (this.campaignID.equals(other.getCampaignID())) {
                 return true;
             } else {
                 return false;
@@ -223,19 +227,19 @@ public class Campaign implements Comparable<Campaign> {
     }
 
     private static String[] campaignHeaders() {
-        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date"};
+        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date", "Status"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString()};
+        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString(), this.status};
     }
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
-        Campaign[] campaigns = new Campaign[campaignList.getLength()];
+        Campaign[] campaigns = new Campaign[campaignList.getAllList().getLength()];
         campaigns = campaignList.getAllArrayList(campaigns);
-        String[][] campaignRows = new String[campaignList.getLength()][];
+        String[][] campaignRows = new String[campaigns.length][];
         for (int i = 0; i < campaigns.length; i++) {
             campaignRows[i] = campaigns[i].strArr();
         }
@@ -324,4 +328,9 @@ public class Campaign implements Comparable<Campaign> {
         return dummyCampaign;
     }
 
+    @Override
+    public Campaign clone() throws CloneNotSupportedException {
+        Campaign cloned = (Campaign) super.clone();
+        return cloned;
+    }
 }

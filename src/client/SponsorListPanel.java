@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.SponsorListPredicates;
 
 /**
  *
@@ -32,7 +33,7 @@ class SponsorListPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -43,7 +44,7 @@ class SponsorListPanel implements Panel {
                     SponsorList.sponsorListTable(sponsorListDB);
                     break;
                 case 3:
-                    search();
+                    search(sponsorListDB);
                     break;
                 case 4:
                     delete(sponsorListDB);
@@ -58,13 +59,13 @@ class SponsorListPanel implements Panel {
                     System.out.println("Index not correct...");
             }
 
-        } while (option != 7);
+        } while (option != 6);
     }
 
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new sponsor list \n");
         menu.append("2. Display sponsor list \n");
         menu.append("3. Search sponsor list \n");
@@ -93,59 +94,72 @@ class SponsorListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
+            campaign = new Campaign();
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
-                do {
+                campaign = campaignDB.get(new Campaign(campaignID));
+                if (campaign.getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
                     do {
-                        hasSponsor = true;
-                        Sponsor.sponsorTable(sponsorDB);
-                        System.out.println("Enter sponsor ID: ");
-                        lastSponsorID = input.nextLine();
+                        do {
+                            sponsorList = new SponsorList();
+                            hasSponsor = true;
+                            SponsorList.sponsorListTable(sponsorListDB);
+                            Sponsor.sponsorTable(sponsorDB);
+                            System.out.print("Enter sponsor ID: ");
+                            lastSponsorID = input.nextLine();
 
-                        if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
-                            SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getLength()];
-                            sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
-                            for (int i = 0; i < sponsorListArr.length; i++) {
-                                if (sponsorListArr[i].getCampaign().equals(campaign) && sponsorListArr[i].getSponsor().equals(sponsor)) {
-                                    hasSponsor = false;
-                                    break;
+                            if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
+                                SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
+                                sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+
+                                if (sponsorListArr != null) {
+                                    for (int i = 0; i < sponsorListArr.length; i++) {
+                                        if (sponsorListArr[i].getCampaign().equals(campaign) && sponsorListArr[i].getSponsor().equals(new Sponsor(lastSponsorID))) {
+
+                                            hasSponsor = false;
+                                            break;
+                                        }
+                                    }
                                 }
+
+                                if (hasSponsor == false) {
+                                    System.out.println("Sponsor ID exist in the campaign already, try again the other sponsor");
+                                }
+                            } else {
+                                hasSponsor = false;
+                                System.out.println("Sponsor ID not found, try again");
                             }
-                            if (hasSponsor == false) {
-                                System.out.println("Sponsor ID exist in the campaign already, try again the other sponsor");
-                            }
-                        } else {
-                            hasSponsor = false;
-                            System.out.println("Sponsor ID not found, try again");
+                        } while (hasSponsor == false);
+
+                        sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
+
+                        sponsorList.setCampaign(campaign);
+                        sponsorList.setSponsor(sponsor);
+                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                        sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                        sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                        sponsorList.setStatus("Active");
+                        sponsorList.setSponsorListID(sponsorList.autoGenerateID());
+
+                        System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
+                        confirmation = input.nextLine();
+
+                        if (confirmation.toUpperCase().equals("Y")) {
+                            sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
                         }
-                    } while (hasSponsor == false);
 
-                    sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
-                    campaign = campaignDB.get(new Campaign(campaignID));
+                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
 
-                    sponsorList.setCampaign(campaign);
-                    sponsorList.setSponsor(sponsor);
-                    System.out.println("Enter date join [dd. MMM. yyyy]: ");
-                    sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                    sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    sponsorList.setStatus("Active");
-                    sponsorList.setSponsorListID(sponsorList.autoGenerateID());
+                        System.out.println("Continue add sponsor to this campaign ? (Y/N)");
+                        option = input.nextLine();
 
-                    System.out.println("Confirm add sponsor to this campaign ? (Y/N)");
-                    confirmation = input.nextLine();
-
-                    if (confirmation.toUpperCase().equals("Y")) {
-                        sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
-                    }
-
-                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
-
-                    System.out.println("Continue add sponsor to this campaign ? (Y/N)");
-                    option = input.nextLine();
-                } while (option.toUpperCase().equals("Y"));
+                    } while (option.trim().toUpperCase().equals("Y"));
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Campaign ID not found, add sponsor abort");
             }
@@ -170,7 +184,7 @@ class SponsorListPanel implements Panel {
 
     public String sponsorListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Sponsor\n");
         menu.append("2. Sponsor Join Date\n");
 
@@ -198,89 +212,94 @@ class SponsorListPanel implements Panel {
 
             if (sponsorListDB.contains(new SponsorList(sponsorListID)) == true) {
                 sponsorList = sponsorListDB.get(new SponsorList(sponsorListID));
-                oriJoinDate = sponsorList.getDateJoin();
-                boolean validIndex = true;
-                do {
-                    System.out.println(sponsorListUpdateMenu());
-                    validIndex = true;
-                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
-                    indexSelected = input.nextLine();
+                if (sponsorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                    String[] splitIndex = indexSelected.split("\\s+");
-                    int[] splitIndexInt = new int[splitIndex.length];
+                    oriJoinDate = sponsorList.getDateJoin();
+                    boolean validIndex = true;
+                    do {
+                        System.out.println(sponsorListUpdateMenu());
+                        validIndex = true;
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        indexSelected = input.nextLine();
 
-                    for (int i = 0; i < splitIndex.length; i++) {
-                        try {
-                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
-                        } catch (Exception e) {
-                            validIndex = false;
-                            break;
-                        }
-                    }
+                        String[] splitIndex = indexSelected.split("\\s+");
+                        int[] splitIndexInt = new int[splitIndex.length];
 
-                    if (validIndex == true) {
-                        boolean hasUpdateSomething = false;
-                        for (int i = 0; i < splitIndexInt.length; i++) {
-                            switch (splitIndexInt[i]) {
-                                case 1:
-                                    do {
-                                        hasSponsor = true;
-                                        Sponsor.sponsorTable(sponsorDB);
-                                        System.out.println("Enter Sponsor ID: ");
-                                        lastSponsorID = input.nextLine();
-
-                                        if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
-                                            SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getLength()];
-                                            sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
-                                            for (int j = 0; j < sponsorListArr.length; j++) {
-                                                if (sponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && sponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
-                                                    hasSponsor = false;
-                                                    break;
-                                                }
-                                            }
-                                            if (hasSponsor == false) {
-                                                System.out.println("Sponsor ID exist in the campaign already, try again the other Sponsor");
-                                            }
-                                        } else {
-                                            hasSponsor = false;
-                                            System.out.println("Sponsor ID not found, try again");
-                                        }
-                                    } while (hasSponsor == false);
-                                    sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID))));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 2:
-                                    System.out.print("Enter the new Sponsor join date [dd. MMM. yyyy]: ");
-                                    sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                                    hasUpdateSomething = true;
-                                    break;
-
-                                default:
-                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                        for (int i = 0; i < splitIndex.length; i++) {
+                            try {
+                                splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                            } catch (Exception e) {
+                                validIndex = false;
+                                break;
                             }
                         }
 
-                        if (splitIndexInt.length != 0) {
-                            System.out.println("Confirm update sponsor list ? (Y/N)");
-                            confirmation = input.nextLine();
+                        if (validIndex == true) {
+                            boolean hasUpdateSomething = false;
+                            for (int i = 0; i < splitIndexInt.length; i++) {
+                                switch (splitIndexInt[i]) {
+                                    case 1:
+                                        do {
+                                            hasSponsor = true;
+                                            Sponsor.sponsorTable(sponsorDB);
+                                            System.out.print("Enter Sponsor ID: ");
+                                            lastSponsorID = input.nextLine();
 
-                            if (confirmation.toUpperCase().equals("Y")) {
-                                sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                                if (oriJoinDate != sponsorList.getDateJoin()) {
-                                    sponsorListDB.delData(oriJoinDate, sponsorList);
-                                    sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
-                                } else {
-                                    sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                                            if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
+                                                SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
+                                                sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+                                                for (int j = 0; j < sponsorListArr.length; j++) {
+                                                    if (sponsorListArr[j].getCampaign().equals(sponsorList.getCampaign()) && sponsorListArr[j].getSponsor().equals(new Sponsor(lastSponsorID))) {
+                                                        hasSponsor = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if (hasSponsor == false) {
+                                                    System.out.println("Sponsor ID exist in the campaign already, try again the other Sponsor");
+                                                }
+                                            } else {
+                                                hasSponsor = false;
+                                                System.out.println("Sponsor ID not found, try again");
+                                            }
+                                        } while (hasSponsor == false);
+                                        sponsorList.setSponsor(sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID))));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 2:
+                                        System.out.print("Enter the new Sponsor join date [dd. MMM. yyyy]: ");
+                                        sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        hasUpdateSomething = true;
+                                        break;
+
+                                    default:
+                                        System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                                 }
                             }
 
-                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update sponsor list successfully" : "Update Sponsor list abort");
-                        } else {
-                            System.out.println("No data selected to be update...");
-                        }
-                    }
+                            if (splitIndexInt.length != 0) {
+                                System.out.println("Confirm update sponsor list ? (Y/N)");
+                                confirmation = input.nextLine();
 
-                } while (validIndex == false);
+                                if (confirmation.toUpperCase().equals("Y")) {
+                                    sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    if (oriJoinDate != sponsorList.getDateJoin()) {
+                                        sponsorListDB.delData(oriJoinDate, sponsorList);
+                                        sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                                    } else {
+                                        sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                                    }
+                                }
+
+                                System.out.println(confirmation.toUpperCase().equals("Y") ? "Update sponsor list successfully" : "Update Sponsor list abort");
+                            } else {
+                                System.out.println("No data selected to be update...");
+                            }
+                        }
+
+                    } while (validIndex == false);
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Sponsor list ID not found, update Sponsor list abort");
             }
@@ -305,14 +324,19 @@ class SponsorListPanel implements Panel {
             sponsorListID = input.nextLine();
             DoublyLinkedList<SponsorList> sponsorLists = sponsorListDB.getAllList();
             if (sponsorLists.contains(new SponsorList(sponsorListID)) == true) {
-                System.out.println("Confirm deactive sponsor list ? (Y/N)");
-                confirmation = input.nextLine();
+                SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
+                if (sponsorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                if (confirmation.toUpperCase().equals("Y")) {
-                    SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
-                    sponsorList.setStatus("Inactive");
-                    sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                    System.out.println("Confirm deactive sponsor list ? (Y/N)");
+                    confirmation = input.nextLine();
+
+                    if (confirmation.toUpperCase().equals("Y")) {
+                        sponsorList.setStatus("Inactive");
+                        sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                        sponsorListDB.updateData(sponsorList.getDateJoin(), sponsorList);
+                    }
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
                 }
             } else {
                 System.out.println("Sponsor list ID not found, deactive Sponsor list abort");
@@ -328,6 +352,40 @@ class SponsorListPanel implements Panel {
     @Override
     public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String sponsorListSearchMenu() {
+        StringBuilder menu = new StringBuilder();
+        System.out.println();
+        Sponsor sponsor = new Sponsor();
+        menu.append("1. Sponsor Name\n");
+        menu.append("2. Sponsor email\n");
+        menu.append("3. Sponsor phone no\n");
+        menu.append("4. Sponsor address\n");
+        menu.append("5. Sponsor date join\n");
+
+        return menu.toString();
+
+    }
+
+    public void search(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
+        SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
+        sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+        RedBlackTree<LocalDate, SponsorList> listForPrint = new RedBlackTree<>();
+        SponsorList[] arrListForPrint = null;
+
+        arrListForPrint = SponsorListPredicates.ControlPanel(sponsorListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (SponsorList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
+            }
+            SponsorList.sponsorListTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
+
     }
 
     @Override

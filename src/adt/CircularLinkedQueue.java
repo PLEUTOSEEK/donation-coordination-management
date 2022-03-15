@@ -253,4 +253,24 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
         return indexOf(element) != -1;
     }
 
+    public T getAt(int givenPos) {
+        //givenPos is start from 1
+
+        if (givenPos >= 1 && givenPos <= length) {
+
+            if (givenPos == 1) {
+
+                return (T) this.firstNode.data;
+
+            } else {
+
+                Node current = this.firstNode;
+                for (int i = 2; i <= givenPos; i++) {
+                    current = current.getNext();
+                }
+                return (T) current.data;
+            }
+        }
+        return null;
+    }
 }

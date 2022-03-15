@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.DonorListPredicates;
 
 /**
  *
@@ -33,7 +34,7 @@ class DonorListPanel implements Panel {
 
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             option = input.nextInt();
 
             switch (option) {
@@ -44,7 +45,7 @@ class DonorListPanel implements Panel {
                     DonorList.donorListTable(donorListDB);
                     break;
                 case 3:
-                    search();
+                    search(donorListDB);
                     break;
                 case 4:
                     delete(donorListDB);
@@ -59,13 +60,13 @@ class DonorListPanel implements Panel {
                     System.out.println("Index not correct...");
             }
 
-        } while (option != 7);
+        } while (option != 6);
     }
 
     @Override
     public String menu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Add new donor list \n");
         menu.append("2. Display donor list \n");
         menu.append("3. Search donor list \n");
@@ -99,59 +100,72 @@ class DonorListPanel implements Panel {
 
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter campaign ID: ");
+            System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
+            campaign = new Campaign();
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
-                do {
+                campaign = campaignDB.get(new Campaign(campaignID));
+                if (campaign.getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
                     do {
-                        hasDonor = true;
-                        Donor.donorTable(donorDB);
-                        System.out.println("Enter donor ID: ");
-                        donorID = input.nextLine();
 
-                        if (donorDB.contains(new Donor(donorID))) {
-                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
-                            donorListArr = donorListDB.getAllArrayList(donorListArr);
-                            for (int i = 0; i < donorListArr.length; i++) {
-                                if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(donor)) {
-                                    hasDonor = false;
-                                    break;
+                        do {
+                            donorList = new DonorList();
+                            hasDonor = true;
+                            Donor.donorTable(donorDB);
+                            System.out.print("Enter donor ID: ");
+                            donorID = input.nextLine();
+
+                            if (donorDB.contains(new Donor(donorID))) {
+                                DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
+                                donorListArr = donorListDB.getAllArrayList(donorListArr);
+                                if (donorListArr != null) {
+                                    for (int i = 0; i < donorListArr.length; i++) {
+                                        if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(new Donor(donorID))) {
+                                            hasDonor = false;
+                                            break;
+                                        }
+                                    }
                                 }
+
+                                if (hasDonor == false) {
+                                    System.out.println("donor ID exist in the campaign already, try again the other donor");
+                                }
+                            } else {
+                                hasDonor = false;
+                                System.out.println("donor ID not found, try again");
+
                             }
-                            if (hasDonor == false) {
-                                System.out.println("donor ID exist in the campaign already, try again the other donor");
-                            }
-                        } else {
-                            hasDonor = false;
-                            System.out.println("donor ID not found, try again");
+                        } while (hasDonor == false);
+
+                        donor = new Donor();
+                        donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
+
+                        donorList.setCampaign(campaign);
+                        donorList.setDonor(donor);
+                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                        donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                        donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                        donorList.setStatus("Active");
+                        donorList.setDonorListID(donorList.autoGenerateID());
+
+                        System.out.print("Confirm add donor to this campaign ? (Y/N) ");
+                        confirmation = input.nextLine();
+
+                        if (confirmation.toUpperCase().equals("Y")) {
+                            donorListDB.addData(donorList.getDateJoin(), donorList);
                         }
-                    } while (hasDonor == false);
 
-                    donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
-                    campaign = campaignDB.get(new Campaign(campaignID));
+                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
-                    donorList.setCampaign(campaign);
-                    donorList.setDonor(donor);
-                    System.out.println("Enter date join [dd. MMM. yyyy]: ");
-                    donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                    donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    donorList.setStatus("Active");
-                    donorList.setDonorListID(donorList.autoGenerateID());
+                        System.out.print("Continue add donor to this campaign ? (Y/N) ");
+                        option = input.nextLine();
 
-                    System.out.println("Confirm add donor to this campaign ? (Y/N)");
-                    confirmation = input.nextLine();
-
-                    if (confirmation.toUpperCase().equals("Y")) {
-                        donorListDB.addData(donorList.getDateJoin(), donorList);
-                    }
-
-                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
-
-                    System.out.println("Continue add donor to this campaign ? (Y/N)");
-                    option = input.nextLine();
-                } while (option.toUpperCase().equals("Y"));
+                    } while (option.toUpperCase().equals("Y"));
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Campaign ID not found, add donor abort");
             }
@@ -165,13 +179,14 @@ class DonorListPanel implements Panel {
     }
 
     @Override
+
     public void display() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String donorListUpdateMenu() {
         StringBuilder menu = new StringBuilder();
-
+        System.out.println();
         menu.append("1. Donor\n");
         menu.append("2. Donor Join Date\n");
 
@@ -197,94 +212,100 @@ class DonorListPanel implements Panel {
 
             System.out.println("Enter donor list ID: ");
             donorListID = input.nextLine();
+            donorList = new DonorList();
 
             if (donorListDB.contains(new DonorList(donorListID)) == true) {
                 donorList = donorListDB.get(new DonorList(donorListID));
-                oriJoinDate = donorList.getDateJoin();
-                boolean validIndex = true;
-                do {
-                    System.out.println(donorListUpdateMenu());
-                    validIndex = true;
-                    System.out.println("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
-                    indexSelected = input.nextLine();
+                if (donorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                    String[] splitIndex = indexSelected.split("\\s+");
-                    int[] splitIndexInt = new int[splitIndex.length];
+                    oriJoinDate = donorList.getDateJoin();
+                    boolean validIndex = true;
+                    do {
+                        System.out.println(donorListUpdateMenu());
+                        validIndex = true;
+                        System.out.print("Enter index of option that want to update, if multiple index leave space at between [1 5 6]: ");
+                        indexSelected = input.nextLine();
 
-                    for (int i = 0; i < splitIndex.length; i++) {
-                        try {
-                            splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
-                        } catch (Exception e) {
-                            validIndex = false;
-                            break;
-                        }
-                    }
+                        String[] splitIndex = indexSelected.split("\\s+");
+                        int[] splitIndexInt = new int[splitIndex.length];
 
-                    if (validIndex == true) {
-                        boolean hasUpdateSomething = false;
-                        for (int i = 0; i < splitIndexInt.length; i++) {
-                            switch (splitIndexInt[i]) {
-                                case 1:
-                                    do {
-                                        hasDonor = true;
-                                        Donor.donorTable(donorDB);
-                                        System.out.println("Enter donor ID: ");
-                                        donorID = input.nextLine();
-
-                                        if (donorDB.contains(new Donor(donorID))) {
-                                            DonorList[] donorListArr = new DonorList[donorListDB.getLength()];
-                                            donorListArr = donorListDB.getAllArrayList(donorListArr);
-
-                                            //check
-                                            for (int j = 0; j < donorListArr.length; j++) {
-                                                if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
-                                                    hasDonor = false;
-                                                    break;
-                                                }
-                                            }
-                                            if (hasDonor == false) {
-                                                System.out.println("donor ID exist in the campaign already, try again the other donor");
-                                            }
-                                        } else {
-                                            hasDonor = false;
-                                            System.out.println("donor ID not found, try again");
-                                        }
-                                    } while (hasDonor == false);
-                                    donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
-                                    hasUpdateSomething = true;
-                                    break;
-                                case 2:
-                                    System.out.print("Enter the new donor join date [dd. MMM. yyyy]: ");
-                                    donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                                    hasUpdateSomething = true;
-                                    break;
-
-                                default:
-                                    System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                        for (int i = 0; i < splitIndex.length; i++) {
+                            try {
+                                splitIndexInt[i] = Integer.valueOf(splitIndex[i]);
+                            } catch (Exception e) {
+                                validIndex = false;
+                                break;
                             }
                         }
 
-                        if (hasUpdateSomething == true) {
-                            System.out.println("Confirm update donor list ? (Y/N)");
-                            confirmation = input.nextLine();
+                        if (validIndex == true) {
+                            boolean hasUpdateSomething = false;
+                            for (int i = 0; i < splitIndexInt.length; i++) {
+                                switch (splitIndexInt[i]) {
+                                    case 1:
+                                        do {
+                                            hasDonor = true;
+                                            Donor.donorTable(donorDB);
+                                            System.out.print("Enter donor ID: ");
+                                            donorID = input.nextLine();
 
-                            if (confirmation.toUpperCase().equals("Y")) {
-                                donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                                if (oriJoinDate != donorList.getDateJoin()) {
-                                    donorListDB.delData(oriJoinDate, donorList);
-                                    donorListDB.addData(donorList.getDateJoin(), donorList);
-                                } else {
-                                    donorListDB.updateData(donorList.getDateJoin(), donorList);
+                                            if (donorDB.contains(new Donor(donorID))) {
+                                                DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
+                                                donorListArr = donorListDB.getAllArrayList(donorListArr);
+
+                                                //check
+                                                for (int j = 0; j < donorListArr.length; j++) {
+                                                    if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
+                                                        hasDonor = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if (hasDonor == false) {
+                                                    System.out.println("donor ID exist in the campaign already, try again the other donor");
+                                                }
+                                            } else {
+                                                hasDonor = false;
+                                                System.out.println("donor ID not found, try again");
+                                            }
+                                        } while (hasDonor == false);
+                                        donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
+                                        hasUpdateSomething = true;
+                                        break;
+                                    case 2:
+                                        System.out.print("Enter the new donor join date [dd. MMM. yyyy]: ");
+                                        donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        hasUpdateSomething = true;
+                                        break;
+
+                                    default:
+                                        System.out.println("Index " + splitIndexInt[i] + "out of bound!");
                                 }
                             }
 
-                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Update donor list successfully" : "Update donor list abort");
-                        } else {
-                            System.out.println("No data selected to be update...");
-                        }
-                    }
+                            if (hasUpdateSomething == true) {
+                                System.out.println("Confirm update donor list ? (Y/N)");
+                                confirmation = input.nextLine();
 
-                } while (validIndex == false);
+                                if (confirmation.toUpperCase().equals("Y")) {
+                                    donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    if (oriJoinDate != donorList.getDateJoin()) {
+                                        donorListDB.delData(oriJoinDate, donorList);
+                                        donorListDB.addData(donorList.getDateJoin(), donorList);
+                                    } else {
+                                        donorListDB.updateData(donorList.getDateJoin(), donorList);
+                                    }
+                                }
+
+                                System.out.println(confirmation.toUpperCase().equals("Y") ? "Update donor list successfully" : "Update donor list abort");
+                            } else {
+                                System.out.println("No data selected to be update...");
+                            }
+                        }
+
+                    } while (validIndex == false);
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
+                }
             } else {
                 System.out.println("Donor list ID not found, update campaign abort");
             }
@@ -304,8 +325,9 @@ class DonorListPanel implements Panel {
     public void delete(RedBlackTree<LocalDate, DonorList> donorListDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
-        String confirmation = "";
+//        String confirmation = "";
         String donorListID = "";
+        String confirmation = "";
 
         do {
             DonorList.donorListTable(donorListDB);
@@ -314,14 +336,20 @@ class DonorListPanel implements Panel {
             donorListID = input.nextLine();
             DoublyLinkedList<DonorList> donorLists = donorListDB.getAllList();
             if (donorLists.contains(new DonorList(donorListID)) == true) {
-                System.out.println("Confirm deactive donor list ? (Y/N)");
-                confirmation = input.nextLine();
+                DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
+                if (donorList.getCampaign().getStatus().toUpperCase().equals("PERMENANT INACTIVE") == false) {
 
-                if (confirmation.toUpperCase().equals("Y")) {
-                    DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
-                    donorList.setStatus("Inactive");
-                    donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    donorListDB.updateData(donorList.getDateJoin(), donorList);
+                    System.out.println("Confirm deactive donor list ? (Y/N)");
+                    confirmation = input.nextLine();
+
+                    if (confirmation.toUpperCase().equals("Y")) {
+
+                        donorList.setStatus("Inactive");
+                        donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                        donorListDB.updateData(donorList.getDateJoin(), donorList);
+                    }
+                } else {
+                    System.out.println("Campaign with permanent inactive status unable to perform modification");
                 }
             } else {
                 System.out.println("Donor list ID not found, deactive donor list abort");
@@ -337,6 +365,25 @@ class DonorListPanel implements Panel {
     @Override
     public void search() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void search(RedBlackTree<LocalDate, DonorList> donorListDB) {
+        DonorList[] DonorListArr = new DonorList[donorListDB.getAllList().getLength()];
+        DonorListArr = donorListDB.getAllArrayList(DonorListArr);
+        RedBlackTree<LocalDate, DonorList> listForPrint = new RedBlackTree<>();
+        DonorList[] arrListForPrint = null;
+
+        arrListForPrint = DonorListPredicates.ControlPanel(DonorListArr);;
+
+        // CampaignPredicates.ControlPanel(campaignArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (DonorList arrListForPrint1 : arrListForPrint) {
+                listForPrint.addData(arrListForPrint1.getDateJoin(), arrListForPrint1);
+            }
+            DonorList.donorListTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
 
     @Override

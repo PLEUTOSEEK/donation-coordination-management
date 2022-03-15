@@ -177,7 +177,7 @@ public class DemandList implements Comparable<DemandList> {
     }
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {
-        DemandList[] demandLists = new DemandList[demandListDB.getLength()];
+        DemandList[] demandLists = new DemandList[demandListDB.getAllList().getLength()];
         demandLists = demandListDB.getAllArrayList(demandLists);
         String[][] demandRows = new String[demandLists.length][];
         for (int i = 0; i < demandLists.length; i++) {
