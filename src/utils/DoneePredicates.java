@@ -52,18 +52,17 @@ public class DoneePredicates implements Inputs {
         System.out.println();
         menu.append("01. Donee ID \n");
         menu.append("02. Donee Name \n");
-        menu.append("03. Request Amount \n");
-        menu.append("04. Bank Type\n");
-        menu.append("05. Donee status\n");
-        menu.append("06. Donee request amount bigger than \n");
-        menu.append("07. Donee target amount smaller or equal \n");
+        menu.append("03. Donee request amount bigger than \n");
+        menu.append("04. Donee request amount smaller or equal \n");
+        menu.append("05. Bank Type\n");
+        menu.append("06. Donee status\n");
+
         return menu.toString();
     }
 
     public static Donee[] ControlPanel(Donee[] doneeArray) {
         Scanner input = new Scanner(System.in);
         DoneePredicates doneePredicates = new DoneePredicates();
-        System.out.println("\n");
         System.out.println(DoneePredicates.doneeSearchMenu());
         int option = 0;
         System.out.print("Option: ");
@@ -77,11 +76,11 @@ public class DoneePredicates implements Inputs {
             case 3:
                 return filterDonee(doneeArray, isRequestAmountBiggerThan(doneePredicates.askDouble()));
             case 4:
-                return filterDonee(doneeArray, isBankEquals(doneePredicates.askStr()));
+                return filterDonee(doneeArray, isRequestAmountSmallOrEqual(doneePredicates.askDouble()));
             case 5:
-                return filterDonee(doneeArray, isStatusEquals(doneePredicates.askStr()));
+                return filterDonee(doneeArray, isBankEquals(doneePredicates.askStr()));
             case 6:
-                break;
+                return filterDonee(doneeArray, isStatusEquals(doneePredicates.askStr()));
             default:
                 System.out.println("Index not correct...");
 
