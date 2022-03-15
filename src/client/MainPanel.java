@@ -32,7 +32,7 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
             CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) {
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
         CampaignPanel campaignPanel = new CampaignPanel();
 
         Scanner input = new Scanner(System.in);

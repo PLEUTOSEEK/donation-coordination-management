@@ -25,7 +25,7 @@ import java.time.LocalDate;
  */
 public class SystemEntryPoint {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();]

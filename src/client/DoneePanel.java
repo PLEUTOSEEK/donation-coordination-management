@@ -17,7 +17,7 @@ import utils.DoneePredicates;
  */
 public class DoneePanel implements Panel {
 
-    public void doneePanel(CircularLinkedQueue<Donee> doneeDB) {
+    public void doneePanel(CircularLinkedQueue<Donee> doneeDB) throws CloneNotSupportedException {
 
         QueueInterface<Donee> doneeQueue;
         Iterator<Donee> iterator;
@@ -149,7 +149,7 @@ public class DoneePanel implements Panel {
         return menu.toString();
     }
 
-    public void modifyDonee(CircularLinkedQueue<Donee> doneeDB) {
+    public void modifyDonee(CircularLinkedQueue<Donee> doneeDB) throws CloneNotSupportedException {
 
         String opt, select, confirm;
         String id = "";
@@ -163,7 +163,7 @@ public class DoneePanel implements Panel {
 
             if (doneeDB.contains(new Donee(id)) == true) {
                 CircularLinkedQueue<Donee> donees = doneeDB;
-                donee = donees.getAt(donees.indexOf(new Donee(id)));
+                donee = donees.getAt(donees.indexOf(new Donee(id))).clone();
                 boolean validIndex = true;
                 do {
                     System.out.println(doneeUpdateMenu());
@@ -281,7 +281,10 @@ public class DoneePanel implements Panel {
 
         arrListForPrint = DoneePredicates.ControlPanel(doneeArray);
 
-        if (arrListForPrint != null) {
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for(Donee donee: arrListForPrint){
+                listForPrint .enqueue(donee);
+            }
             Donee.doneeTable(listForPrint);
         } else {
             System.out.println("No Record Found...");
