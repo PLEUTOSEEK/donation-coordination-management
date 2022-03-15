@@ -91,7 +91,7 @@ class DoneeListPanel implements Panel {
         DoneeList doneeList = new DoneeList();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         boolean hasDonee = true;
-
+        String originalLastId = DoneeList.getLastDoneeListID();
         do {
 
             Campaign.campaignTable(campaignDB);
@@ -104,9 +104,9 @@ class DoneeListPanel implements Panel {
                 if (campaign.isPermanentDelete() == false) {
 
                     do {
+                        originalLastId = DoneeList.getLastDoneeListID();
                         doneeList = new DoneeList();
                         Donee.doneeTable(doneeDB);
-
                         hasDonee = true;
                         Donee initialFront = doneeDB.getFront();
 
@@ -141,6 +141,8 @@ class DoneeListPanel implements Panel {
                                 doneeList.setStatus("Active");
                                 doneeList.setDoneeListID(doneeList.autoGenerateID());
                                 doneeListDB.addData(doneeList.getDateJoin(), doneeList);
+                            }else{
+                                 DoneeList.setLastDoneeListID(originalLastId);
                             }
 
                             System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
@@ -154,8 +156,8 @@ class DoneeListPanel implements Panel {
 
                         System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
 
-                        System.out.println("At least one donee needed for a campaign...");
-                        option = "Y";
+//                        System.out.println("At least one donee needed for a campaign...");
+//                        option = "Y";
 
                     } while (option.toUpperCase().equals("Y"));
                 } else {
@@ -238,7 +240,7 @@ class DoneeListPanel implements Panel {
                                         break;
 
                                     default:
-                                        System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                                        System.out.println("Index " + splitIndexInt[i] + " out of bound!");
                                 }
                             }
 
@@ -291,6 +293,7 @@ class DoneeListPanel implements Panel {
         String option = "";
         String confirmation = "";
         String doneeListID = "";
+        
         if (doneeDB.getFront() != null) {
             do {
                 DoneeList.doneeListTable(doneeListDB);
@@ -323,6 +326,8 @@ class DoneeListPanel implements Panel {
                                 doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeList.getDonee()));
                                 doneeListDB.delData(doneeList.getDateJoin(), doneeList);
                             }
+                                
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Delete successfully" : "Delete donee list abort");
                         } else {
                             System.out.println("At least one donee require for a campaign...");
                         }

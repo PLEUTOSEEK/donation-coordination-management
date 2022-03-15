@@ -699,6 +699,8 @@ public class CampaignPanel implements Panel {
                             }
                         }
                     }
+                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Campaign " + status[statusSelect - 1] + " successfully" : status[statusSelect - 1] + " campaign abort");
+
                 } else {
                     System.out.println("Campaign with permanent inactive status unable to make modification.");
                 }

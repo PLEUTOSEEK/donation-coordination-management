@@ -5,6 +5,7 @@
         <group>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Donor.java</file>
 =======
 <<<<<<< HEAD
@@ -82,6 +83,27 @@
             <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/client/MainPanel.java</file>
             <file>file:/A:/OneDrive/OneDrive%20-%20Tunku%20Abdul%20Rahman%20University%20College/Desktop/DSA%20assignment/donation-coordination-management-system/src/client/DemandListPanel.java</file>
 >>>>>>> 400793da2cb9299e0ce435ed2963225ce5170ee0
+=======
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/client/TestEvery.java</file>
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/adt/SinglyLinkedList.java</file>
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/client/DonorPanel.java</file>
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/adt/SinglyLinkedListInterface.java</file>
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/entity/Donee.java</file>
+            <file>file:/C:/Users/pheyz/dsa/donation-coordination-management/src/adt/CircularLinkedQueue.java</file>
+=======
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/entity/Donee.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/DonorPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/DonorListPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/TestEvery.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/utils/DonorListPredicates.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/DoneePanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/utils/DoneePredicates.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/DoneeListPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/client/MainPanel.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/CircularLinkedQueue.java</file>
+>>>>>>> 2a9317aba9895c11a6cb3c8dab5ffc5e96c5bff3
+>>>>>>> 4f27f8fe34eb33f3f3ebfe1eb3d371cae78d3083
         </group>
     </open-files>
 </project-private>

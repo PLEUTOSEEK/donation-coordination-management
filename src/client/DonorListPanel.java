@@ -95,22 +95,23 @@ class DonorListPanel implements Panel {
         DonorList donorList = new DonorList();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         boolean hasDonor = true;
-
+        String originalLastId = DonorList.getLastDonorListID();
         do {
 
             Campaign.campaignTable(campaignDB);
-
             System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
             campaign = new Campaign();
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 campaign = campaignDB.get(new Campaign(campaignID));
+
                 if (campaign.isPermanentDelete() == false) {
 
                     do {
 
                         do {
+                            originalLastId = DonorList.getLastDonorListID();
                             donorList = new DonorList();
                             hasDonor = true;
                             Donor.donorTable(donorDB);
@@ -156,6 +157,8 @@ class DonorListPanel implements Panel {
 
                             if (confirmation.toUpperCase().equals("Y")) {
                                 donorListDB.addData(donorList.getDateJoin(), donorList);
+                            } else {
+                                DonorList.setLastDonorListID(originalLastId);
                             }
 
                             System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
@@ -365,6 +368,7 @@ class DonorListPanel implements Panel {
                         donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
                         donorListDB.updateData(donorList.getDateJoin(), donorList);
                     }
+                    System.out.println(confirmation.toUpperCase().equals("Y") ? "Deactive successfully" : "Deactive donor list abort");
                 } else {
                     System.out.println("Campaign with permanent inactive status unable to perform modification");
                 }
