@@ -14,16 +14,16 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
     private static String lastSponsorID = "";
 
     public Sponsor() {
-        this("", "", ' ', "", "", "", "", "");
+        this("", "", ' ', "", "", "", "", "", "");
     }
 
     public Sponsor(String accountID) {
         this.accountID = accountID;
     }
 
-    public Sponsor(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String companyName) {
+    public Sponsor(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String companyName, String status) {
 
-        super(accountID, name, gender, ic, email, phoneNo, address);
+        super(accountID, name, gender, ic, email, phoneNo, address, status);
         this.companyName = companyName;
 
     }
@@ -116,6 +116,10 @@ public class Sponsor extends Account implements Comparable<Sponsor> {
 
     public DoublyLinkedList<Sponsor> generateDummySponsor() {
         return null;
+    }
+
+    public boolean isInActive() {
+        return status.equalsIgnoreCase("Inactive");
     }
 
 }

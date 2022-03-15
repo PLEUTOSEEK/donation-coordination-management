@@ -15,7 +15,7 @@ import com.github.javafaker.Faker;
  */
 public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
-    private String requestIssue, status;
+    private String requestIssue;
     private double requestAmount;
     private double requestOriAmount;
     private String bankType, bankAcc;
@@ -23,11 +23,11 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private static String lastDoneeID = "";
 
     public Donee() {
-        this("", "", "", ' ', "", "", "", "", 0.0, "", "");
+        this("", "", "", ' ', "", "", "", "", 0.0, "", "", "");
     }
 
-    public Donee(String accountID, String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc) {
-        super(accountID, name, gender, ic, email, phoneNo, address);
+    public Donee(String accountID, String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc, String status) {
+        super(accountID, name, gender, ic, email, phoneNo, address, status);
         this.accountID = lastDoneeID;
         this.requestIssue = requestIssue;
         this.requestAmount = requestAmount;
@@ -41,10 +41,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     public void setRequestIssue(String requestIssue) {
         this.requestIssue = requestIssue;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public void setRequestAmount(double requestAmount) {
@@ -244,10 +240,14 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
         return lastDoneeID;
     }
-    
-        @Override
+
+    @Override
     public Donee clone() throws CloneNotSupportedException {
         Donee cloned = (Donee) super.clone();
         return cloned;
+    }
+
+    public boolean isInActive() {
+        return status.equalsIgnoreCase("Inactive");
     }
 }

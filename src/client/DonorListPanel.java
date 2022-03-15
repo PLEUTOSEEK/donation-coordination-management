@@ -141,23 +141,27 @@ class DonorListPanel implements Panel {
 
                         donor = new Donor();
                         donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
+                        if (donor.isInActive() == false) {
 
-                        donorList.setCampaign(campaign);
-                        donorList.setDonor(donor);
-                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
-                        donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                        donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                        donorList.setStatus("Active");
-                        donorList.setDonorListID(donorList.autoGenerateID());
+                            donorList.setCampaign(campaign);
+                            donorList.setDonor(donor);
+                            System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                            donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                            donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                            donorList.setStatus("Active");
+                            donorList.setDonorListID(donorList.autoGenerateID());
 
-                        System.out.print("Confirm add donor to this campaign ? (Y/N) ");
-                        confirmation = input.nextLine();
+                            System.out.print("Confirm add donor to this campaign ? (Y/N) ");
+                            confirmation = input.nextLine();
 
-                        if (confirmation.toUpperCase().equals("Y")) {
-                            donorListDB.addData(donorList.getDateJoin(), donorList);
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                donorListDB.addData(donorList.getDateJoin(), donorList);
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
+                        } else {
+                            System.out.println("Donor is in inactive status, please try again the other donor...");
                         }
-
-                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
                         System.out.print("Continue add donor to this campaign ? (Y/N) ");
                         option = input.nextLine();

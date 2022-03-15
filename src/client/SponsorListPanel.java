@@ -134,24 +134,27 @@ class SponsorListPanel implements Panel {
                         } while (hasSponsor == false);
 
                         sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
+                        if (sponsor.isInActive() == false) {
 
-                        sponsorList.setCampaign(campaign);
-                        sponsorList.setSponsor(sponsor);
-                        System.out.print("Enter date join [dd. MMM. yyyy]: ");
-                        sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-                        sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-                        sponsorList.setStatus("Active");
-                        sponsorList.setSponsorListID(sponsorList.autoGenerateID());
+                            sponsorList.setCampaign(campaign);
+                            sponsorList.setSponsor(sponsor);
+                            System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                            sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                            sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                            sponsorList.setStatus("Active");
+                            sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
-                        System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
-                        confirmation = input.nextLine();
+                            System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
+                            confirmation = input.nextLine();
 
-                        if (confirmation.toUpperCase().equals("Y")) {
-                            sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                            if (confirmation.toUpperCase().equals("Y")) {
+                                sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);
+                            }
+
+                            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
+                        } else {
+                            System.out.println("Sponsor is in inactive status, please try again the other sponsor...");
                         }
-
-                        System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
-
                         System.out.print("Continue add sponsor to this campaign ? (Y/N) ");
                         option = input.nextLine();
 
