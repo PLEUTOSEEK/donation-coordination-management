@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author JiaToong
+ * @author Looi Jia Toong
  */
 public class Donation implements Comparable<Donation> {
 
