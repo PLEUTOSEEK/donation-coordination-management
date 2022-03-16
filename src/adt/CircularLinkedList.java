@@ -7,7 +7,7 @@ package adt;
 
 /**
  *
- * @author JiaToong
+ * @author Looi Jia Toong
  */
 public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
@@ -106,38 +106,118 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public Object getAnyNode(int position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (position >= 1 && position <= length) {
+
+            if (position == 1) {
+                getFirstNode();
+            } else if (position == this.length) {
+                getLastNode();
+            } else {
+                Node currentNode = null;
+                for (int i = 2; i <= position; i++) {
+                    currentNode = currentNode.next;
+                }
+
+                return currentNode;
+            }
+
+        }
+        return false;
     }
 
     @Override
     public boolean removeFirstNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (isEmpty() == false) {
+            lastNode.next = firstNode.next;
+            firstNode = firstNode.next;
+        }
+        length--;
+        return true;
     }
 
     @Override
     public boolean removeLastNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        removeAnyNode(length - 1);
+        return true;
     }
 
     @Override
     public boolean removeAnyNode(int position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (position >= 1 && position <= length) {
+
+            if (position == 1) {
+                return removeFirstNode();
+            } else if (position == this.length) {
+                return removeLastNode();
+            } else {
+                Node currentNode = null;
+                for (int i = 2; i <= position; i++) {
+                    currentNode = currentNode.next;
+                }
+
+                //currentNode.next = currentNode.next.next()
+                //previousNode.next = currentNode
+
+                return true;
+            }
+
+        }
+        return true;
     }
 
     @Override
-    public boolean replaceFirstNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean replaceFirstNode(T element) {
+        Node newNode = new Node(element);
+        if (isEmpty() == true) {
+            firstNode = newNode;
+            lastNode.next = newNode;
+        } else {
+            newNode.next = firstNode.next;
+            firstNode = newNode;
+            lastNode.next = newNode;
+        }
+
+        return true;
     }
 
     @Override
-    public boolean replaceLastNode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean replaceLastNode(T element) {
+        Node newNode = new Node(element);
+        if (isEmpty() == true) {
+            firstNode = newNode;
+            newNode.next = lastNode;
+            lastNode.next = newNode;
+        } else {
+            newNode.next = lastNode.next;
+            lastNode = newNode;
+        }
+
+        return true;
     }
 
     @Override
-    public boolean replaceAnyNode(int position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean replaceAnyNode(T element, int position) {
+        if (position >= 1 && position <= length) {
 
+            if (position == 1) {
+                return replaceFirstNode(element);
+            } else if (position == this.length) {
+                return replaceLastNode(element);
+            } else {
+                Node newNode = new Node(element);
+                Node currentNode = null;
+                for (int i = 2; i <= position; i++) {
+                    currentNode = currentNode.next;
+                }
+
+                newNode.next = currentNode.next;
+                currentNode = newNode;
+
+                return true;
+            }
+
+        }
+        return false;
     }
 
     private class Node {
