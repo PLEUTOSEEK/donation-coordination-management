@@ -238,7 +238,7 @@ public class CampaignPanel implements Panel {
                 confirmation = input.nextLine();
 
                 if (confirmation.toUpperCase().equals("Y")) {
-                    for (int i = 1; i <= memoSponsors.getLength(); i++) {
+                    for (int i = 1; i <= memoSponsors.getLength(); i++) { //memory
                         sponsorListDB.addData(memoSponsors.getAt(i).getDateJoin(), memoSponsors.getAt(i));
                     }
 
@@ -316,7 +316,7 @@ public class CampaignPanel implements Panel {
                 }
             } while (hasSponsor == false);
 
-            sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
+            sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));//retrieve
 
             sponsorList.setCampaign(campaign);
             sponsorList.setSponsor(sponsor);

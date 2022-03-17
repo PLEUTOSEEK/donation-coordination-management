@@ -7,28 +7,37 @@ package adt;
 
 /**
  *
- * @author JiaToong
+ * @author Looi Jia Toong
  */
-public interface LinkedListInterface<T> {
-    
-    boolean addLastNode(T element);
-    boolean addFirstNode(T element);
-    boolean addAtAnyNode(T element, int position);
-    
-    int countNodes();
-    boolean searchNode(T element);
-    boolean isEmpty();
-    
-    Object getFirstNode();
-    Object getLastNode();
-    Object getAnyNode(int position);
-    
-    boolean removeFirstNode();
-    boolean removeLastNode();
-    boolean removeAnyNode(int position);
-    
-    boolean replaceFirstNode();
-    boolean replaceLastNode();
-    boolean replaceAnyNode(int position);
-}
+public interface CircularLinkedListInterface<T> {
 
+    boolean addLastNode(T element);
+
+    boolean addFirstNode(T element);
+
+    boolean addAtAnyNode(T element, int position);
+
+    int countNodes();
+
+    boolean searchNode(T element);
+
+    boolean isEmpty();
+
+    Object getFirstNode();
+
+    Object getLastNode();
+
+    Object getAnyNode(int position);
+
+    boolean removeFirstNode();
+
+    boolean removeLastNode();
+
+    boolean removeAnyNode(int position);
+
+    boolean replaceFirstNode(T element);
+
+    boolean replaceLastNode(T element);
+
+    boolean replaceAnyNode(T element, int position);
+}
