@@ -15,6 +15,7 @@ import entity.Campaign;
 import entity.Donation;
 import entity.Donee;
 import entity.Donor;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -94,6 +95,63 @@ public class DonationPanel implements Panel {
             CircularLinkedQueue<Donee> doneeDB,
             SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
 
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String donorID = "";
+        String doneeID = "";
+        Donation donation = new Donation();
+        Donor donor = new Donor();
+        Donee donee = new Donee();
+        String originalLastID = Donation.getLastDonationID();
+
+        do {
+            Donor.donorTable(donorDB);
+            Donee.doneeTable(doneeDB);
+
+            System.out.println("Enter Donor ID: ");
+            donorID = input.nextLine();
+
+            if (donorDB.contains(new Donor(donorID)) == true) {
+                donor = donorDB.get(new Donor(donorID));
+
+                System.out.println("Enter Donee ID: ");
+                doneeID = input.nextLine();
+                if (doneeDB.contains(new Donee(doneeID)) == true) {
+                    donee = doneeDB.get(new Donee(doneeID));
+
+                    originalLastID = Donation.getLastDonationID();
+                    donation.setDonor(donor);
+                    donation.setDonee(donee);
+
+                    System.out.println("Enter total amount: ");
+                    donation.setTotalAmount(input.nextDouble());
+                    System.out.println("Enter description: ");
+                    donation.setDescription(input.nextLine());
+                    System.out.println("Enter date of donation [dd. MM. yyyy] : ");
+                    donation.setDateOfDonation(LocalDate.parse(input.nextLine()));
+                    donation.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    donation.setStatus("Active");
+                    donation.setDonationID(donation.autoGenerateID());
+
+                    System.out.println("Confirm to add this donation record? (Y/N)  ");
+                    confirmation = input.nextLine();
+
+                    if (confirmation.toUpperCase().equals("Y")) {
+                        donationDB.addLastNode(donation);
+                        System.out.println("Added successfully...");
+                    } else {
+                        Donation.setLastDonationID(originalLastID);
+                        System.out.println("Cancelled...");
+                    }
+
+                }
+
+            }
+            System.out.println("Continue adding new donation? (Y/N) ");
+            option = input.nextLine();
+            
+        } while (option.toUpperCase().equals("Y"));
     }
 
     public void addDonorToCampaign(CircularLinkedList<Donation> donationDB,
