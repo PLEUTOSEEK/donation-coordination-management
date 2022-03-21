@@ -8,6 +8,7 @@ package client;
 import adt.DoublyLinkedList;
 import adt.ListInterface;
 import adt.RedBlackTree;
+import entity.Campaign;
 import entity.DemandList;
 import entity.Funds;
 import entity.Sponsor;
@@ -56,7 +57,7 @@ public class SponsorItemPanel implements Panel {
                     break;
                 }
             }
-        } while (opt != 6);
+        } while (opt != 4);
 
     }
 
@@ -78,8 +79,7 @@ public class SponsorItemPanel implements Panel {
             SponsorItem sponsorItem = new SponsorItem();
             sponsorItem.setSponsoredID(sponsorItem.autoGenerateID());
 
-            SponsorItemInformation sponsorItemInformation = addDemandList(fundsDB, demandListDB);
-
+            //SponsorItemInformation sponsorItemInformation = addDemandList(fundsDB, demandListDB, campaignDB);
             sponsorItem.setStatus("Active");
 
             System.out.print("Confirm add sponsor item? (Y/N)");
@@ -120,21 +120,64 @@ public class SponsorItemPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private SponsorItemInformation addDemandList(DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB) {
-        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
-        //enter demand list id 
-        //retrieve demand list based on id
-        demandList.getAt(demandList.indexOf(new DemandList("")));
+    private SponsorItemInformation addDemandList(DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB,
+            RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<SponsorItem> sponsorItemDB) {
+        String opt, confirm;
+        String lastDemandListID = "";
+        Campaign campaign = new Campaign();
+        SponsorItem sponsorItem = new SponsorItem();
+        Scanner s = new Scanner(System.in);
 
-        //if campaign status = permanent inactive then cannot create sponsorItem
+        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
+
+        do {
+            //enter demand list id 
+            System.out.print("Enter Demand List ID:");
+            lastDemandListID = s.nextLine();
+            demandList.getAt(demandList.indexOf(new DemandList(lastDemandListID))); //retrieve demand list based on id
+
+            System.out.println(lastDemandListID);
+
+            System.out.print("Confirm ? (Y/N)");
+            confirm = s.nextLine();
+
+            if (confirm.toUpperCase().equals("Y")) {
+                //demandListDB.addData(;
+            } else {
+
+            }
+
+            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add failed...");
+
+            System.out.print("\nContinue add? (Y/N)");
+            opt = s.nextLine();
+
+            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to main page..");
+
+        } while (opt.toUpperCase().equals("Y"));
+
+        if (campaign.getStatus().toUpperCase().equals("Permanent Inactive")) {
+            SponsorItem[] sponsorItemArr = new SponsorItem[sponsorItemDB.getLength()];
+
+        }
+
+//if campaign status = permanent inactive then cannot create sponsorItem
         //type in qty
         //check is type in qty more than needee qty or not,and also check wheather the funds able to cover the amount of Donate
         //qty deduct,funds deduct(qty*per unit)--need to return to addNewSponsorItem
-        return null;
+        {
+            return null;
+        }
     }
-    //private addFunds
-    //enter funds id
-    //retrieve funds based on id
+
+    private SponsorItemInformation addFunds() {
+
+        //private addFunds
+        //enter funds id
+        //retrieve funds based on id
+        return null;
+
+    }
 
     @Override
     public void add() {

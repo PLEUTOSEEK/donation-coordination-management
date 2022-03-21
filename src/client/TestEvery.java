@@ -31,7 +31,7 @@ public class TestEvery {
 //        DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
         SponsorPanel sponsor = new SponsorPanel();
-        SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
+        //SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
 
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
@@ -52,14 +52,14 @@ public class TestEvery {
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
         DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(demandListDB);
 //      SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-        DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB, sponsorDB);
+        // DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB, sponsorDB);
 
 //        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
 //        DoneeListPanel doneeL = new DoneeListPanel();
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
-//        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
+        //  DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         //       SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
@@ -104,8 +104,8 @@ public class TestEvery {
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
         //donor.donorPanel(donorDB);
-        //sponsor.controlPanel(sponsorDB);
-        sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
+        sponsor.controlPanel(sponsorDB);
+        //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
