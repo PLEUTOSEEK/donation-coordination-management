@@ -220,6 +220,28 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         return false;
     }
 
+    public T[] toArray(T[] array) {
+        Node curr = this.firstNode;
+
+        if (curr != null) {
+
+            int num = 0;
+
+            while (curr != null) {
+                try {
+                    array[num] = ((T) curr.data);
+                    curr = curr.next;
+                    num++;
+                } catch (Exception e) {
+                    break;
+                }
+            }
+            return array;
+        } else {
+            return null;
+        }
+    }
+    
     private class Node {
 
         private T data;
