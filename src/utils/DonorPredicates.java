@@ -26,7 +26,7 @@ public class DonorPredicates implements Inputs {
     }
     
     public static Predicate<Donor> isDonorTypeContains(String DonorType){
-        return x -> x.getDonorType().toLowerCase().contains(DonorType.toLowerCase());
+        return x -> x.getDonorType().toLowerCase().equals(DonorType.toLowerCase());
     }
     
     public static Predicate<Donor> isICContains(String ic){
@@ -82,7 +82,7 @@ public class DonorPredicates implements Inputs {
                 return filterDonor(donorArray, isNameContains(donorPredicates.askStr()));
 
             case 3:
-                return filterDonor(donorArray, isDonorTypeContains(donorPredicates.askStr()));
+                return filterDonor(donorArray, isDonorTypeContains(donorPredicates.askType()));
 
             case 4:
                 return filterDonor(donorArray, isICContains(donorPredicates.askStr()));
@@ -97,7 +97,6 @@ public class DonorPredicates implements Inputs {
                 return filterDonor(donorArray, isNameContains(donorPredicates.askStr()));
 
             case 8:
-                System.out.println("halo");
                 return filterDonor(donorArray, isStatusContains(donorPredicates.askStr()));
            
             default:
@@ -106,11 +105,28 @@ public class DonorPredicates implements Inputs {
         }
     }
      
-    @Override
-    public LocalDate askDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public String askType(){
+        Scanner input = new Scanner(System.in);
+        String result="";
+        try{
+            System.out.println("1.organization\n2.individual");
+            System.out.print("Enter a numeric (1,2): ");
+            int opt = input.nextInt();
+            if (opt== 1){
+                result = "organization";
+            } else if(opt == 2) {
+                result = "individual";
+            }else{
+                System.out.println("Select from 1 or 2");
+                result ="";
+            }
+         } catch (Exception ex) {
+             System.out.println("Please select from 1 or 2");
+         }
+         
+        return result;
     }
-
+     
     @Override
     public String askStr() {
         Scanner input = new Scanner(System.in);
@@ -118,6 +134,11 @@ public class DonorPredicates implements Inputs {
         return input.nextLine();
     }
 
+    @Override
+    public LocalDate askDate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     @Override
     public int askInt() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

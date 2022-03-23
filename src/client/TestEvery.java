@@ -102,15 +102,16 @@ public class TestEvery {
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
-<<<<<<< HEAD
+
         donor.donorPanel(donorDB);
 //       sponsor.controlPanel(sponsorDB);
 
-=======
-        //donor.donorPanel(donorDB);
-        sponsor.controlPanel(sponsorDB);
+
+        //donor.donorPanel(donorDB);2
+        
+ //       sponsor.controlPanel(sponsorDB);
         //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
->>>>>>> 2b744c49b01f10218d4d415e636ef46bbc904092
+
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
