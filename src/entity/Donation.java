@@ -5,12 +5,19 @@
  */
 package entity;
 
+import adt.CircularLinkedList;
+import com.bethecoder.ascii_table.ASCIITable;
+import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 
 /**
  *
- * @author JiaToong
+ * @author Looi Jia Toong
  */
 public class Donation implements Comparable<Donation> {
 
@@ -20,31 +27,38 @@ public class Donation implements Comparable<Donation> {
     private Donee donee;
     private double totalAmount;
     private String description;
+    private String status;
     private LocalDate dateOfDonation;
     private Timestamp dateModified;
     private static String lastDonationID;
-    
-    public Donation(){
+
+    public Donation() {
     }
 
-    public Donation(String donationID, Donor donor, Donee donee, double totalAmount, String description, LocalDate dateOfDonation, Timestamp dateModified) {
+    public Donation(String donationID, Donor donor, Donee donee, double totalAmount, String description, String status, LocalDate dateOfDonation, Timestamp dateModified) {
         this.donationID = donationID;
         this.donor = donor;
         this.donee = donee;
         this.totalAmount = totalAmount;
         this.description = description;
+        this.status = status;
         this.dateOfDonation = dateOfDonation;
         this.dateModified = dateModified;
     }
 
-    public Donation(String donationID, Campaign campaign, Donor donor, double totalAmount, String description, LocalDate dateOfDonation, Timestamp dateModified) {
+    public Donation(String donationID, Campaign campaign, Donor donor, double totalAmount, String description, String status, LocalDate dateOfDonation, Timestamp dateModified) {
         this.donationID = donationID;
         this.campaign = campaign;
         this.donor = donor;
         this.totalAmount = totalAmount;
         this.description = description;
+        this.status = status;
         this.dateOfDonation = dateOfDonation;
         this.dateModified = dateModified;
+    }
+
+    public Donation(String donationID) {
+        this.donationID = donationID;
     }
 
     public String getDonationID() {
@@ -103,6 +117,14 @@ public class Donation implements Comparable<Donation> {
         this.description = description;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public LocalDate getDateOfDonation() {
         return dateOfDonation;
     }
@@ -119,12 +141,105 @@ public class Donation implements Comparable<Donation> {
         this.dateModified = dateModified;
     }
 
-  
-    
-    
-    @Override
-    public int compareTo(Donation o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean equals(Object o) {
+        if (o instanceof Donation) {
+            Donation other = (Donation) o;
+            if (this.donationID.equalsIgnoreCase(other.getDonationID())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
+    @Override
+    public int compareTo(Donation o) {
+        if (this.donationID.compareTo(o.donationID) < 0) {
+            return -1;
+        } else if (this.donationID.compareTo(o.donationID) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public String autoGenerateID() {
+        String newDonationID = "";
+        int seq = 0;
+        if (lastDonationID.equals("")) {
+            newDonationID = "DON1001";
+        } else {
+            seq = Integer.parseInt(lastDonationID.substring(2));
+            seq += 1;
+
+            newDonationID = "DON" + seq;
+        }
+        lastDonationID = newDonationID;
+
+        return lastDonationID;
+    }
+
+    private static String[] donationHeaders() {
+        String[] campaignHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified"};
+
+        return campaignHeaders;
+    }
+
+    private String[] strArr() {
+        return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString()};
+    }
+
+    private static String[][] donationRows(CircularLinkedList<Donation> donationDB) {
+        Donation[] donations = new Donation[donationDB.countNodes()];
+        donations = donationDB.toArray(donations);
+        String[][] donationRows = new String[donations.length][];
+        for (int i = 0; i < donations.length; i++) {
+            donationRows[i] = donations[i].strArr();
+        }
+        return donationRows;
+    }
+
+    public static void donationTable(CircularLinkedList<Donation> donationDB) {
+        String[] donationHeader = Donation.donationHeaders();
+        String[][] donationData = Donation.donationRows(donationDB);
+
+        ASCIITable.getInstance().printTable(donationHeader, donationData);
+    }
+
+    public CircularLinkedList<Donation> generateDummyDonation() {
+        CircularLinkedList<Donation> dummyDonations = new CircularLinkedList<Donation>();
+        Faker faker = new Faker();
+        Donation donation = new Donation();
+        LocalDateTimeRangeRandomizer randomTimeRange;
+        LocalDateTime randomTime;
+        LocalDateTime minTime = LocalDateTime.of(2017, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomTimeRange = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
+
+        String[] description = "Heaven Kitties,Heaven Bunnies,Heaven Pigeons,Heaven Volunteers,Heaven Pinks,Heaven Pink Jackets,Heaven Pink Legs,Heaven United,Heaven Athletic,Pink Kitties,Pink Bunnies,Pink Pigeons,Pink Volunteers,Lively Kitties,Lively Bunnies,Lively Pigeons,Lively Volunteers,Donation Kitties,Donation Bunnies,Donation Pigeons,Donation Volunteers,Generous Kitties,Generous Bunnies,Generous Pigeons,Generous Volunteers".split(",");
+
+        for (int data = 0; data < 100; data++) {
+            LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
+            Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(2, 10)).toEpochDay());
+
+            donation = new Donation();
+            donation.setDonationID(autoGenerateID());
+            //donation.setDonor();
+            //donation.setDonee(Donee.getDoneeID());
+            donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
+            donation.setDescription(description[(int) faker.number().randomDigit()]);
+            donation.setDateOfDonation(dateOfDonation);
+            donation.setStatus("Active");
+            donation.setDateModified(dateModified);
+        }
+
+        return dummyDonations;
+    }
+
+    @Override
+    public Campaign clone() throws CloneNotSupportedException {
+        Campaign cloned = (Campaign) super.clone();
+        return cloned;
+    }
 }

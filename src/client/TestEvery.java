@@ -10,10 +10,13 @@ import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
+import entity.DemandList;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
+import entity.Funds;
 import entity.Sponsor;
+import entity.SponsorItem;
 import java.time.LocalDate;
 
 /**
@@ -28,12 +31,14 @@ public class TestEvery {
 //        DoneePanel doneeP = new DoneePanel();
         DonorPanel donor = new DonorPanel();
         SponsorPanel sponsor = new SponsorPanel();
+        //SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
 
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
+        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
 
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
@@ -45,14 +50,16 @@ public class TestEvery {
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
-//SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+        DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(demandListDB);
+//      SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+        // DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB, sponsorDB);
 
 //        RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
 //        DoneeListPanel doneeL = new DoneeListPanel();
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
-//        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
+        //  DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
       
@@ -95,9 +102,15 @@ public class TestEvery {
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
+<<<<<<< HEAD
         donor.donorPanel(donorDB);
 //       sponsor.controlPanel(sponsorDB);
 
+=======
+        //donor.donorPanel(donorDB);
+        sponsor.controlPanel(sponsorDB);
+        //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
+>>>>>>> 2b744c49b01f10218d4d415e636ef46bbc904092
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);

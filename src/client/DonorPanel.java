@@ -306,7 +306,9 @@ public class DonorPanel implements Panel {
                             System.out.print("\nConfirm update (Y/N)");
                             option = sc.next().charAt(0);
                             if (option == 'Y' || option == 'y') {
+
                                 donorDB.replace(donor, donorDB.indexOf(donor));
+
                                 System.out.println("\nUpdate successfully...");
                             } else {
                                 System.out.println("\nUpdate abort...");

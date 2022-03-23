@@ -23,7 +23,7 @@ import java.time.Month;
 public class Funds implements Comparable<Funds> {
 
     private String fundsID;
-    private SponsorItem sponsorItem;
+    //private SponsorItem sponsorItem;
     private Sponsor sponsor;
     private Double totalAmount;
     private Double originalTotalAmount;
@@ -35,9 +35,8 @@ public class Funds implements Comparable<Funds> {
     public Funds() {
     }
 
-    public Funds(String fundsID, SponsorItem sponsorItem, Sponsor sponsor, Double totalAmount, Double originalTotalAmount, LocalDate datePay, Timestamp dateModified, String status) {
+    public Funds(String fundsID, Sponsor sponsor, Double totalAmount, Double originalTotalAmount, LocalDate datePay, Timestamp dateModified, String status) {
         this.fundsID = fundsID;
-        this.sponsorItem = sponsorItem;
         this.sponsor = sponsor;
         this.totalAmount = totalAmount;
         this.originalTotalAmount = originalTotalAmount;
@@ -52,14 +51,6 @@ public class Funds implements Comparable<Funds> {
 
     public void setFundsID(String fundsID) {
         this.fundsID = fundsID;
-    }
-
-    public SponsorItem getSponsorItem() {
-        return sponsorItem;
-    }
-
-    public void setSponsorItem(SponsorItem sponsorItem) {
-        this.sponsorItem = sponsorItem;
     }
 
     public Sponsor getSponsor() {
@@ -214,6 +205,7 @@ public class Funds implements Comparable<Funds> {
             funds = new Funds();
             //DemandList demandListIndividual = demandList.getAt(record);
             //funds.setSponsorItem(demandListIndividual);
+            funds.setFundsID(autoGenerateID());
             funds.setTotalAmount(faker.number().randomDouble(2, 1000, 10000));
             funds.setOriginalTotalAmount(faker.number().randomDouble(2, 1000, 10000));
             funds.setDatePay(datePay);

@@ -28,7 +28,6 @@ public class SponsorItem implements Comparable<SponsorItem> {
     private Sponsor sponsor;
     private int quantity;
     private LocalDate dateDonate;
-    private String description;
     private Timestamp dateModified;
     private String status;
     private static String lastSponsoredID = "";
@@ -37,14 +36,13 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
     }
 
-    public SponsorItem(String sponsoredID, DemandList demandList, Funds funds, Sponsor sponsor, int quantity, LocalDate dateDonate, String description, Timestamp dateModified, String status) {
+    public SponsorItem(String sponsoredID, DemandList demandList, Funds funds, Sponsor sponsor, int quantity, LocalDate dateDonate, Timestamp dateModified, String status) {
         this.sponsoredID = sponsoredID;
         this.demandList = demandList;
         this.funds = funds;
         this.sponsor = sponsor;
         this.quantity = quantity;
         this.dateDonate = dateDonate;
-        this.description = description;
         this.dateModified = dateModified;
         this.status = status;
     }
@@ -105,14 +103,6 @@ public class SponsorItem implements Comparable<SponsorItem> {
         this.dateDonate = dateDonate;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Timestamp getDateModified() {
         return dateModified;
     }
@@ -156,14 +146,14 @@ public class SponsorItem implements Comparable<SponsorItem> {
     }
 
     private static String[] sponsorItemHeaders() {
-        String[] sponsorItemHeaders = {"Sponsored Item ID", "Demand List ID", "Fund ID", "Sponsor ID", "Quantity", "Date Donate", "Description", "Date Modified", "Status"};
+        String[] sponsorItemHeaders = {"Sponsored Item ID", "Demand List ID", "Fund ID", "Sponsor ID", "Quantity", "Date Donate", "Date Modified", "Status"};
 
         return sponsorItemHeaders;
     }
 
     private String[] strArr() {
         String quan = String.valueOf(quantity);
-        return new String[]{sponsoredID, demandList.getDemandListID(), funds.getFundsID(), sponsor.getAccountID(), quan, this.dateDonate.toString(), description, this.dateModified.toString(), status};
+        return new String[]{sponsoredID, demandList.getDemandListID(), funds.getFundsID(), sponsor.getAccountID(), quan, this.dateDonate.toString(), this.dateModified.toString(), status};
     }
 
     //change the list and apply toArray method.
@@ -178,11 +168,12 @@ public class SponsorItem implements Comparable<SponsorItem> {
         return sponsorItemRow;
     }
 
-    public static void sponsorItemTable(DoublyLinkedList<SponsorItem> sponsorItemList) {
+    public static void sponsorItemTable(DoublyLinkedList<SponsorItem> sponsorItemDB) {
         String[] header = SponsorItem.sponsorItemHeaders();
-        String[][] sponsorItemData = SponsorItem.sponsorItemRows(sponsorItemList);
+        String[][] sponsorItemData = SponsorItem.sponsorItemRows(sponsorItemDB);
 
         ASCIITable.getInstance().printTable(header, sponsorItemData);
+
     }
 
     public String autoGenerateID() {
@@ -210,7 +201,6 @@ public class SponsorItem implements Comparable<SponsorItem> {
         LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
         LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
-        String[] description = "Table,Chair,Plate,Bottle".split(",");
 
         DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
         DoublyLinkedList<Funds> funds = fundsDB;
@@ -243,15 +233,19 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
             sponsorItem.setQuantity(qtyDeduct);
             sponsorItem.setDateDonate(dateDonate);
-            sponsorItem.setDescription(description[faker.number().numberBetween(0, description.length - 1)]);
             sponsorItem.setDateModified(dateModified);
             sponsorItem.setStatus("Active");
 
             dummySponsorItem.addLast(sponsorItem);
 
         }
-
         return dummySponsorItem;
+    }
+
+    @Override
+    public SponsorItem clone() throws CloneNotSupportedException {
+        SponsorItem cloned = (SponsorItem) super.clone();
+        return cloned;
     }
 
     public boolean isInActive() {

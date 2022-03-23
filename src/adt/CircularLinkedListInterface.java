@@ -7,9 +7,9 @@ package adt;
 
 /**
  *
- * @author JiaToong
+ * @author Looi Jia Toong
  */
-public interface LinkedListInterface<T> {
+public interface CircularLinkedListInterface<T> {
 
     boolean addLastNode(T element);
 
@@ -35,9 +35,9 @@ public interface LinkedListInterface<T> {
 
     boolean removeAnyNode(int position);
 
-    boolean replaceFirstNode();
+    boolean replaceFirstNode(T element);
 
-    boolean replaceLastNode();
+    boolean replaceLastNode(T element);
 
-    boolean replaceAnyNode(int position);
+    boolean replaceAnyNode(T element, int position);
 }

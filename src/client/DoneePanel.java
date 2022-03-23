@@ -155,7 +155,7 @@ public class DoneePanel implements Panel {
         String id = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
-        
+
         do {
             Donee.doneeTable(doneeDB);
             System.out.print("Enter a Donee Id:");
@@ -282,8 +282,8 @@ public class DoneePanel implements Panel {
         arrListForPrint = DoneePredicates.ControlPanel(doneeArray);
 
         if (arrListForPrint != null && arrListForPrint.length != 0) {
-            for(Donee donee: arrListForPrint){
-                listForPrint .enqueue(donee);
+            for (Donee donee : arrListForPrint) {
+                listForPrint.enqueue(donee);
             }
             Donee.doneeTable(listForPrint);
         } else {
