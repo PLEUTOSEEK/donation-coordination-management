@@ -168,34 +168,8 @@ public class CampaignPanel implements Panel {
         if (doneeDB.getFront() != null) {
 
             do {
-                //<editor-fold defaultstate="collapsed" desc="temporary delete later">
-                System.out.print("Enter the campaign name: ");
-                campaign.setCampaignName("best");
-                System.out.print("Enter the campaign start date [dd. MMM. yyyy]: ");
-                campaign.setCampaignStartDate(LocalDate.parse("12. Mar. 2022", dtfDate));
-                System.out.print("Enter the campaign start time [H:mm:ss]: ");
-                campaign.setCampaignStartTime(LocalTime.parse("04:00:00", dtfTime));
-                System.out.print("Enter the campaign end date [dd. MMM. yyyy]: ");
-                campaign.setCampaignEndDate(LocalDate.parse("15. Mar. 2022", dtfDate));
-                System.out.print("Enter the campaign end time [H:mm:ss]: ");
-                campaign.setCampaignEndTime(LocalTime.parse("23:59:59", dtfTime));
-                System.out.print("Enter the target amount: ");
-                campaign.setTargetAmount(4500);
-                System.out.print("Enter the campaign email: ");
-                campaign.setCampaignEmail("xuanvanquish@gmail.com");
-                System.out.print("Enter the campaign mobile no: ");
-                campaign.setCampaignMobileNo("016-209 1883");
-                System.out.print("Enter the campaign campaign address: ");
-                campaign.setCampagnAddress("address123");
-                System.out.print("Enter the campaign bank no: ");
-                campaign.setCampaignBankNo("8956 4589 6325");
-                System.out.print("Enter the campaign description: ");
-                campaign.setDescription("description 134");
-                System.out.print("Enter the campaign register date [dd. MMM. yyyy]: ");
-                campaign.setCampaignRegisterDate(LocalDate.parse("13. Mar. 2022", dtfDate));
-                //</editor-fold>
+
                 // ID need to auto generate
-                /*
                 System.out.print("Enter the campaign name: ");
                 campaign.setCampaignName(input.nextLine());
                 System.out.print("Enter the campaign start date [dd. MMM. yyyy]: ");
@@ -221,7 +195,7 @@ public class CampaignPanel implements Panel {
                 campaign.setDescription(input.nextLine());
                 System.out.print("Enter the campaign register date [dd. MMM. yyyy]: ");
                 campaign.setCampaignRegisterDate(LocalDate.parse(input.nextLine(), dtfDate));
-                 */
+
                 campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
                 campaign.setStatus("Active");
                 oriCampLastID = Campaign.getLastCampaignID();
