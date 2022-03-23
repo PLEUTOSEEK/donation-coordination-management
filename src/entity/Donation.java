@@ -8,8 +8,12 @@ package entity;
 import adt.CircularLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 
 /**
  *
@@ -51,6 +55,10 @@ public class Donation implements Comparable<Donation> {
         this.status = status;
         this.dateOfDonation = dateOfDonation;
         this.dateModified = dateModified;
+    }
+
+    public Donation(String donationID) {
+        this.donationID = donationID;
     }
 
     public String getDonationID() {
@@ -182,9 +190,9 @@ public class Donation implements Comparable<Donation> {
         return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString()};
     }
 
-    /*private static String[][] donationRows(CircularLinkedList<Donation> donationDB) {
-        Donation[] donations = new Donation[donationDB.getAllList().getLength()];
-        donations = donationDB.getAllArrayList(donations);
+    private static String[][] donationRows(CircularLinkedList<Donation> donationDB) {
+        Donation[] donations = new Donation[donationDB.countNodes()];
+        donations = donationDB.toArray(donations);
         String[][] donationRows = new String[donations.length][];
         for (int i = 0; i < donations.length; i++) {
             donationRows[i] = donations[i].strArr();
@@ -203,19 +211,35 @@ public class Donation implements Comparable<Donation> {
         CircularLinkedList<Donation> dummyDonations = new CircularLinkedList<Donation>();
         Faker faker = new Faker();
         Donation donation = new Donation();
+        LocalDateTimeRangeRandomizer randomTimeRange;
+        LocalDateTime randomTime;
+        LocalDateTime minTime = LocalDateTime.of(2017, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        randomTimeRange = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
-        String[] totalAmount = "Shiloh Almond,Haidar Potts,Anton Klein,Balraj Lang,Raya Penn,Cherry Swift,Raymond Worthington,Connah Parrish,Stacey Mathews,Corinne Monaghan,Reid Mccallum,Saqlain Stephens,Ray Whyte,Gertrude Mccabe,Jamaal Gould".split(",");
-        String[] description = {"organization", "individual"};
-        int[] dateOfDonation = {77, 70};
+        String[] description = "Heaven Kitties,Heaven Bunnies,Heaven Pigeons,Heaven Volunteers,Heaven Pinks,Heaven Pink Jackets,Heaven Pink Legs,Heaven United,Heaven Athletic,Pink Kitties,Pink Bunnies,Pink Pigeons,Pink Volunteers,Lively Kitties,Lively Bunnies,Lively Pigeons,Lively Volunteers,Donation Kitties,Donation Bunnies,Donation Pigeons,Donation Volunteers,Generous Kitties,Generous Bunnies,Generous Pigeons,Generous Volunteers".split(",");
 
         for (int data = 0; data < 100; data++) {
+            LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
+            Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(2, 10)).toEpochDay());
+
             donation = new Donation();
             donation.setDonationID(autoGenerateID());
-            ...
+            //donation.setDonor();
+            //donation.setDonee(Donee.getDoneeID());
+            donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
+            donation.setDescription(description[(int) faker.number().randomDigit()]);
+            donation.setDateOfDonation(dateOfDonation);
             donation.setStatus("Active");
-            dummyDonors.add(donor);
+            donation.setDateModified(dateModified);
         }
 
         return dummyDonations;
-    }*/
+    }
+
+    @Override
+    public Campaign clone() throws CloneNotSupportedException {
+        Campaign cloned = (Campaign) super.clone();
+        return cloned;
+    }
 }
