@@ -13,7 +13,7 @@ public interface SinglyLinkedListInterface<T> {
 
     public boolean add(T element);
 
-    public boolean add(int newPosition, T newElement);
+    public boolean add(T newElement,int newPosition);
 
     public boolean remove(int inputPosition);
 

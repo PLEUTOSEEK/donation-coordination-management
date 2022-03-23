@@ -13,7 +13,7 @@ import com.github.javafaker.Faker;
  *
  * @author Wong Phey Zhen
  */
-public class Donor extends Account implements Comparable<Donor> {
+public class Donor extends Account implements Comparable<Donor>, Cloneable {
 
     private String donorType;
 
@@ -166,7 +166,14 @@ public class Donor extends Account implements Comparable<Donor> {
         return dummyDonors;
     }
 
+    @Override
+    public Donor clone() throws CloneNotSupportedException {
+        Donor cloned = (Donor) super.clone();
+        return cloned;
+    }
+
     public boolean isInActive() {
         return status.equalsIgnoreCase("Inactive");
     }
+
 }

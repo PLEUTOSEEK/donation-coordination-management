@@ -238,7 +238,7 @@ public class CampaignPanel implements Panel {
                 confirmation = input.nextLine();
 
                 if (confirmation.toUpperCase().equals("Y")) {
-                    for (int i = 1; i <= memoSponsors.getLength(); i++) {
+                    for (int i = 1; i <= memoSponsors.getLength(); i++) { //memory
                         sponsorListDB.addData(memoSponsors.getAt(i).getDateJoin(), memoSponsors.getAt(i));
                     }
 
@@ -316,25 +316,30 @@ public class CampaignPanel implements Panel {
                 }
             } while (hasSponsor == false);
 
-            sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));
+            sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastSponsorID)));//retrieve
 
-            sponsorList.setCampaign(campaign);
-            sponsorList.setSponsor(sponsor);
-            System.out.print("Enter date join [dd. MMM. yyyy]: ");
-            sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-            sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-            sponsorList.setStatus("Active");
-            sponsorList.setSponsorListID(sponsorList.autoGenerateID());
+            if (sponsor.isInActive() == false) {
+                sponsorList.setCampaign(campaign);
+                sponsorList.setSponsor(sponsor);
+                System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                sponsorList.setStatus("Active");
+                sponsorList.setSponsorListID(sponsorList.autoGenerateID());
 
-            System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
-            confirmation = input.nextLine();
+                System.out.print("Confirm add sponsor to this campaign ? (Y/N) ");
+                confirmation = input.nextLine();
 
-            if (confirmation.toUpperCase().equals("Y")) {
-                memoSponsorList.addLast(sponsorList);
-                haveRecord = true;
+                if (confirmation.toUpperCase().equals("Y")) {
+                    memoSponsorList.addLast(sponsorList);
+                    haveRecord = true;
+                }
+
+                System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
+            } else {
+                System.out.println("Sponsor is in inactive status, please try again the other sponsor...");
+
             }
-
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added sponsor successfully" : "Add sponsor abort");
 
             if (haveRecord != true) {
                 System.out.println("At least one sponsor require...");
@@ -453,24 +458,28 @@ public class CampaignPanel implements Panel {
             } while (hasDonor == false);
 
             Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
+            if (donor.isInActive() == false) {
 
-            donorList.setCampaign(campaign);
-            donorList.setDonor(donor);
-            System.out.print("Enter date join [dd. MMM. yyyy]: ");
-            donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
-            donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
-            donorList.setStatus("Active");
-            donorList.setDonorListID(donorList.autoGenerateID());
+                donorList.setCampaign(campaign);
+                donorList.setDonor(donor);
+                System.out.print("Enter date join [dd. MMM. yyyy]: ");
+                donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                donorList.setStatus("Active");
+                donorList.setDonorListID(donorList.autoGenerateID());
 
-            System.out.print("Confirm add donor to this campaign ? (Y/N) ");
-            confirmation = input.nextLine();
+                System.out.print("Confirm add donor to this campaign ? (Y/N) ");
+                confirmation = input.nextLine();
 
-            if (confirmation.toUpperCase().equals("Y")) {
-                memoDonors.addLast(donorList);
-                haveRecord = true;
+                if (confirmation.toUpperCase().equals("Y")) {
+                    memoDonors.addLast(donorList);
+                    haveRecord = true;
+                }
+
+                System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
+            } else {
+                System.out.println("Donor is in inactive status, please try again the other donor...");
             }
-
-            System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donor successfully" : "Add donor abort");
 
             if (haveRecord != true) {
                 System.out.println("At least one donor require...");
