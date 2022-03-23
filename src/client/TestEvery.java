@@ -26,7 +26,7 @@ public class TestEvery {
 
         //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 //        DoneePanel doneeP = new DoneePanel();
-        //DonorPanel donor = new DonorPanel();
+        DonorPanel donor = new DonorPanel();
         SponsorPanel sponsor = new SponsorPanel();
 
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
@@ -55,8 +55,7 @@ public class TestEvery {
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
-        //       SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-        //SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
+      
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
         //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
@@ -71,7 +70,7 @@ public class TestEvery {
         //</editor-fold>
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
-        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
+//        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
 
 //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
 //
@@ -96,8 +95,8 @@ public class TestEvery {
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
-        //donor.donorPanel(donorDB);
-        sponsor.controlPanel(sponsorDB);
+        donor.donorPanel(donorDB);
+//       sponsor.controlPanel(sponsorDB);
 
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
