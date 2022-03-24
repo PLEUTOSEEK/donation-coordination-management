@@ -65,7 +65,6 @@ public class TestEvery {
         //  DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         //       DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
-      
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
         //        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
         //        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name"));
@@ -80,7 +79,6 @@ public class TestEvery {
         //</editor-fold>
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
-<<<<<<< HEAD
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
@@ -100,9 +98,8 @@ public class TestEvery {
         //        MainPanel mainPanel = new MainPanel();
         //      doneeP.doneePanel(doneeDB);
         //      doneeP.doneePanel(doneeDB
-=======
-//        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
 
+//        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
 //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
 //
 //        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
@@ -121,30 +118,23 @@ public class TestEvery {
 //        MainPanel mainPanel = new MainPanel();
 //      doneeP.doneePanel(doneeDB);
 //      doneeP.doneePanel(doneeDB
->>>>>>> fee97967aac53e930b3f34a35cd8dad9a36c4e79
         //donor.donorPanel(donorDB);
         //         donor.donorPanel(donorDB);
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
-<<<<<<< HEAD
         //donor.donorPanel(donorDB);
         // sponsor.controlPanel(sponsorDB);
         //funds.controlPanel(fundsDB, sponsorDB, demandListDB);
         //demandList.controlPanel(campaignDB, demandListDB);
         sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
-=======
 
         donor.donorPanel(donorDB);
 //       sponsor.controlPanel(sponsorDB);
 
-
         //donor.donorPanel(donorDB);2
-        
- //       sponsor.controlPanel(sponsorDB);
+        //       sponsor.controlPanel(sponsorDB);
         //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
-
->>>>>>> fee97967aac53e930b3f34a35cd8dad9a36c4e79
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
