@@ -31,18 +31,18 @@ public class TestEvery {
 
         //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 //        DoneePanel doneeP = new DoneePanel();
-<<<<<<< HEAD
+
         //DonorPanel donor = new DonorPanel();
         //SponsorPanel sponsor = new SponsorPanel();
         //SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
         DonationPanel donation = new DonationPanel();
-=======
+
         DonorPanel donor = new DonorPanel();
         SponsorPanel sponsor = new SponsorPanel();
         SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
         FundsPanel funds = new FundsPanel();
         //DemandListPanel demandList = new DemandListPanel();
->>>>>>> 782e5fe72bbabd36b84da47a7e7508263d4a6810
+
 
         //DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
@@ -135,9 +135,9 @@ public class TestEvery {
         //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
         //donor.donorPanel(donorDB);
-<<<<<<< HEAD
+
        // sponsor.controlPanel(sponsorDB);
-=======
+
         // sponsor.controlPanel(sponsorDB);
         //funds.controlPanel(fundsDB, sponsorDB, demandListDB);
         //demandList.controlPanel(campaignDB, demandListDB);
@@ -148,7 +148,7 @@ public class TestEvery {
 
         //donor.donorPanel(donorDB);2
         //       sponsor.controlPanel(sponsorDB);
->>>>>>> 782e5fe72bbabd36b84da47a7e7508263d4a6810
+
         //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
