@@ -31,9 +31,11 @@ public class TestEvery {
 //        DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
         SponsorPanel sponsor = new SponsorPanel();
-        //SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
+        SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
+        FundsPanel funds = new FundsPanel();
+        //DemandListPanel demandList = new DemandListPanel();
 
-//        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
+        //DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
 //        DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
@@ -50,7 +52,8 @@ public class TestEvery {
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();
-        DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(demandListDB);
+        DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(sponsorDB);
+        DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB);
 //      SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         // DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB, sponsorDB);
 
@@ -79,33 +82,34 @@ public class TestEvery {
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
-
-//        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
-//
-//        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
-//
-//        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
-//        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
-//
-//        Sponsor.sponsorTable(sponsorDB);
-//        Donee.doneeTable(doneeDB);
-//        Donor.donorTable(donorDB);
-//        SponsorList.sponsorListTable(sponsorListDB);
-//        DoneeList.doneeListTable(doneeListDB);
-//        DonorList.donorListTable(donorListDB);
-//        DemandList.demandTable(demandListDB);
-//
-//        MainPanel mainPanel = new MainPanel();
-//      doneeP.doneePanel(doneeDB);
-//      doneeP.doneePanel(doneeDB
+        //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
+        //
+        //        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
+        //
+        //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
+        //        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
+        //
+        //        Sponsor.sponsorTable(sponsorDB);
+        //        Donee.doneeTable(doneeDB);
+        //        Donor.donorTable(donorDB);
+        //        SponsorList.sponsorListTable(sponsorListDB);
+        //        DoneeList.doneeListTable(doneeListDB);
+        //        DonorList.donorListTable(donorListDB);
+        //        DemandList.demandTable(demandListDB);
+        //
+        //        MainPanel mainPanel = new MainPanel();
+        //      doneeP.doneePanel(doneeDB);
+        //      doneeP.doneePanel(doneeDB
         //donor.donorPanel(donorDB);
         //         donor.donorPanel(donorDB);
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
-//        doneeP.controlPanel(doneeDB);
+        //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
         //donor.donorPanel(donorDB);
-        sponsor.controlPanel(sponsorDB);
-        //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
+        // sponsor.controlPanel(sponsorDB);
+        //funds.controlPanel(fundsDB, sponsorDB, demandListDB);
+        //demandList.controlPanel(campaignDB, demandListDB);
+        sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);

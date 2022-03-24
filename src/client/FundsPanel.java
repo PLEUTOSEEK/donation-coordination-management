@@ -7,9 +7,14 @@ package client;
 
 import adt.DoublyLinkedList;
 import adt.ListInterface;
+import adt.RedBlackTree;
+import entity.DemandList;
 import entity.Funds;
 import entity.Sponsor;
 import entity.SponsorItem;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -18,7 +23,8 @@ import java.util.Scanner;
  */
 public class FundsPanel implements Panel {
 
-    public void controlPanel(DoublyLinkedList<SponsorItem> sponsorItemDB, DoublyLinkedList<Sponsor> sponsorDB, DoublyLinkedList<Funds> fundsDB) {
+    public void controlPanel(DoublyLinkedList<Funds> fundsDB, DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
 
         ListInterface<Funds> funds;
 
@@ -34,11 +40,11 @@ public class FundsPanel implements Panel {
             opt = s.nextInt();
             switch (opt) {
                 case 1: {
-
+                    addFunds(fundsDB, sponsorDB);
                     break;
                 }
                 case 2: {
-
+                    displayFunds(fundsDB);
                     break;
                 }
                 case 3: {
@@ -54,10 +60,80 @@ public class FundsPanel implements Panel {
         } while (opt != 4);
 
     }
+// if demandList inactive sponsor cannot add funds
 
-    public DoublyLinkedList<Funds> addFunds(DoublyLinkedList<Funds> fundsDB) {
+    public void addFunds(DoublyLinkedList<Funds> fundsDB,
+            DoublyLinkedList<Sponsor> sponsorDB) {
 
-        return fundsDB;
+        String confirm, opt;
+        String lastDemandListID = "";
+        String lastsponsorID = "";
+        double tAmount = 0.00;
+        Scanner s = new Scanner(System.in);
+        String fundsLastID = Funds.getLastFundsID();
+        Funds funds = new Funds();
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        do {
+            Sponsor sponsor = new Sponsor();
+            Sponsor.sponsorTable(sponsorDB);
+            System.out.print("Enter Sponsor ID:");
+            lastsponsorID = s.nextLine();
+
+            if (sponsorDB.contains(new Sponsor(lastsponsorID)) == true) {
+                sponsor = sponsorDB.getAt(sponsorDB.indexOf(new Sponsor(lastsponsorID)));
+
+                if (sponsor.isInActive() == false) {
+
+                    fundsLastID = Funds.getLastFundsID();
+                    funds.setSponsor(sponsor);
+                    funds.setFundsID(funds.autoGenerateID());
+
+                    System.out.print("Enter total amount:");
+                    tAmount = s.nextDouble();
+                    funds.setOriginalTotalAmount(tAmount);
+
+                    funds.setTotalAmount(tAmount);
+
+                    s.nextLine(); //clear buffer
+
+                    System.out.print("Enter date of pay [dd.MM.yyyy]:");
+                    funds.setDatePay(LocalDate.parse(s.nextLine(), dtfDate));
+
+                    funds.setDateModified(new Timestamp(System.currentTimeMillis()));
+
+                    funds.setStatus("Active");
+
+                    System.out.print("Confirm to add Funds?(Y/N):");
+                    confirm = s.nextLine();
+
+                    if (confirm.toUpperCase().equals("Y")) {
+                        fundsDB.addLast(funds);
+                        System.out.println("Added successfully...");
+
+                    } else {
+                        Funds.setLastFundsID(fundsLastID);
+                        Sponsor.setLastSponsorID(lastsponsorID);
+
+                        System.out.println("Add Funds Failed");
+
+                    }
+
+                } else {
+                    System.out.println("This is Inactive");
+                }
+
+            }
+
+            System.out.print("Continue adding new funds? (Y/N) ");
+            opt = s.nextLine();
+
+        } while (opt.toUpperCase().equals("Y"));
+
+    }
+
+    public void displayFunds(DoublyLinkedList<Funds> fundsDB) {
+        Funds.fundsTable(fundsDB);
     }
 
     @Override

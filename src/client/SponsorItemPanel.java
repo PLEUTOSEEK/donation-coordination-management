@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client;
 
 import adt.DoublyLinkedList;
@@ -13,10 +8,10 @@ import entity.DemandList;
 import entity.Funds;
 import entity.Sponsor;
 import entity.SponsorItem;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import utils.SponsorItemInformation;
 
 /**
  *
@@ -24,8 +19,9 @@ import utils.SponsorItemInformation;
  */
 public class SponsorItemPanel implements Panel {
 
-    public void controlPanel(DoublyLinkedList<SponsorItem> sponsorItemDB, DoublyLinkedList<Sponsor> sponsorDB,
-            DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
+    public void controlPanel(DoublyLinkedList<SponsorItem> sponsorItemDB,
+            DoublyLinkedList<Funds> fundsDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
 
         ListInterface<SponsorItem> sponsorItem;
 
@@ -41,7 +37,8 @@ public class SponsorItemPanel implements Panel {
 
             switch (opt) {
                 case 1: {
-                    sponsorItemDB = addNewSponsorItem(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
+                    //sponsorItemDB = addNewSponsorItem(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
+                    addDemandListAndFunds(fundsDB, demandListDB, sponsorItemDB);
                     break;
                 }
                 case 2: {
@@ -61,7 +58,7 @@ public class SponsorItemPanel implements Panel {
 
     }
 
-    public DoublyLinkedList<SponsorItem> addNewSponsorItem(DoublyLinkedList<SponsorItem> sponsorItemDB, DoublyLinkedList<Sponsor> sponsorDB,
+    public DoublyLinkedList<SponsorItem> addNewSponsorItem(DoublyLinkedList<SponsorItem> sponsorItemDB,
             DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB) {
 
         String confirm, opt;
@@ -109,6 +106,141 @@ public class SponsorItemPanel implements Panel {
         SponsorItem.sponsorItemTable(sponsorItemDB);
     }
 
+    private void addDemandListAndFunds(DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB,
+            DoublyLinkedList<SponsorItem> sponsorItemDB) {
+        String opt, confirm;
+        String lastDemandListID = "";
+        String lastFundsID = "";
+        String lastSponsorItemID = SponsorItem.getLastSponsoredID();
+        //Campaign campaign = new Campaign();
+        SponsorItem sponsorItem = new SponsorItem();
+        Scanner s = new Scanner(System.in);
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
+
+        boolean hasDemandList = true;
+
+        do {
+            hasDemandList = true;
+            DemandList.demandTable(demandListDB);
+
+            System.out.print("Enter Demand List ID:");
+            lastDemandListID = s.nextLine();
+
+            if (demandListDB.contains(new DemandList(lastDemandListID)) == true) {
+                DemandList targetDemandList = demandList.getAt(demandList.indexOf(new DemandList(lastDemandListID))); //retrieve demand list based on id
+
+                if (targetDemandList.getCampaign().isPermanentDelete() || targetDemandList.getCampaign().isInactive() || targetDemandList.isInactive() == false) {
+
+                    Funds.fundsTable(fundsDB);
+                    System.out.print("Enter Funds ID:");
+                    lastFundsID = s.nextLine();
+
+                    if (fundsDB.contains(new Funds(lastFundsID)) == true) {
+                        Funds targetFunds = fundsDB.getAt(fundsDB.indexOf(new Funds(lastFundsID)));
+
+                        if (targetFunds.isInActive() == false) {
+
+                            lastSponsorItemID = SponsorItem.getLastSponsoredID();
+                            sponsorItem.setSponsoredID(sponsorItem.autoGenerateID());
+
+                            sponsorItem.setDemandList(targetDemandList);
+                            sponsorItem.setFunds(targetFunds);
+                            System.out.print("Enter Quantity:");
+                            int qty = s.nextInt();
+                            sponsorItem.setQuantity(qty);
+
+                            s.nextLine();
+
+                            if (targetDemandList.getQuantity() == 0) {
+
+                                targetDemandList.setStatus("Inactive");
+                                System.out.println("Your quantity is 0, you cant use this Demand List ID");
+
+                            } else if (targetFunds.getTotalAmount() == 0.00) {
+
+                                targetFunds.setStatus("Inactive");
+                                System.out.println("Your amount is 0, you cant use this Funds ID");
+                            } else {
+
+                                System.out.print("Enter date of donate[dd.MM.yyyy]:");
+                                sponsorItem.setDateDonate(LocalDate.parse(s.nextLine(), dtfDate));
+
+                                sponsorItem.setDateModified(new Timestamp(System.currentTimeMillis()));
+
+                                sponsorItem.setStatus("Active");
+
+                                //hasDemandList = false;
+                                System.out.print("Confirm ? (Y/N):");
+                                confirm = s.nextLine();
+
+                                targetDemandList.setQuantity(targetDemandList.getQuantity() - qty);
+
+                                System.out.println(qty);
+                                System.out.println(targetDemandList.getPricePerUnit());
+                                System.out.println(targetDemandList.getPricePerUnit() * qty);
+
+                                System.out.println("Successful to deduct qty in demandList");
+                                //how to know the demanList qty has been deducted?
+
+                                System.out.println(targetFunds.getTotalAmount());
+                                System.out.println(targetFunds.getTotalAmount() - (targetDemandList.getPricePerUnit() * qty));
+                                System.out.println("Successful to deduct amount in Funds");
+
+                                if (confirm.toUpperCase().equals("Y")) {
+                                    sponsorItemDB.addLast(sponsorItem);
+                                    System.out.println("Added successfully");
+                                } else {
+                                    DemandList.setLastDemandID(lastDemandListID);
+                                    Funds.setLastFundsID(lastFundsID);
+                                    SponsorItem.setLastSponsoredID(lastSponsorItemID);
+
+                                    System.out.println("Added Failed");
+                                }
+
+                            }
+
+                        } else {
+                            System.out.println("This is Inactive");
+                        }
+                    }
+
+                } else {
+                    System.out.println("Status Inactive!");
+                }
+            } else {
+                System.out.println("DemandList ID not found!");
+            }
+            System.out.print("Continue add? (Y/N) ");
+            opt = s.nextLine();
+            //ask demandList ID
+            //retrieve demandList obj
+            //ask funds ID
+            //retrieve funds obj
+            //enter qty 
+            //qty*price
+            //confirm?
+            //deduct funds, stored in total amount, store donated qty in sponsoredItem 
+            //deduct qty on demandList = targetDemandList.setQuantity(demandListIndividual.getQuantity() - qtyDeduct);
+            //check balance of qty on demandList 
+            //if qty=0,if targetDemandList.getQty()=0
+            //targetDemandList.setStatus("inactive"), funds same
+            //if the enter qty more than demandList qty ,then auto assign max qty & print message
+            //qty*price
+            //retrieve balance of the funds
+            //if the enter qty of total price more than funds then auto decrease the qty able to cover
+        } while (opt.toUpperCase().equals("Y"));
+
+        //if (campaign.getStatus().toUpperCase().equals("Permanent Inactive")) {
+        //    SponsorItem[] sponsorItemArr = new SponsorItem[sponsorItemDB.getLength()];
+        // }
+        //if campaign status = permanent inactive then cannot create sponsorItem
+        //type in qty
+        //check is type in qty more than needee qty or not,and also check wheather the funds able to cover the amount of Donate
+        //qty deduct,funds deduct(qty*per unit)--need to return to addNewSponsorItem
+    }
+
     @Override
 
     public void controlPanel() {
@@ -118,65 +250,6 @@ public class SponsorItemPanel implements Panel {
     @Override
     public String menu() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private SponsorItemInformation addDemandList(DoublyLinkedList<Funds> fundsDB, RedBlackTree<LocalDate, DemandList> demandListDB,
-            RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<SponsorItem> sponsorItemDB) {
-        String opt, confirm;
-        String lastDemandListID = "";
-        Campaign campaign = new Campaign();
-        SponsorItem sponsorItem = new SponsorItem();
-        Scanner s = new Scanner(System.in);
-
-        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
-
-        do {
-            //enter demand list id 
-            System.out.print("Enter Demand List ID:");
-            lastDemandListID = s.nextLine();
-            demandList.getAt(demandList.indexOf(new DemandList(lastDemandListID))); //retrieve demand list based on id
-
-            System.out.println(lastDemandListID);
-
-            System.out.print("Confirm ? (Y/N)");
-            confirm = s.nextLine();
-
-            if (confirm.toUpperCase().equals("Y")) {
-                //demandListDB.addData(;
-            } else {
-
-            }
-
-            System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add failed...");
-
-            System.out.print("\nContinue add? (Y/N)");
-            opt = s.nextLine();
-
-            System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to main page..");
-
-        } while (opt.toUpperCase().equals("Y"));
-
-        if (campaign.getStatus().toUpperCase().equals("Permanent Inactive")) {
-            SponsorItem[] sponsorItemArr = new SponsorItem[sponsorItemDB.getLength()];
-
-        }
-
-//if campaign status = permanent inactive then cannot create sponsorItem
-        //type in qty
-        //check is type in qty more than needee qty or not,and also check wheather the funds able to cover the amount of Donate
-        //qty deduct,funds deduct(qty*per unit)--need to return to addNewSponsorItem
-        {
-            return null;
-        }
-    }
-
-    private SponsorItemInformation addFunds() {
-
-        //private addFunds
-        //enter funds id
-        //retrieve funds based on id
-        return null;
-
     }
 
     @Override
