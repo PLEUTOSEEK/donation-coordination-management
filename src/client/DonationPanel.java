@@ -51,7 +51,7 @@ public class DonationPanel implements Panel {
                     addDonorToCampaign(donationDB, campaignDB, donorDB); //donor to campaign
                     break;
                 case 3:
-                    //Donation.donationTable(donationDB);
+                    Donation.donationTable(donationDB);
                     break;
                 case 4:
                     //search
@@ -133,6 +133,7 @@ public class DonationPanel implements Panel {
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donation.setStatus("Active");
                     donation.setDonationID(donation.autoGenerateID());
+                    donation.setCampaign(null);
 
                     System.out.println("Confirm to add this donation record? (Y/N)  ");
                     confirmation = input.nextLine();
@@ -194,6 +195,7 @@ public class DonationPanel implements Panel {
                     donation.setDateOfDonation(LocalDate.parse(input.nextLine()));
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donation.setStatus("Active");
+                    donation.setDonee(null);
                     donation.setDonationID(donation.autoGenerateID());
 
                     System.out.println("Confirm to add this donation record? (Y/N)  ");
@@ -218,7 +220,6 @@ public class DonationPanel implements Panel {
 
     @Override
     public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -259,12 +260,14 @@ public class DonationPanel implements Panel {
         int selection;
 
         do {
-            Donation.donationTable(donationDB);
+            /*Donation.donationTable(donationDB);
 
             System.out.println("Enter Donation ID : ");
             donationID = input.nextLine();
 
-            /*CircularLinkedList<Donation> donations = donations.getAll();
+            Donation[] donations = new Donation[donationDB.countNodes()];
+            donations = donationDB.toArray(donations);
+            
             if (donations.contains(new Donation(donationID)) == true) {
                 Donation donation = donations.getAtAnyNode(donations.indexOf(new Donation(donationID)));
 

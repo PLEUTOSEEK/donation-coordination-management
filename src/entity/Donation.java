@@ -6,6 +6,9 @@
 package entity;
 
 import adt.CircularLinkedList;
+import adt.CircularLinkedQueue;
+import adt.RedBlackTree;
+import adt.SinglyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
 import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
@@ -170,7 +173,7 @@ public class Donation implements Comparable<Donation> {
         if (lastDonationID.equals("")) {
             newDonationID = "DON1001";
         } else {
-            seq = Integer.parseInt(lastDonationID.substring(2));
+            seq = Integer.parseInt(lastDonationID.substring(3));
             seq += 1;
 
             newDonationID = "DON" + seq;
@@ -207,7 +210,7 @@ public class Donation implements Comparable<Donation> {
         ASCIITable.getInstance().printTable(donationHeader, donationData);
     }
 
-    public CircularLinkedList<Donation> generateDummyDonation() {
+    public CircularLinkedList<Donation> generateDummyDonation(SinglyLinkedList<Donor> donorDB, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, Campaign> campaignDB) {
         CircularLinkedList<Donation> dummyDonations = new CircularLinkedList<Donation>();
         Faker faker = new Faker();
         Donation donation = new Donation();
@@ -218,15 +221,29 @@ public class Donation implements Comparable<Donation> {
         randomTimeRange = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
         String[] description = "Heaven Kitties,Heaven Bunnies,Heaven Pigeons,Heaven Volunteers,Heaven Pinks,Heaven Pink Jackets,Heaven Pink Legs,Heaven United,Heaven Athletic,Pink Kitties,Pink Bunnies,Pink Pigeons,Pink Volunteers,Lively Kitties,Lively Bunnies,Lively Pigeons,Lively Volunteers,Donation Kitties,Donation Bunnies,Donation Pigeons,Donation Volunteers,Generous Kitties,Generous Bunnies,Generous Pigeons,Generous Volunteers".split(",");
+        
+        Donor[] donors = new Donor[donorDB.getDataCount()];
+        for (int i = 0; i < donorDB.getDataCount(); i++) {
+            donors[i] = donorDB.getAt(i);
+        }
 
-        for (int data = 0; data < 100; data++) {
+        Donee[] donees = new Donee[doneeDB.getLength()];
+        for (int i = 0; i < doneeDB.getLength(); i++) {
+            donees[i] = doneeDB.getAt(i);
+        }
+
+        Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
+        campaigns = campaignDB.getAllArrayList(campaigns);
+
+        for (int data = 0; data < 30; data++) {
             LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
-            Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(2, 10)).toEpochDay());
+            Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(0, 3)).toEpochDay());
 
             donation = new Donation();
             donation.setDonationID(autoGenerateID());
-            //donation.setDonor();
-            //donation.setDonee(Donee.getDoneeID());
+            donation.setDonor(donors[faker.number().numberBetween(0, donorDB.getDataCount())]);
+            donation.setDonee(donees[faker.number().numberBetween(0, doneeDB.getLength())]);
+            donation.setCampaign(campaigns[faker.number().numberBetween(0, campaignDB.getLength())]);
             donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
             donation.setDescription(description[(int) faker.number().randomDigit()]);
             donation.setDateOfDonation(dateOfDonation);
@@ -238,8 +255,10 @@ public class Donation implements Comparable<Donation> {
     }
 
     @Override
-    public Campaign clone() throws CloneNotSupportedException {
-        Campaign cloned = (Campaign) super.clone();
+    public Donation clone() throws CloneNotSupportedException {
+        Donation cloned = (Donation) super.clone();
         return cloned;
     }
+    
+    
 }

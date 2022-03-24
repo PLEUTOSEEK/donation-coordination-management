@@ -5,12 +5,14 @@
  */
 package client;
 
+import adt.CircularLinkedList;
 import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
+import entity.Donation;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
@@ -30,8 +32,9 @@ public class TestEvery {
         //RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 //        DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
-        SponsorPanel sponsor = new SponsorPanel();
+        //SponsorPanel sponsor = new SponsorPanel();
         //SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
+        DonationPanel donation = new DonationPanel();
 
 //        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();
 //        CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
@@ -39,7 +42,8 @@ public class TestEvery {
 //         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
-
+        
+        
         //DoneePanel doneeP = new DoneePanel();
         //DonorPanel donor = new DonorPanel();
         DoneeListPanel doneeL = new DoneeListPanel();
@@ -86,7 +90,8 @@ public class TestEvery {
 //
 //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
 //        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
-//
+       CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
+
 //        Sponsor.sponsorTable(sponsorDB);
 //        Donee.doneeTable(doneeDB);
 //        Donor.donorTable(donorDB);
@@ -104,12 +109,13 @@ public class TestEvery {
 //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
         //donor.donorPanel(donorDB);
-        sponsor.controlPanel(sponsorDB);
+       // sponsor.controlPanel(sponsorDB);
         //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
         //         donor.donorPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
+        donation.donationPanel(donationDB, campaignDB, doneeDB, donorDB);
     }
 
 }
