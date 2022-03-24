@@ -256,4 +256,8 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
         return cloned;
     }
 
+    public boolean isInactive() {
+        return status.equalsIgnoreCase("Inactive");
+    }
+
 }

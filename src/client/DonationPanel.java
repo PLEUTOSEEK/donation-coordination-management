@@ -17,6 +17,7 @@ import entity.Donee;
 import entity.Donor;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -104,6 +105,7 @@ public class DonationPanel implements Panel {
         Donor donor = new Donor();
         Donee donee = new Donee();
         String originalLastID = Donation.getLastDonationID();
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         do {
             Donor.donorTable(donorDB);
@@ -129,7 +131,7 @@ public class DonationPanel implements Panel {
                     System.out.println("Enter description: ");
                     donation.setDescription(input.nextLine());
                     System.out.println("Enter date of donation [dd. MM. yyyy] : ");
-                    donation.setDateOfDonation(LocalDate.parse(input.nextLine()));
+                    donation.setDateOfDonation(LocalDate.parse(input.nextLine(), dtfDate));
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donation.setStatus("Active");
                     donation.setDonationID(donation.autoGenerateID());
@@ -167,6 +169,7 @@ public class DonationPanel implements Panel {
         Donor donor = new Donor();
         Campaign campaign = new Campaign();
         String originalLastID = Donation.getLastDonationID();
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         do {
             Donor.donorTable(donorDB);
@@ -192,7 +195,7 @@ public class DonationPanel implements Panel {
                     System.out.println("Enter description: ");
                     donation.setDescription(input.nextLine());
                     System.out.println("Enter date of donation [dd. MM. yyyy] : ");
-                    donation.setDateOfDonation(LocalDate.parse(input.nextLine()));
+                    donation.setDateOfDonation(LocalDate.parse(input.nextLine(), dtfDate));
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donation.setStatus("Active");
                     donation.setDonee(null);
@@ -293,10 +296,9 @@ public class DonationPanel implements Panel {
             }else{
                 System.out.println("Donation record not found");
             }*/
-            
             System.out.println("Continue deleting ? (Y/N) ");
             option = input.nextLine();
-            
+
         } while (option.toUpperCase().equals("Y"));
     }
 

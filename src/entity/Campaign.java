@@ -337,4 +337,8 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     public boolean isPermanentDelete() {
         return status.equalsIgnoreCase("Permanent Inactive");
     }
+
+    public boolean isInactive() {
+        return status.equalsIgnoreCase("Inactive");
+    }
 }

@@ -15,6 +15,7 @@ import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
 import entity.DonorList;
+import entity.Funds;
 import entity.Sponsor;
 import entity.SponsorList;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class SystemEntryPoint {
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
-
+        DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(sponsorDB);
         //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
         sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
         sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
@@ -52,6 +53,6 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
 
         MainPanel mainPanel = new MainPanel();
-        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
+        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB, fundsDB);
     }
 }
