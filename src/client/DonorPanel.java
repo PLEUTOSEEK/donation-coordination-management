@@ -102,13 +102,14 @@ public class DonorPanel implements Panel {
     public void add(SinglyLinkedList<Donor> donorDB) {
         Scanner sc = new Scanner(System.in);
         Scanner s = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         String donorType = "";
         char option = ' ';
         int opt = 0;
 
         do {
             Donor donor = new Donor();
-            sc.nextLine();
+            //sc.nextLine();
             System.out.print("\nDonor name   :");
             donor.setName(sc.nextLine());
 
@@ -129,7 +130,7 @@ public class DonorPanel implements Panel {
 
             } else {
                 donor.setDonorType("individual");
-                sc.nextLine();
+                //sc.nextLine();
                 System.out.print("\nGender(M/F)  :");
                 donor.setGender(sc.next().charAt(0));
                 sc.nextLine();
@@ -147,17 +148,17 @@ public class DonorPanel implements Panel {
             System.out.print("\nAddress      :");
             donor.setAddress(sc.nextLine());
 
-            donor.setStatus("active");
+            donor.setStatus("Active");
 
             System.out.print("\nConfirm add Donor(Y/N) :");
-            option = sc.next().charAt(0);
+            option = scan.next().charAt(0);
             if (option == 'Y' || option == 'y') {
                 donor.setAccountID(donor.autoGenerateID());
                 donorDB.add(donor);
             }
 
             System.out.print("\nContinue add Donor (Y/N):");
-            option = sc.next().charAt(0);
+            option = scan.next().charAt(0);
 
         } while (option == 'Y' || option == 'y');
 
@@ -169,6 +170,7 @@ public class DonorPanel implements Panel {
 
     public void update(SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
         Scanner sc = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
         char option = ' ';
         String opt = "";
         String donorID = "";
@@ -176,7 +178,6 @@ public class DonorPanel implements Panel {
 
         do {
             Donor.donorTable(donorDB);
-            sc.nextLine();
             System.out.print("Enter Donor ID:");
             donorID = sc.nextLine();
 
@@ -209,7 +210,7 @@ public class DonorPanel implements Panel {
                         for (int i = 0; i < optSplit.length; i++) {
                             switch (optSplit[i]) {
                                 case 1:
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     System.out.print("\nDonor name   :");
                                     donor.setName(sc.nextLine());
                                     hasUpdateSomething = true;
@@ -234,7 +235,7 @@ public class DonorPanel implements Panel {
                                         sc.nextLine();
                                         System.out.print("\nGender(M/F)  :");
                                         donor.setGender(sc.next().charAt(0));
-                                        sc.nextLine();
+                                        //sc.nextLine();
                                         System.out.print("\nNRIC         :");
                                         donor.setIc(sc.nextLine());
 
@@ -246,8 +247,8 @@ public class DonorPanel implements Panel {
                                     String donorType = donor.getDonorType();
                                     if (donorType == "organization") {
                                         donor.setGender(' ');
-                                        System.out.print("\nThe donor type is organization");
-
+                                        System.out.print("\nThe donor type is organization,so gender cannot be set");
+                                         hasUpdateSomething = true;
                                     } else {
                                         System.out.print("\nGender(M/F)  :");
                                         donor.setGender(sc.next().charAt(0));
@@ -257,7 +258,7 @@ public class DonorPanel implements Panel {
 
                                 case 4:
                                     donorType = donor.getDonorType();
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     if (donorType == "organization") {
                                         System.out.print("\nRegister No  :");
                                         donor.setIc(sc.nextLine());
@@ -270,28 +271,28 @@ public class DonorPanel implements Panel {
                                     break;
 
                                 case 5:
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     System.out.print("\nEmail        :");
                                     donor.setEmail(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 6:
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     System.out.print("\nPhone number :");
                                     donor.setPhoneNo(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 7:
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     System.out.print("\nAddress      :");
                                     donor.setAddress(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 8:
-                                    sc.nextLine();
+                                    //sc.nextLine();
                                     System.out.println("\nStatus       :");
                                     donor.setStatus(sc.nextLine());
                                     hasUpdateSomething = true;
@@ -303,8 +304,9 @@ public class DonorPanel implements Panel {
                             }
                         }
                         if (hasUpdateSomething == true) {
+                            //s.next();
                             System.out.print("\nConfirm update (Y/N)");
-                            option = sc.next().charAt(0);
+                            option = s.next().charAt(0);
                             if (option == 'Y' || option == 'y') {
 
                                 donorDB.replace(donor, donorDB.indexOf(donor));
@@ -319,11 +321,12 @@ public class DonorPanel implements Panel {
                 } while (optvalidation == false);
             }
             System.out.print("\nContinue update (Y/N):");
-            option = sc.next().charAt(0);
+            option = s.next().charAt(0);
         } while (option == 'Y' || option == 'y');
 
+    
     }
-
+    
     public void delete(SinglyLinkedList<Donor> donorDB) {
         Scanner sc = new Scanner(System.in);
         String id = "";
@@ -383,7 +386,7 @@ public class DonorPanel implements Panel {
         }
 
     }
-
+    
     @Override
     public void add() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -414,3 +417,6 @@ public class DonorPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
+
+
+
