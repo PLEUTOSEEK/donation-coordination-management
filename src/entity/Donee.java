@@ -230,7 +230,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
         if (lastDoneeID.equals("")) {
             newDoneeID = "DE1001";
         } else {
-
             n = Integer.parseInt(lastDoneeID.substring(2));
             n += 1;
             newDoneeID = "DE" + n;

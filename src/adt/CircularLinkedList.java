@@ -23,8 +23,10 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     public boolean addLastNode(T element) {
         Node newNode = new Node(element);
 
-        if (isEmpty() == true) {
+        if (firstNode == null) {
             firstNode = newNode;
+            lastNode = newNode;
+            lastNode.next = firstNode;
         } else {
             lastNode.next = newNode;
             lastNode = newNode;
@@ -39,8 +41,10 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     public boolean addFirstNode(T element) {
         Node newNode = new Node(element);
 
-        if (isEmpty() == true) {
+        if (firstNode == null) {
             firstNode = newNode;
+            lastNode = newNode;
+            lastNode.next = firstNode;
         } else {
             newNode.next = firstNode;
             lastNode.next = newNode;
@@ -62,7 +66,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 return addLastNode(element);
             } else {
 
-                Node currentNode = null;
+                Node currentNode = firstNode;
                 for (int i = 2; i <= position; i++) {
                     currentNode = currentNode.next;
                 }
@@ -77,6 +81,14 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public int countNodes() {
+        Node currentNode = firstNode;
+        int length = 0;
+        if (firstNode != null) {
+            do {
+                currentNode = currentNode.next;
+                length++;
+            } while (currentNode != firstNode);
+        }
         return length;
     }
 
@@ -96,12 +108,18 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public Object getFirstNode() {
-        return firstNode;
+        if (firstNode == null) {
+            return null;
+        }
+        return firstNode.data;
     }
 
     @Override
     public Object getLastNode() {
-        return lastNode;
+        if (isEmpty()) {
+            return null;
+        }
+        return lastNode.data;
     }
 
     @Override
@@ -113,23 +131,27 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             } else if (position == this.length) {
                 getLastNode();
             } else {
-                Node currentNode = null;
+                Node currentNode = firstNode;
                 for (int i = 2; i <= position; i++) {
                     currentNode = currentNode.next;
                 }
 
-                return currentNode;
+                return currentNode.data;
             }
-
         }
-        return false;
+        return null;
     }
 
     @Override
     public boolean removeFirstNode() {
-        if (isEmpty() == false) {
-            lastNode.next = firstNode.next;
-            firstNode = firstNode.next;
+        if (!isEmpty()) {
+            if (firstNode != lastNode) {
+                firstNode = firstNode.next;
+                lastNode.next = firstNode;
+            } else {
+                firstNode = null;
+                lastNode = null;
+            }
         }
         length--;
         return true;
@@ -137,7 +159,14 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public boolean removeLastNode() {
-        removeAnyNode(length - 1);
+        if (!isEmpty()) {
+            Node currentNode = firstNode;
+            while (currentNode.next != lastNode) {
+                currentNode = currentNode.next;
+            }
+            lastNode = currentNode;
+            lastNode.next = firstNode;
+        }
         return true;
     }
 
@@ -150,14 +179,12 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             } else if (position == this.length) {
                 return removeLastNode();
             } else {
-                Node currentNode = null;
+                Node currentNode = firstNode;
                 for (int i = 2; i <= position; i++) {
                     currentNode = currentNode.next;
                 }
-
-                //currentNode.next = currentNode.next.next()
-                //previousNode.next = currentNode
-
+                Node dltNode = currentNode.next;
+                currentNode.next = dltNode.next;
                 return true;
             }
 
@@ -168,10 +195,8 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     @Override
     public boolean replaceFirstNode(T element) {
         Node newNode = new Node(element);
-        if (isEmpty() == true) {
-            firstNode = newNode;
-            lastNode.next = newNode;
-        } else {
+
+        if (!isEmpty()) {
             newNode.next = firstNode.next;
             firstNode = newNode;
             lastNode.next = newNode;
@@ -183,20 +208,17 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     @Override
     public boolean replaceLastNode(T element) {
         Node newNode = new Node(element);
-        if (isEmpty() == true) {
-            firstNode = newNode;
-            newNode.next = lastNode;
-            lastNode.next = newNode;
-        } else {
-            newNode.next = lastNode.next;
+        if (!isEmpty()) {
+            newNode.next = firstNode;
             lastNode = newNode;
+            return true;
         }
-
-        return true;
+        return false;
     }
 
     @Override
-    public boolean replaceAnyNode(T element, int position) {
+    public boolean replaceAnyNode(T element, int position
+    ) {
         if (position >= 1 && position <= length) {
 
             if (position == 1) {
@@ -205,13 +227,13 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 return replaceLastNode(element);
             } else {
                 Node newNode = new Node(element);
-                Node currentNode = null;
+                Node currentNode = firstNode;
                 for (int i = 2; i <= position; i++) {
                     currentNode = currentNode.next;
                 }
 
                 newNode.next = currentNode.next;
-                currentNode = newNode;
+                newNode = currentNode;
 
                 return true;
             }
@@ -221,16 +243,16 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     }
 
     public T[] toArray(T[] array) {
-        Node curr = this.firstNode;
+        Node currentNode = firstNode;
 
-        if (curr != null) {
+        if (currentNode != null) {
 
             int num = 0;
 
-            while (curr != null) {
+            while (currentNode != null) {
                 try {
-                    array[num] = ((T) curr.data);
-                    curr = curr.next;
+                    array[num] = ((T) currentNode.data);
+                    currentNode = currentNode.next;
                     num++;
                 } catch (Exception e) {
                     break;
@@ -241,7 +263,28 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             return null;
         }
     }
-    
+
+    public boolean contains(T element) {
+        return indexOf(element) != -1;
+    }
+
+    public int indexOf(T element) {
+        Node currentNode = firstNode;
+        int counter = 1;
+
+        while (currentNode != null) {
+
+            if (currentNode.equals(element)) {
+                return counter;
+            }
+
+            currentNode = currentNode.next;
+            counter += 1;
+        }
+
+        return -1;
+    }
+
     private class Node {
 
         private T data;
