@@ -403,13 +403,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return true;
     }
 
-    @Override
-    public Object getData(U label, T data) {
-        Node currentNode = this.root;
-        Object targetNode = getRec(label, data, currentNode);
-        return targetNode;
-    }
-
     public Node getNode(U label) {
         Node currentNode = this.root;
         Node targetNode = getRec(label, currentNode);
@@ -872,12 +865,12 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public Object getMin() {
+    public ListInterface<T> getMin() {
         return getLeftMostNode(this.root).getListData();
     }
 
     @Override
-    public Object getMax() {
+    public ListInterface<T> getMax() {
         return getRightMostNode(this.root).getListData();
     }
 
@@ -1028,60 +1021,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         public void setColor(boolean color) {
             this.color = color;
         }
-    }
-
-    public void testLeftRotate() {
-        this.root = new Node(000);
-        Node x = new Node(222);
-        Node y = new Node(111);
-        Node b = new Node(333);
-        Node alpha = new Node(999);
-        Node Y = new Node(444);
-
-        this.root.setLeft(x);
-        x.setParent(this.root);
-        x.setLeft(alpha);
-        x.setRight(y);
-
-        alpha.setParent(x);
-
-        y.setParent(x);
-        y.setLeft(b);
-        y.setRight(Y);
-
-        b.setParent(y);
-
-        Y.setParent(y);
-
-        leftRotate(x);
-
-    }
-
-    public void testRightRotate() {
-        this.root = new Node(000);
-        Node x = new Node(222);
-        Node y = new Node(111);
-        Node b = new Node(333);
-        Node alpha = new Node(999);
-        Node Y = new Node(444);
-
-        this.root.setLeft(y);
-        y.setParent(this.root);
-        y.setLeft(x);
-        y.setRight(Y);
-
-        alpha.setParent(x);
-
-        x.setParent(y);
-        x.setLeft(alpha);
-        x.setRight(b);
-
-        b.setParent(x);
-
-        Y.setParent(y);
-
-        rightRotate(y);
-
     }
 
 }
