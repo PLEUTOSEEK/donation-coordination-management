@@ -229,13 +229,29 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     }
 
     private static String[] campaignHeaders() {
-        String[] campaignHeaders = {"Campaign ID", "Campaign Name", "Start Date", "End Date", "Email", "Bank No.", "Target Amount", "Status", "Date Modified"};
+        String[] campaignHeaders = {"Campaign ID",
+            "Campaign Name",
+            "Start Date",
+            "End Date",
+            "Email",
+            "Bank No.",
+            "Target Amount",
+            "Status",
+            "Date Modified"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{campaignID, campaignName, this.campaignStartDate.toString(), this.campaignEndDate.toString(), this.campaignEmail, this.campaignBankNo, String.valueOf(this.targetAmount), this.status, this.dateModified.toLocalDateTime().toString()};
+        return new String[]{campaignID,
+            campaignName,
+            this.campaignStartDate.toString(),
+            this.campaignEndDate.toString(),
+            this.campaignEmail,
+            this.campaignBankNo,
+            String.valueOf(this.targetAmount),
+            this.status,
+            this.dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
