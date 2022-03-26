@@ -928,7 +928,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     @Override
     public T get(T data) {
 
-        if (root == null) {
+        if (root == null || data == null) {
             return null;
         }
 
