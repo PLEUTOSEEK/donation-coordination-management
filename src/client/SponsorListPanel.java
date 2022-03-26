@@ -300,7 +300,7 @@ class SponsorListPanel implements Panel {
 
             System.out.print("Enter sponsor list ID: ");
             sponsorListID = input.nextLine();
-            DoublyLinkedList<SponsorList> sponsorLists = sponsorListDB.getAllList();
+            DoublyLinkedList<SponsorList> sponsorLists = (DoublyLinkedList<SponsorList>) sponsorListDB.getAllList();
             if (sponsorLists.contains(new SponsorList(sponsorListID)) == true) {
                 SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
                 if (sponsorList.getCampaign().isPermanentDelete() == false) {

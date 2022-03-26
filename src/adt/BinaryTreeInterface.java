@@ -24,6 +24,10 @@ public interface BinaryTreeInterface<U, T> {
 
     public T get(T data);
 
+    public ListInterface<T> getAllSmallerNode(U label);
+
+    public ListInterface<T> getAllBiggerNode(U label);
+
     public ListInterface<T> getMin();
 
     public ListInterface<T> getMax();

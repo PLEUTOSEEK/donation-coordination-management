@@ -858,6 +858,52 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
+    public ListInterface<T> getAllSmallerNode(U label) {
+
+        if (isEmpty()) {
+            return null;
+        }
+
+        ListInterface<T> allList = new DoublyLinkedList();
+        Node currentNode = root;
+
+        while (currentNode != null && currentNode.getLabel().compareTo(label) >= 0) {
+            currentNode = currentNode.left;
+        }
+        allList.joinLast(currentNode.getListData());
+        getPartialNode(currentNode.left, label, allList);
+        return allList;
+    }
+
+    public void getPartialNode(Node currentNode, U label, ListInterface<T> allList) {
+        if (currentNode != null) {
+            allList.joinLast(currentNode.getListData());
+
+            getPartialNode(currentNode.left, label, allList);
+
+            getPartialNode(currentNode.right, label, allList);
+        }
+    }
+
+    @Override
+    public ListInterface<T> getAllBiggerNode(U label) {
+        if (isEmpty()) {
+            return null;
+        }
+
+        ListInterface<T> allList = new DoublyLinkedList();
+        Node currentNode = root;
+
+        while (currentNode != null && currentNode.getLabel().compareTo(label) <= 0) {
+            currentNode = currentNode.right;
+        }
+
+        allList.joinLast(currentNode.getListData());
+        getPartialNode(currentNode.right, label, allList);
+        return allList;
+    }
+
+    @Override
     public ListInterface<T> getMin() {
         return getLeftMostNode(this.root).getListData();
     }
@@ -903,7 +949,8 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return (T[]) allList.toArray(array);
     }
 
-    public DoublyLinkedList<T> getAllList() {
+    public ListInterface<T> getAllList() {
+
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
         allList.quickSort();

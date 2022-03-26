@@ -185,7 +185,7 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
         //</editor-fold>
         int counter = 1;
-        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+        DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
 
         SponsorList sponsorList = new SponsorList();
 

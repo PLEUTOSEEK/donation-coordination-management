@@ -187,7 +187,7 @@ public class CampaignPanel implements Panel {
                 campaign.setCampaignEmail(input.nextLine());
                 System.out.print("Enter the campaign mobile no: ");
                 campaign.setCampaignMobileNo(input.nextLine());
-                System.out.print("Enter the campaign campaign address: ");
+                System.out.print("Enter the campaign address: ");
                 campaign.setCampagnAddress(input.nextLine());
                 System.out.print("Enter the campaign bank no: ");
                 campaign.setCampaignBankNo(input.nextLine());
@@ -505,7 +505,7 @@ public class CampaignPanel implements Panel {
             campaignID = input.nextLine();
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
-                DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+                DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
                 campaign = new Campaign();
                 campaign = campaignDB.get(new Campaign(campaignID)).clone();
 
@@ -577,7 +577,7 @@ public class CampaignPanel implements Panel {
                                         break;
                                     case 9:
 
-                                        System.out.print("Enter the new campaign campaign address: ");
+                                        System.out.print("Enter the new campaign address: ");
                                         campaign.setCampagnAddress(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
@@ -644,7 +644,7 @@ public class CampaignPanel implements Panel {
 
             System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
-            DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+            DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
             if (campaigns.contains(new Campaign(campaignID)) == true) {
                 Campaign campaign = campaigns.getAt(campaigns.indexOf(new Campaign(campaignID)));
 

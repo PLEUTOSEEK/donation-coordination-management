@@ -313,7 +313,7 @@ class DemandListPanel implements Panel {
 
             System.out.println("Enter demand list ID: ");
             demandListID = input.nextLine();
-            DoublyLinkedList<DemandList> demandLists = demandListDB.getAllList();
+            DoublyLinkedList<DemandList> demandLists = (DoublyLinkedList<DemandList>) demandListDB.getAllList();
             if (demandLists.contains(new DemandList(demandListID)) == true) {
                 DemandList demandList = demandLists.getAt(demandLists.indexOf(new DemandList(demandListID)));
                 if (demandList.getCampaign().isPermanentDelete() == false) {

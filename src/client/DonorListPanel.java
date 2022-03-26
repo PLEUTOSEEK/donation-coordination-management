@@ -354,7 +354,7 @@ class DonorListPanel implements Panel {
 
             System.out.print("Enter donor list ID: ");
             donorListID = input.nextLine();
-            DoublyLinkedList<DonorList> donorLists = donorListDB.getAllList();
+            DoublyLinkedList<DonorList> donorLists = (DoublyLinkedList<DonorList>) donorListDB.getAllList();
             if (donorLists.contains(new DonorList(donorListID)) == true) {
                 DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
                 if (donorList.getCampaign().isPermanentDelete() == false) {

@@ -184,7 +184,7 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
         //</editor-fold>
         int counter = 1;
-        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+        DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
 
         DoneeList doneeList = new DoneeList();
 

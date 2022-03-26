@@ -5,6 +5,8 @@
  */
 package entity;
 
+import adt.DoublyLinkedList;
+import adt.ListInterface;
 import adt.RedBlackTree;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
@@ -276,8 +278,8 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
         Faker faker = new Faker();
         LocalDateTimeRangeRandomizer randomLDTR;
         LocalDateTime randomLDT;
-        LocalDateTime minTime = LocalDateTime.of(2018, Month.JANUARY, 1, 00, 00, 00);
-        LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
+        LocalDateTime minTime = LocalDateTime.of(2020, Month.JANUARY, 1, 00, 00, 00);
+        LocalDateTime maxTime = LocalDateTime.of(2023, Month.DECEMBER, 31, 23, 59, 59);
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
         String[] campaignName = "All for Love,Another Chance,Be Marvelous,Walk for Homeless,JOY Licious,Carnival of Love,Charities 4 All,Charities 4 You,Charity Time,Homeless Children Org,Hope Anonymous,Hunger Solution Inc,Smileys,Neighborhood Love,Home Sweeter,Home,Donation City,Spirit of Giving,Crits for Bits,Dispensin’ Donations,Tip of the Hats,DoNation,Charitable Charm,Charity Time,Acute Awareness,Fortunate Folks,Life of Giving,Love In Action,Giving Group,Raise Reason,Fundraisers to Heaven,Give For Good,Hope Anonymous,Lots of Dreams of Lost Dreams,Secret Family,Generous Hearts,Better life,Ignite helpers,Spread Smiles,Love Hands,Superheroes,Givers Achievers,Give a Little,Give for Good,Give to Life,The Goal Quest,Good Hearted,Gracious Givers,Grateful Gifts,Greater Purpose,Heart & Sole Fundraiser Walk,Heart for the Arts,Home Sweeter,Home Hope,Anonymous,Hope Givers,Inspiration For The World,Lots of Dreams,Love In Action,Loving Care Inc.,Meat Shots for Hungry,Mission Minded,No Violence Inc,Noble Nonprofits,Precious Gifts,Prepare Aware,Pure Active Love".split(",");
@@ -345,6 +347,21 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     @Override
     public String toString() {
         return "Campaign{" + "campaignID=" + campaignID + ", campaignName=" + campaignName + ", campaignStartDate=" + campaignStartDate + ", campaignStartTime=" + campaignStartTime + ", campaignEndDate=" + campaignEndDate + ", campaignEndTime=" + campaignEndTime + ", targetAmount=" + targetAmount + ", campaignEmail=" + campaignEmail + ", campaignMobileNo=" + campaignMobileNo + ", campaignAddress=" + campaignAddress + ", campaignBankNo=" + campaignBankNo + ", description=" + description + ", status=" + status + ", campaignRegisterDate=" + campaignRegisterDate + ", dateModified=" + dateModified + '}';
+    }
+
+    public static void deactiveExpiredCampaign(RedBlackTree<LocalDate, Campaign> campaignDB) {
+        ListInterface<Campaign> deactiveCampaignList = campaignDB.getAllSmallerNode(LocalDate.now());
+
+        if (deactiveCampaignList instanceof DoublyLinkedList) {
+            deactiveCampaignList = (DoublyLinkedList<Campaign>) deactiveCampaignList;
+
+            for (int i = 0; i < deactiveCampaignList.getLength(); i++) {
+                if (deactiveCampaignList.getAt(i) instanceof Campaign) {
+                    ((Campaign) deactiveCampaignList.getAt(i)).status = "Inactive";
+                }
+            }
+        }
+
     }
 
 }
