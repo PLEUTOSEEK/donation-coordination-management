@@ -953,14 +953,14 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             founded[0] = true;
             return (T) currentNode.getListData().getAt(currentNode.getListData().indexOf(data));
         } else {
-            if (currentNode.left != null && founded[0] == false) {
+            if (currentNode.left != null) {
                 data = get(data, currentNode.left, founded);
                 if (founded[0] == true) {
                     return data;
                 }
             }
 
-            if (currentNode.right != null && founded[0] == false) {
+            if (currentNode.right != null) {
                 data = get(data, currentNode.right, founded);
                 if (founded[0] == true) {
                     return data;
