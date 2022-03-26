@@ -18,7 +18,7 @@ public interface BinaryTreeInterface<U, T> {
 
     public boolean delData(U label, T data);
 
-    public boolean clearAt(U label);
+    public boolean deleteNode(U label);
 
     public boolean clear();
 
@@ -28,7 +28,7 @@ public interface BinaryTreeInterface<U, T> {
 
     public ListInterface<T> getMax();
 
-    public T[] getAllArrayList(T[] array);
+    public T[] getAllListInArray(T[] array);
 
     public boolean containsData(U label, T data);
 

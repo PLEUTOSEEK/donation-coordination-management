@@ -98,7 +98,7 @@ class DemandListPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, DemandList> demandListDB) {
         DemandList[] DemandListArr = new DemandList[demandListDB.getAllList().getLength()];
-        DemandListArr = demandListDB.getAllArrayList(DemandListArr);
+        DemandListArr = demandListDB.getAllListInArray(DemandListArr);
         RedBlackTree<LocalDate, DemandList> listForPrint = new RedBlackTree<>();
         DemandList[] arrListForPrint = null;
 

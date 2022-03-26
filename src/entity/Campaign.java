@@ -238,7 +238,7 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
 
     private static String[][] campaignRows(RedBlackTree<LocalDate, Campaign> campaignList) {
         Campaign[] campaigns = new Campaign[campaignList.getAllList().getLength()];
-        campaigns = campaignList.getAllArrayList(campaigns);
+        campaigns = campaignList.getAllListInArray(campaigns);
         String[][] campaignRows = new String[campaigns.length][];
         for (int i = 0; i < campaigns.length; i++) {
             campaignRows[i] = campaigns[i].strArr();
@@ -341,4 +341,10 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
     public boolean isInactive() {
         return status.equalsIgnoreCase("Inactive");
     }
+
+    @Override
+    public String toString() {
+        return "Campaign{" + "campaignID=" + campaignID + ", campaignName=" + campaignName + ", campaignStartDate=" + campaignStartDate + ", campaignStartTime=" + campaignStartTime + ", campaignEndDate=" + campaignEndDate + ", campaignEndTime=" + campaignEndTime + ", targetAmount=" + targetAmount + ", campaignEmail=" + campaignEmail + ", campaignMobileNo=" + campaignMobileNo + ", campaignAddress=" + campaignAddress + ", campaignBankNo=" + campaignBankNo + ", description=" + description + ", status=" + status + ", campaignRegisterDate=" + campaignRegisterDate + ", dateModified=" + dateModified + '}';
+    }
+
 }

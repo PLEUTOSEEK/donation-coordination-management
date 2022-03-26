@@ -74,7 +74,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         } else {
             while (inserted == false) {
 
-                //newNode's label bigger than compare node's label (in term of date >> newNode's date is after current node's date)
                 if (this.newNode.getLabel().compareTo(currentNode.getLabel()) > 0) {
 
                     if (currentNode.getRight() != null) {
@@ -97,7 +96,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                         inserted = true;
                     }
 
-                } else if (this.newNode.getLabel().compareTo(currentNode.getLabel()) == 0) { // if repeat label, direct assign it to same node's list, and all insertion is done.
+                } else if (this.newNode.getLabel().compareTo(currentNode.getLabel()) == 0) {
                     this.newNode = currentNode;
                     currentNode.getListData().addLast(data);
                     inserted = true;
@@ -387,10 +386,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                 this.deleteNode((U) node.getLabel());
                 deleted = true;
             }
-        } else {
-            // dont have node, cannot delete
         }
-
         return deleted;
     }
 
@@ -449,6 +445,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     //==================DELETE
+    @Override
     public boolean deleteNode(U label) {
 
         Node node = getNode(label);
@@ -854,11 +851,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             if (node.getListData().indexOf(data) != -1) {
                 node.getListData().replaceAt(data, node.getListData().indexOf(data));
                 updated = true;
-            } else {
-                // dont have data, cannot update
             }
-        } else {
-            // dont have node, cannot update
         }
 
         return updated;
@@ -902,23 +895,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public boolean clearAt(U label) {
-        Node node = getNode(label);
-        boolean cleared = false;
-        if (node != null) {
-
-            deleteNode((U) node.getLabel());
-            cleared = true;
-
-        } else {
-            // dont have node, cannot delete
-        }
-
-        return cleared;
-    }
-
-    @Override
-    public T[] getAllArrayList(T[] array) {
+    public T[] getAllListInArray(T[] array) {
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
         allList.quickSort();
@@ -945,13 +922,53 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     public boolean contains(T element) {
-        return this.getAllList().contains(element);
+        return get(element) != null;
     }
 
     @Override
     public T get(T data) {
+
+        if (root == null) {
+            return null;
+        }
+
+        boolean[] founded = new boolean[1];
+        founded[0] = false;
+        T result = get(data, root, founded);
+
+        if (founded[0] == false) {
+            return null;
+        } else {
+            return result;
+        }
+
+        /* Direct solution, but not efficiency
         DoublyLinkedList<T> allList = getAllList();
         return allList.getAt(allList.indexOf(data));
+         */
+    }
+
+    public T get(T data, Node currentNode, boolean[] founded) {
+        if (currentNode.getListData().contains(data)) {
+            founded[0] = true;
+            return (T) currentNode.getListData().getAt(currentNode.getListData().indexOf(data));
+        } else {
+            if (currentNode.left != null && founded[0] == false) {
+                data = get(data, currentNode.left, founded);
+                if (founded[0] == true) {
+                    return data;
+                }
+            }
+
+            if (currentNode.right != null && founded[0] == false) {
+                data = get(data, currentNode.right, founded);
+                if (founded[0] == true) {
+                    return data;
+                }
+            }
+        }
+
+        return data;
     }
 
     // =====================DELETE

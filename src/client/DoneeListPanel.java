@@ -358,7 +358,7 @@ class DoneeListPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         DoneeList[] DoneeListArr = new DoneeList[doneeListDB.getAllList().getLength()];
-        DoneeListArr = doneeListDB.getAllArrayList(DoneeListArr);
+        DoneeListArr = doneeListDB.getAllListInArray(DoneeListArr);
         RedBlackTree<LocalDate, DoneeList> listForPrint = new RedBlackTree<>();
         DoneeList[] arrListForPrint = null;
 

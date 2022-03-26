@@ -504,7 +504,7 @@ public class CampaignPanel implements Panel {
             System.out.print("Enter campaign ID: ");
             campaignID = input.nextLine();
 
-            if (campaignDB.getAllList().contains(new Campaign(campaignID)) == true) {
+            if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
                 campaign = new Campaign();
                 campaign = campaignDB.get(new Campaign(campaignID)).clone();
@@ -671,7 +671,7 @@ public class CampaignPanel implements Panel {
 
                         if (status[statusSelect - 1].toUpperCase().equals("PERMANENT INACTIVE")) {
                             DoneeList[] doneeListArr = new DoneeList[doneeListDB.getAllList().getLength()];
-                            doneeListArr = doneeListDB.getAllArrayList(doneeListArr);
+                            doneeListArr = doneeListDB.getAllListInArray(doneeListArr);
 
                             for (int i = 0; i < doneeListArr.length; i++) {
                                 if (doneeListArr[i].getCampaign().equals(campaign)) {
@@ -704,7 +704,7 @@ public class CampaignPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, Campaign> campaignDB) {
         Campaign[] campaignArray = new Campaign[campaignDB.getAllList().getLength()];
-        campaignArray = campaignDB.getAllArrayList(campaignArray);
+        campaignArray = campaignDB.getAllListInArray(campaignArray);
         RedBlackTree<LocalDate, Campaign> listForPrint = new RedBlackTree<>();
         Campaign[] arrListForPrint = null;
 

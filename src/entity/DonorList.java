@@ -141,7 +141,7 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {
         DonorList[] donorList = new DonorList[donorListDB.getAllList().getLength()];
-        donorList = donorListDB.getAllArrayList(donorList);
+        donorList = donorListDB.getAllListInArray(donorList);
         String[][] donorListRows = new String[donorList.length][];
         for (int i = 0; i < donorList.length; i++) {
             donorListRows[i] = donorList[i].strArr();
@@ -195,7 +195,7 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
 
             for (int record = 0; record < randomTtl; record++) {
                 DonorList[] donorListArr = new DonorList[dummyDonorList.getAllList().getLength()];
-                donorListArr = dummyDonorList.getAllArrayList(donorListArr);
+                donorListArr = dummyDonorList.getAllListInArray(donorListArr);
                 Donor donor = donorDB.getAt(faker.number().numberBetween(1, donorDB.getDataCount()));
 
                 donorList = new DonorList();
