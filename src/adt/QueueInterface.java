@@ -26,11 +26,7 @@ public interface QueueInterface<T> {
 
     public boolean checkExitsData(T entry);
 
-    public Iterator<T> getIterator();
-
     public void modify(T oldEntry, T newEntry);
-
-    public T[] get(CircularLinkedQueue q);
 
     public T[] toArray(T[] array);
 
