@@ -154,7 +154,7 @@ public class TestEvery {
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
         //         donor.donorPanel(donorDB);
-        donation.donationPanel(donationDB, campaignDB, doneeDB, donorDB);
+        donation.controlPanel(donationDB, campaignDB, doneeDB, donorDB);
     }
 
 }

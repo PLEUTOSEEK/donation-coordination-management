@@ -5,12 +5,14 @@
  */
 package client;
 
+import adt.CircularLinkedList;
 import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
+import entity.Donation;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
@@ -51,10 +53,11 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
+        CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
 
         Campaign.deactiveExpiredCampaign(campaignDB);
 
         MainPanel mainPanel = new MainPanel();
-        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB, fundsDB);
+        mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB, fundsDB, donationDB);
     }
 }

@@ -32,7 +32,7 @@ public class DonationPanel implements Panel {
 
     }
 
-    public void donationPanel(
+    public void controlPanel(
             CircularLinkedList<Donation> donationDB,
             RedBlackTree<LocalDate, Campaign> campaignDB,
             CircularLinkedQueue<Donee> doneeDB,

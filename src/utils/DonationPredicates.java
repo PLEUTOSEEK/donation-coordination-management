@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author USER
+ * @author Looi Jia Toong
  */
 public class DonationPredicates implements Inputs {
 
