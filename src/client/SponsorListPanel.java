@@ -114,7 +114,7 @@ class SponsorListPanel implements Panel {
 
                             if (sponsorDB.contains(new Sponsor(lastSponsorID))) {
                                 SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
-                                sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+                                sponsorListArr = sponsorListDB.getAllListInArray(sponsorListArr);
 
                                 if (sponsorListArr != null) {
                                     for (int i = 0; i < sponsorListArr.length; i++) {
@@ -300,7 +300,7 @@ class SponsorListPanel implements Panel {
 
             System.out.print("Enter sponsor list ID: ");
             sponsorListID = input.nextLine();
-            DoublyLinkedList<SponsorList> sponsorLists = sponsorListDB.getAllList();
+            DoublyLinkedList<SponsorList> sponsorLists = (DoublyLinkedList<SponsorList>) sponsorListDB.getAllList();
             if (sponsorLists.contains(new SponsorList(sponsorListID)) == true) {
                 SponsorList sponsorList = sponsorLists.getAt(sponsorLists.indexOf(new SponsorList(sponsorListID)));
                 if (sponsorList.getCampaign().isPermanentDelete() == false) {
@@ -348,7 +348,7 @@ class SponsorListPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
         SponsorList[] sponsorListArr = new SponsorList[sponsorListDB.getAllList().getLength()];
-        sponsorListArr = sponsorListDB.getAllArrayList(sponsorListArr);
+        sponsorListArr = sponsorListDB.getAllListInArray(sponsorListArr);
         RedBlackTree<LocalDate, SponsorList> listForPrint = new RedBlackTree<>();
         SponsorList[] arrListForPrint = null;
 

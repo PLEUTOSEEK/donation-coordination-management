@@ -178,7 +178,7 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {
         DemandList[] demandLists = new DemandList[demandListDB.getAllList().getLength()];
-        demandLists = demandListDB.getAllArrayList(demandLists);
+        demandLists = demandListDB.getAllListInArray(demandLists);
         String[][] demandRows = new String[demandLists.length][];
         for (int i = 0; i < demandLists.length; i++) {
             demandRows[i] = demandLists[i].strArr();
@@ -227,7 +227,7 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
         // fake generator (END)
 
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
-        campaigns = campaignDB.getAllArrayList(campaigns);
+        campaigns = campaignDB.getAllListInArray(campaigns);
         for (Campaign campaign : campaigns) {
             int randomDemand = faker.number().numberBetween(1, 3);
             for (int i = 0; i < randomDemand; i++) {

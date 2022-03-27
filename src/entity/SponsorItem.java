@@ -192,7 +192,7 @@ public class SponsorItem implements Comparable<SponsorItem> {
         LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
-        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
+        DoublyLinkedList<DemandList> demandList = (DoublyLinkedList<DemandList>) demandListDB.getAllList();
         DoublyLinkedList<Funds> funds = fundsDB;
 
         SponsorItem sponsorItem = new SponsorItem();

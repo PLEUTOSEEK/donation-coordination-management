@@ -58,6 +58,8 @@ public class CaregiverDonationCordinationManagementSystem {
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
         DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB);
 
+        Campaign.deactiveExpiredCampaign(campaignDB);
+
         MainPanel mainPanel = new MainPanel();
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB,
                 demandListDB, fundsDB, donationDB, sponsorItemDB);

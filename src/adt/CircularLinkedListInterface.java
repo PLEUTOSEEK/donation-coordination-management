@@ -19,8 +19,6 @@ public interface CircularLinkedListInterface<T> {
 
     int countNodes();
 
-    boolean searchNode(T element);
-
     boolean isEmpty();
 
     Object getFirstNode();
