@@ -145,9 +145,10 @@ public class Donation implements Comparable<Donation> {
     }
 
     public boolean equals(Object o) {
-        Donation other = (Donation) o;
+
         if (o instanceof Donation) {
-            
+            Donation other = (Donation) o;
+
             if (this.donationID.equalsIgnoreCase(other.getDonationID())) {
                 return true;
             } else {
@@ -185,13 +186,19 @@ public class Donation implements Comparable<Donation> {
     }
 
     private static String[] donationHeaders() {
-        String[] campaignHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified", "Status"};
 
-        return campaignHeaders;
+        String[] donationHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified", "Status"};
+
+        return donationHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
+        if (campaign == null) {
+            return new String[]{donationID, donor.getAccountID(), "", donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
+
+        } else {
+            return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), "", String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
+        }
     }
 
     private static String[][] donationRows(CircularLinkedList<Donation> donationDB) {
@@ -225,32 +232,32 @@ public class Donation implements Comparable<Donation> {
 
         Donor[] donors = new Donor[donorDB.getDataCount()];
         for (int i = 0; i < donorDB.getDataCount(); i++) {
-            donors[i] = donorDB.getAt(i);
+            donors[i] = donorDB.getAt(i+1);
         }
 
         Donee[] donees = new Donee[doneeDB.getLength()];
         for (int i = 0; i < doneeDB.getLength(); i++) {
-            donees[i] = doneeDB.getAt(i);
+            donees[i] = doneeDB.getAt(i+1);
         }
 
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
         campaigns = campaignDB.getAllListInArray(campaigns);
-         
+
         for (int data = 0; data < 10; data++) {
             LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
             Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(0, 3)).toEpochDay());
 
             donation = new Donation();
             donation.setDonationID(autoGenerateID());
-            donation.setDonor(donors[faker.number().numberBetween(0, donorDB.getDataCount())]);
-            donation.setDonee(donees[faker.number().numberBetween(0, doneeDB.getLength())]);
-            donation.setCampaign(campaigns[faker.number().numberBetween(0, campaignDB.getLength())]);
+            donation.setDonor(donors[faker.number().numberBetween(0, donors.length - 1)]);
+            donation.setDonee(donees[faker.number().numberBetween(0, donees.length-1)]);
+            donation.setCampaign(campaigns[faker.number().numberBetween(0, campaigns.length - 1)]);
             donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
-            donation.setDescription(description[(int) faker.number().randomDigit()]);
+            donation.setDescription(description[faker.number().numberBetween(0, description.length - 1)]); // suspect
             donation.setDateOfDonation(dateOfDonation);
             donation.setStatus("Active");
             donation.setDateModified(dateModified);
-            
+
             dummyDonations.addLastNode(donation);
         }
 

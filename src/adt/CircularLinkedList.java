@@ -114,12 +114,13 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public Object getAnyNode(int position) {
+        
         if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
-                getFirstNode();
+                return getFirstNode();
             } else if (position == countNodes()) {
-                getLastNode();
+                return getLastNode();
             } else {
                 Node currentNode = firstNode;
                 for (int i = 2; i <= position; i++) {
@@ -264,7 +265,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
         while (currentNode != null) {
 
-            if (currentNode.equals(element)) {
+            if (currentNode.data.equals(element)) {
                 return counter;
             }
 

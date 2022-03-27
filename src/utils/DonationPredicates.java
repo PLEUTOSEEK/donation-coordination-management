@@ -119,8 +119,8 @@ public class DonationPredicates implements Inputs {
     @Override
     public LocalDate askDate() {
         Scanner input = new Scanner(System.in);
-        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
-        System.out.print("Enter date value [dd. MMM. yyyy] : ");
+        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        System.out.print("Enter date value [dd.MM.yyyy] : ");
         return LocalDate.parse(input.nextLine(), dtfDate);
     }
 

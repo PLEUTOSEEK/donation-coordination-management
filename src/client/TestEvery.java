@@ -117,7 +117,7 @@ public class TestEvery {
 //        RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
 //        RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
        CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
-
+       //Donation.donationTable(donationDB);
 //        Sponsor.sponsorTable(sponsorDB);
 //        Donee.doneeTable(doneeDB);
 //        Donor.donorTable(donorDB);
