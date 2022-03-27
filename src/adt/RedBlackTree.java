@@ -74,7 +74,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         } else {
             while (inserted == false) {
 
-                //newNode's label bigger than compare node's label (in term of date >> newNode's date is after current node's date)
                 if (this.newNode.getLabel().compareTo(currentNode.getLabel()) > 0) {
 
                     if (currentNode.getRight() != null) {
@@ -97,7 +96,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                         inserted = true;
                     }
 
-                } else if (this.newNode.getLabel().compareTo(currentNode.getLabel()) == 0) { // if repeat label, direct assign it to same node's list, and all insertion is done.
+                } else if (this.newNode.getLabel().compareTo(currentNode.getLabel()) == 0) {
                     this.newNode = currentNode;
                     currentNode.getListData().addLast(data);
                     inserted = true;
@@ -387,10 +386,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
                 this.deleteNode((U) node.getLabel());
                 deleted = true;
             }
-        } else {
-            // dont have node, cannot delete
         }
-
         return deleted;
     }
 
@@ -401,13 +397,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         this.length = 0;
 
         return true;
-    }
-
-    @Override
-    public Object getData(U label, T data) {
-        Node currentNode = this.root;
-        Object targetNode = getRec(label, data, currentNode);
-        return targetNode;
     }
 
     public Node getNode(U label) {
@@ -456,6 +445,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     //==================DELETE
+    @Override
     public boolean deleteNode(U label) {
 
         Node node = getNode(label);
@@ -861,23 +851,65 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
             if (node.getListData().indexOf(data) != -1) {
                 node.getListData().replaceAt(data, node.getListData().indexOf(data));
                 updated = true;
-            } else {
-                // dont have data, cannot update
             }
-        } else {
-            // dont have node, cannot update
         }
 
         return updated;
     }
 
     @Override
-    public Object getMin() {
+    public ListInterface<T> getAllSmallerNode(U label) {
+
+        if (isEmpty()) {
+            return null;
+        }
+
+        ListInterface<T> allList = new DoublyLinkedList();
+        Node currentNode = root;
+
+        while (currentNode != null && currentNode.getLabel().compareTo(label) >= 0) {
+            currentNode = currentNode.left;
+        }
+        allList.joinLast(currentNode.getListData());
+        getPartialNode(currentNode.left, label, allList);
+        return allList;
+    }
+
+    public void getPartialNode(Node currentNode, U label, ListInterface<T> allList) {
+        if (currentNode != null) {
+            allList.joinLast(currentNode.getListData());
+
+            getPartialNode(currentNode.left, label, allList);
+
+            getPartialNode(currentNode.right, label, allList);
+        }
+    }
+
+    @Override
+    public ListInterface<T> getAllBiggerNode(U label) {
+        if (isEmpty()) {
+            return null;
+        }
+
+        ListInterface<T> allList = new DoublyLinkedList();
+        Node currentNode = root;
+
+        while (currentNode != null && currentNode.getLabel().compareTo(label) <= 0) {
+            currentNode = currentNode.right;
+        }
+
+        allList.joinLast(currentNode.getListData());
+        getPartialNode(currentNode.right, label, allList);
+        return allList;
+    }
+
+    @Override
+    public ListInterface<T> getMin() {
         return getLeftMostNode(this.root).getListData();
     }
 
     @Override
-    public Object getMax() {
+    public ListInterface<T> getMax() {
         return getRightMostNode(this.root).getListData();
     }
 
@@ -909,23 +941,7 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     @Override
-    public boolean clearAt(U label) {
-        Node node = getNode(label);
-        boolean cleared = false;
-        if (node != null) {
-
-            deleteNode((U) node.getLabel());
-            cleared = true;
-
-        } else {
-            // dont have node, cannot delete
-        }
-
-        return cleared;
-    }
-
-    @Override
-    public T[] getAllArrayList(T[] array) {
+    public T[] getAllListInArray(T[] array) {
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
         allList.quickSort();
@@ -933,7 +949,8 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         return (T[]) allList.toArray(array);
     }
 
-    public DoublyLinkedList<T> getAllList() {
+    public ListInterface<T> getAllList() {
+
         DoublyLinkedList<T> allList = new DoublyLinkedList();
         getAllList(this.root, allList);
         allList.quickSort();
@@ -952,13 +969,53 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
     }
 
     public boolean contains(T element) {
-        return this.getAllList().contains(element);
+        return get(element) != null;
     }
 
     @Override
     public T get(T data) {
+
+        if (root == null || data == null) {
+            return null;
+        }
+
+        boolean[] founded = new boolean[1];
+        founded[0] = false;
+        T result = get(data, root, founded);
+
+        if (founded[0] == false) {
+            return null;
+        } else {
+            return result;
+        }
+
+        /* Direct solution, but not efficiency
         DoublyLinkedList<T> allList = getAllList();
         return allList.getAt(allList.indexOf(data));
+         */
+    }
+
+    public T get(T data, Node currentNode, boolean[] founded) {
+        if (currentNode.getListData().contains(data)) {
+            founded[0] = true;
+            return (T) currentNode.getListData().getAt(currentNode.getListData().indexOf(data));
+        } else {
+            if (currentNode.left != null) {
+                data = get(data, currentNode.left, founded);
+                if (founded[0] == true) {
+                    return data;
+                }
+            }
+
+            if (currentNode.right != null) {
+                data = get(data, currentNode.right, founded);
+                if (founded[0] == true) {
+                    return data;
+                }
+            }
+        }
+
+        return data;
     }
 
     // =====================DELETE
@@ -1028,60 +1085,6 @@ public class RedBlackTree<U extends Comparable<? super U>, T extends Comparable<
         public void setColor(boolean color) {
             this.color = color;
         }
-    }
-
-    public void testLeftRotate() {
-        this.root = new Node(000);
-        Node x = new Node(222);
-        Node y = new Node(111);
-        Node b = new Node(333);
-        Node alpha = new Node(999);
-        Node Y = new Node(444);
-
-        this.root.setLeft(x);
-        x.setParent(this.root);
-        x.setLeft(alpha);
-        x.setRight(y);
-
-        alpha.setParent(x);
-
-        y.setParent(x);
-        y.setLeft(b);
-        y.setRight(Y);
-
-        b.setParent(y);
-
-        Y.setParent(y);
-
-        leftRotate(x);
-
-    }
-
-    public void testRightRotate() {
-        this.root = new Node(000);
-        Node x = new Node(222);
-        Node y = new Node(111);
-        Node b = new Node(333);
-        Node alpha = new Node(999);
-        Node Y = new Node(444);
-
-        this.root.setLeft(y);
-        y.setParent(this.root);
-        y.setLeft(x);
-        y.setRight(Y);
-
-        alpha.setParent(x);
-
-        x.setParent(y);
-        x.setLeft(alpha);
-        x.setRight(b);
-
-        b.setParent(x);
-
-        Y.setParent(y);
-
-        rightRotate(y);
-
     }
 
 }

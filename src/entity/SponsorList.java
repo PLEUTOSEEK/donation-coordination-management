@@ -139,7 +139,7 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
 
     private static String[][] sponsorListRows(RedBlackTree<LocalDate, SponsorList> sponsorListDB) {
         SponsorList[] sponsorList = new SponsorList[sponsorListDB.getAllList().getLength()];
-        sponsorList = sponsorListDB.getAllArrayList(sponsorList);
+        sponsorList = sponsorListDB.getAllListInArray(sponsorList);
         String[][] sponsorListRows = new String[sponsorList.length][];
         for (int i = 0; i < sponsorList.length; i++) {
             sponsorListRows[i] = sponsorList[i].strArr();
@@ -185,7 +185,7 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
         //</editor-fold>
         int counter = 1;
-        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+        DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
 
         SponsorList sponsorList = new SponsorList();
 
@@ -195,7 +195,7 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
             int randomTtl = faker.number().numberBetween(1, 3);
             for (int record = 0; record < randomTtl; record++) {
                 SponsorList[] sponsorListArr = new SponsorList[dummySponsorList.getAllList().getLength()];
-                sponsorListArr = dummySponsorList.getAllArrayList(sponsorListArr);
+                sponsorListArr = dummySponsorList.getAllListInArray(sponsorListArr);
                 Sponsor sponsor = sponsorDB.getAt(faker.number().numberBetween(1, sponsorDB.getLength()));
 
                 sponsorList = new SponsorList();

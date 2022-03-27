@@ -3,7 +3,6 @@ package client;
 import adt.DoublyLinkedList;
 import adt.ListInterface;
 import adt.RedBlackTree;
-import entity.Campaign;
 import entity.DemandList;
 import entity.Funds;
 import entity.Sponsor;
@@ -117,7 +116,7 @@ public class SponsorItemPanel implements Panel {
         Scanner s = new Scanner(System.in);
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
+        DoublyLinkedList<DemandList> demandList = (DoublyLinkedList<DemandList>) demandListDB.getAllList();
 
         boolean hasDemandList = true;
 
@@ -218,12 +217,12 @@ public class SponsorItemPanel implements Panel {
             //retrieve demandList obj
             //ask funds ID
             //retrieve funds obj
-            //enter qty 
+            //enter qty
             //qty*price
             //confirm?
-            //deduct funds, stored in total amount, store donated qty in sponsoredItem 
+            //deduct funds, stored in total amount, store donated qty in sponsoredItem
             //deduct qty on demandList = targetDemandList.setQuantity(demandListIndividual.getQuantity() - qtyDeduct);
-            //check balance of qty on demandList 
+            //check balance of qty on demandList
             //if qty=0,if targetDemandList.getQty()=0
             //targetDemandList.setStatus("inactive"), funds same
             //if the enter qty more than demandList qty ,then auto assign max qty & print message

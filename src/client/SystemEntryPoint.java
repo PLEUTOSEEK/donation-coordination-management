@@ -52,6 +52,8 @@ public class SystemEntryPoint {
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
 
+        Campaign.deactiveExpiredCampaign(campaignDB);
+
         MainPanel mainPanel = new MainPanel();
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB, fundsDB);
     }

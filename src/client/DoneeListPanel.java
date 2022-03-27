@@ -141,8 +141,8 @@ class DoneeListPanel implements Panel {
                                 doneeList.setStatus("Active");
                                 doneeList.setDoneeListID(doneeList.autoGenerateID());
                                 doneeListDB.addData(doneeList.getDateJoin(), doneeList);
-                            }else{
-                                 DoneeList.setLastDoneeListID(originalLastId);
+                            } else {
+                                DoneeList.setLastDoneeListID(originalLastId);
                             }
 
                             System.out.println(confirmation.toUpperCase().equals("Y") ? "Added donee successfully" : "Add donee abort");
@@ -158,7 +158,6 @@ class DoneeListPanel implements Panel {
 
 //                        System.out.println("At least one donee needed for a campaign...");
 //                        option = "Y";
-
                     } while (option.toUpperCase().equals("Y"));
                 } else {
                     System.out.println("Campaign with permanent inactive status unable to perform modification");
@@ -293,14 +292,14 @@ class DoneeListPanel implements Panel {
         String option = "";
         String confirmation = "";
         String doneeListID = "";
-        
+
         if (doneeDB.getFront() != null) {
             do {
                 DoneeList.doneeListTable(doneeListDB);
 
                 System.out.print("Enter donee list ID: ");
                 doneeListID = input.nextLine();
-                DoublyLinkedList<DoneeList> doneeLists = doneeListDB.getAllList();
+                DoublyLinkedList<DoneeList> doneeLists = (DoublyLinkedList<DoneeList>) doneeListDB.getAllList();
                 if (doneeLists.contains(new DoneeList(doneeListID)) == true) {
                     DoneeList doneeList = doneeLists.getAt(doneeLists.indexOf(new DoneeList(doneeListID)));
                     if (doneeList.getCampaign().isPermanentDelete() == false) {
@@ -326,7 +325,7 @@ class DoneeListPanel implements Panel {
                                 doneeInHelpDB.delAt(doneeInHelpDB.indexOf(doneeList.getDonee()));
                                 doneeListDB.delData(doneeList.getDateJoin(), doneeList);
                             }
-                                
+
                             System.out.println(confirmation.toUpperCase().equals("Y") ? "Delete successfully" : "Delete donee list abort");
                         } else {
                             System.out.println("At least one donee require for a campaign...");
@@ -358,7 +357,7 @@ class DoneeListPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         DoneeList[] DoneeListArr = new DoneeList[doneeListDB.getAllList().getLength()];
-        DoneeListArr = doneeListDB.getAllArrayList(DoneeListArr);
+        DoneeListArr = doneeListDB.getAllListInArray(DoneeListArr);
         RedBlackTree<LocalDate, DoneeList> listForPrint = new RedBlackTree<>();
         DoneeList[] arrListForPrint = null;
 

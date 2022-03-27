@@ -233,7 +233,7 @@ public class Donation implements Comparable<Donation> {
         }
 
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
-        campaigns = campaignDB.getAllArrayList(campaigns);
+        campaigns = campaignDB.getAllListInArray(campaigns);
 
         for (int data = 0; data < 30; data++) {
             LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
