@@ -5,18 +5,21 @@
  */
 package client;
 
+import adt.CircularLinkedList;
 import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
+import entity.Donation;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
 import entity.DonorList;
 import entity.Funds;
 import entity.Sponsor;
+import entity.SponsorItem;
 import entity.SponsorList;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -34,7 +37,9 @@ public class MainPanel implements Panel {
             CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB,
-            DoublyLinkedList<Funds> fundsDB) throws CloneNotSupportedException {
+            DoublyLinkedList<Funds> fundsDB,
+            CircularLinkedList<Donation> donationDB,
+            DoublyLinkedList<SponsorItem> sponsorItemDB) throws CloneNotSupportedException {
         CampaignPanel campaignPanel = new CampaignPanel();
 
         DoneePanel doneePanel = new DoneePanel();
