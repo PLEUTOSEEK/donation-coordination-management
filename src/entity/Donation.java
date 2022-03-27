@@ -33,7 +33,7 @@ public class Donation implements Comparable<Donation> {
     private String status;
     private LocalDate dateOfDonation;
     private Timestamp dateModified;
-    private static String lastDonationID;
+    private static String lastDonationID = "";
 
     public Donation() {
     }

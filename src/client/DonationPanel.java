@@ -42,12 +42,12 @@ public class DonationPanel implements Panel {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println(menu());
-            System.out.println("Option: ");
+            System.out.print("Option: ");
             opt = sc.nextInt();
 
             switch (opt) {
                 case 1:
-                    addDonorToDonee(donationDB, doneeDB, donorDB); //donor to donee
+                    addDonorToDonee(donationDB, doneeDB, donorDB,campaignDB); //donor to donee
                     break;
                 case 2:
                     addDonorToCampaign(donationDB, campaignDB, donorDB); //donor to campaign
@@ -95,31 +95,36 @@ public class DonationPanel implements Panel {
 
     public void addDonorToDonee(CircularLinkedList<Donation> donationDB,
             CircularLinkedQueue<Donee> doneeDB,
-            SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
+            SinglyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, Campaign> campaignDB) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
         String donorID = "";
         String doneeID = "";
+        String campaignID = "";
+        
         Donation donation = new Donation();
         Donor donor = new Donor();
         Donee donee = new Donee();
+        Campaign campaign = new Campaign();
+        
         String originalLastID = Donation.getLastDonationID();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         do {
             Donor.donorTable(donorDB);
-            Donee.doneeTable(doneeDB);
-
-            System.out.println("Enter Donor ID: ");
+            
+            System.out.print("Enter Donor ID: ");
             donorID = input.nextLine();
 
             if (donorDB.contains(new Donor(donorID)) == true) {
                 donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
 
                 if (donor.getStatus().equals("Active")) {
-                    System.out.println("Enter Donee ID: ");
+                    Donee.doneeTable(doneeDB);
+                    System.out.print("Enter Donee ID: ");
                     doneeID = input.nextLine();
                     if (doneeDB.contains(new Donee(doneeID)) == true) {
                         donee = doneeDB.getAt(doneeDB.indexOf(new Donee(doneeID)));
@@ -129,18 +134,19 @@ public class DonationPanel implements Panel {
                             donation.setDonor(donor);
                             donation.setDonee(donee);
 
-                            System.out.println("Enter total amount: ");
+                            System.out.print("Enter total amount: ");
                             donation.setTotalAmount(input.nextDouble());
-                            System.out.println("Enter description: ");
+                            System.out.print("Enter description: ");
                             donation.setDescription(input.nextLine());
-                            System.out.println("Enter date of donation [dd. MM. yyyy] : ");
+                            input.nextLine();//string buffer
+                            System.out.print("Enter date of donation [dd. MM. yyyy] : ");
                             donation.setDateOfDonation(LocalDate.parse(input.nextLine(), dtfDate));
                             donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                             donation.setStatus("Active");
                             donation.setDonationID(donation.autoGenerateID());
                             donation.setCampaign(null);
 
-                            System.out.println("Confirm to add this donation record? (Y/N)  ");
+                            System.out.print("Confirm to add this donation record? (Y/N)  ");
                             confirmation = input.nextLine();
 
                             if (confirmation.toUpperCase().equals("Y")) {
@@ -160,7 +166,7 @@ public class DonationPanel implements Panel {
                 } else {
                     System.out.println("Donor with inactive status cannot be added...");
                 }
-                System.out.println("Continue adding new donation? (Y/N) ");
+                System.out.print("Continue adding new donation? (Y/N) ");
                 option = input.nextLine();
 
             } else {
@@ -188,13 +194,13 @@ public class DonationPanel implements Panel {
             Donor.donorTable(donorDB);
             Campaign.campaignTable(campaignDB);
 
-            System.out.println("Enter Donor ID: ");
+            System.out.print("Enter Donor ID: ");
             donorID = input.nextLine();
 
             if (donorDB.contains(new Donor(donorID)) == true) {
                 donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
                 if (donor.getStatus().equals("Active")) {
-                    System.out.println("Enter Campaign ID: ");
+                    System.out.print("Enter Campaign ID: ");
                     campaignID = input.nextLine();
 
                     if (campaignDB.contains(new Campaign(campaignID)) == true) {
@@ -205,18 +211,19 @@ public class DonationPanel implements Panel {
                             donation.setDonor(donor);
                             donation.setCampaign(campaign);
 
-                            System.out.println("Enter total amount: ");
+                            System.out.print("Enter total amount: ");
                             donation.setTotalAmount(input.nextDouble());
-                            System.out.println("Enter description: ");
+                            System.out.print("Enter description: ");
                             donation.setDescription(input.nextLine());
-                            System.out.println("Enter date of donation [dd. MM. yyyy] : ");
+                            input.nextLine(); //string buffer
+                            System.out.print("Enter date of donation [dd. MM. yyyy] : ");
                             donation.setDateOfDonation(LocalDate.parse(input.nextLine(), dtfDate));
                             donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                             donation.setStatus("Active");
                             donation.setDonee(null);
                             donation.setDonationID(donation.autoGenerateID());
 
-                            System.out.println("Confirm to add this donation record? (Y/N)  ");
+                            System.out.print("Confirm to add this donation record? (Y/N)  ");
                             confirmation = input.nextLine();
 
                             if (confirmation.toUpperCase().equals("Y")) {
@@ -269,7 +276,7 @@ public class DonationPanel implements Panel {
         do {
             Donation.donationTable(donationDB);
 
-            System.out.println("Enter donation ID: ");
+            System.out.print("Enter donation ID: ");
             donationID = input.nextLine();
 
             if (donationDB.contains(new Donation(donationID)) == true) {
@@ -281,7 +288,7 @@ public class DonationPanel implements Panel {
 
                     do {
                         System.out.println(donationUpdateMenu());
-                        System.out.println("Enter the index of option that you want to update, if multiple index leave space at between [1 5 6]: ");
+                        System.out.print("Enter the index of option that you want to update, if multiple index leave space at between [1 5 6]: ");
                         selectedIndex = input.nextLine();
 
                         String[] splitIndex = selectedIndex.split("\\s+");
@@ -301,17 +308,17 @@ public class DonationPanel implements Panel {
                             for (int i = 0; i < splitIndexInt.length; i++) {
                                 switch (splitIndexInt[i]) {
                                     case 1:
-                                        System.out.println("Enter the new total amount of donation: ");
+                                        System.out.print("Enter the new total amount of donation: ");
                                         donation.setTotalAmount(input.nextDouble());
                                         hasUpdateSomething = true;
                                         break;
                                     case 2:
-                                        System.out.println("Enter the new description: ");
+                                        System.out.print("Enter the new description: ");
                                         donation.setDescription(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 3:
-                                        System.out.println("Enter the new date of donation [dd. MMM. yyyy]: ");
+                                        System.out.print("Enter the new date of donation [dd. MMM. yyyy]: ");
                                         donation.setDateOfDonation(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
@@ -320,7 +327,7 @@ public class DonationPanel implements Panel {
                                 }
                             }
                             if (hasUpdateSomething == true) {
-                                System.out.println("Confirm update donation record? (Y/N) ");
+                                System.out.print("Confirm update donation record? (Y/N) ");
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
@@ -344,7 +351,7 @@ public class DonationPanel implements Panel {
                 System.out.println("Donation ID not found...");
             }
 
-            System.out.println("Continue updating donation records? (Y/N) ");
+            System.out.print("Continue updating donation records? (Y/N) ");
             option = input.nextLine();
 
         } while (option.toUpperCase().equals("Y"));
@@ -364,7 +371,7 @@ public class DonationPanel implements Panel {
         do {
             Donation.donationTable(donationDB);
 
-            System.out.println("Enter Donation ID : ");
+            System.out.print("Enter Donation ID : ");
             donationID = input.nextLine();
 
             if (donationDB.contains(new Donation(donationID)) == true) {
@@ -377,7 +384,7 @@ public class DonationPanel implements Panel {
                 }
 
                 System.out.println(statusMenu.toString());
-                System.out.println("Option: ");
+                System.out.print("Option: ");
                 selection = input.nextInt();
 
                 System.out.print("Confirm " + status[selection - 1] + " this record ? (Y/N) ");
