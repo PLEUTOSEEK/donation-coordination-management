@@ -79,14 +79,6 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
         return true;
     }
 
-    public T requeue() {
-
-        T element = dequeue();
-        enqueue(element);
-
-        return element;
-    }
-
     public T dequeue() {
         T front = null;
         if (firstNode == null) {
@@ -250,7 +242,6 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
 
     public T getAt(int givenPos) {
         //givenPos is start from 1
-
         if (givenPos >= 1 && givenPos <= length) {
 
             if (givenPos == 1) {

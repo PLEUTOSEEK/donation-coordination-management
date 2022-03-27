@@ -17,6 +17,8 @@ public interface QueueInterface<T> {
     public T dequeue();
 
     public T getFront();
+    
+    public T getEnd();
 
     public boolean isEmpty();
 
@@ -33,4 +35,6 @@ public interface QueueInterface<T> {
     public int indexOf(T element);
 
     public boolean contains(T element);
+
+    public T getAt(int givenPos);
 }
