@@ -47,7 +47,7 @@ public class DonationPanel implements Panel {
 
             switch (opt) {
                 case 1:
-                    addDonorToDonee(donationDB, doneeDB, donorDB,campaignDB); //donor to donee
+                    addDonorToDonee(donationDB, doneeDB, donorDB); //donor to donee
                     break;
                 case 2:
                     addDonorToCampaign(donationDB, campaignDB, donorDB); //donor to campaign
@@ -95,8 +95,7 @@ public class DonationPanel implements Panel {
 
     public void addDonorToDonee(CircularLinkedList<Donation> donationDB,
             CircularLinkedQueue<Donee> doneeDB,
-            SinglyLinkedList<Donor> donorDB,
-            RedBlackTree<LocalDate, Campaign> campaignDB) throws CloneNotSupportedException {
+            SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
 
         Scanner input = new Scanner(System.in);
         String option = "";
