@@ -6,7 +6,7 @@
 package adt;
 
 /**
- * @author junyao
+ * @author Wong Jun Yao
  */
 import java.util.Iterator;
 
@@ -17,6 +17,8 @@ public interface QueueInterface<T> {
     public T dequeue();
 
     public T getFront();
+    
+    public T getEnd();
 
     public boolean isEmpty();
 
@@ -26,15 +28,13 @@ public interface QueueInterface<T> {
 
     public boolean checkExitsData(T entry);
 
-    public Iterator<T> getIterator();
-
     public void modify(T oldEntry, T newEntry);
-
-    public T[] get(CircularLinkedQueue q);
 
     public T[] toArray(T[] array);
 
     public int indexOf(T element);
 
     public boolean contains(T element);
+
+    public T getAt(int givenPos);
 }

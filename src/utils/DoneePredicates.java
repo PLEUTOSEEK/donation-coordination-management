@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author junyao
+ * @author Wong Jun Yao
  */
 public class DoneePredicates implements Inputs {
 

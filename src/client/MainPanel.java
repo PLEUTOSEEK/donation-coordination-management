@@ -19,6 +19,7 @@ import entity.Donor;
 import entity.DonorList;
 import entity.Funds;
 import entity.Sponsor;
+import entity.SponsorItem;
 import entity.SponsorList;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -37,7 +38,9 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB,
             DoublyLinkedList<Funds> fundsDB,
-            CircularLinkedList<Donation> donationDB) throws CloneNotSupportedException {
+            CircularLinkedList<Donation> donationDB,
+            DoublyLinkedList<SponsorItem> sponsorItemDB) throws CloneNotSupportedException {
+
         CampaignPanel campaignPanel = new CampaignPanel();
         
         DoneePanel doneePanel = new DoneePanel();
