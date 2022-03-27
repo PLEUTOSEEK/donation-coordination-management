@@ -28,16 +28,16 @@ import java.time.LocalDate;
  * @author Tee Zhuo Xuan
  */
 public class CaregiverDonationCordinationManagementSystem {
-
+    
     public static void main(String[] args) throws CloneNotSupportedException {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
-
+        
         DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();]
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(sponsorDB);
-        CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation();
+        CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
 
 //<editor-fold defaultstate="collapsed" desc="Temporary delete later">
         sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
@@ -57,9 +57,9 @@ public class CaregiverDonationCordinationManagementSystem {
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
         DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB);
-
+        
         Campaign.deactiveExpiredCampaign(campaignDB);
-
+        
         MainPanel mainPanel = new MainPanel();
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB,
                 demandListDB, fundsDB, donationDB, sponsorItemDB);
