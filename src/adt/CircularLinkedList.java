@@ -54,11 +54,11 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     @Override
     public boolean addAtAnyNode(T element, int position) {
         Node newNode = new Node(element);
-        if (position >= 1 && position <= countNodes()) {
+        if (position >= 1 && position <= countNodes() + 1) {
 
             if (position == 1) {
                 return addFirstNode(element);
-            } else if (position == this.countNodes()) {
+            } else if (position == countNodes() + 1) {
                 return addLastNode(element);
             } else {
 
