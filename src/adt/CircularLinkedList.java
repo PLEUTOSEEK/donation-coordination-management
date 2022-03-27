@@ -12,7 +12,6 @@ package adt;
 public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     private Node firstNode, lastNode;
-    private int length;
 
     public CircularLinkedList() {
         this.firstNode = null;
@@ -32,8 +31,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             lastNode = newNode;
             newNode.next = firstNode;
         }
-
-        length++;
         return true;
     }
 
@@ -51,18 +48,17 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             firstNode = newNode;
         }
 
-        length++;
         return true;
     }
 
     @Override
     public boolean addAtAnyNode(T element, int position) {
         Node newNode = new Node(element);
-        if (position >= 1 && position <= length + 1) {
+        if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
                 return addFirstNode(element);
-            } else if (position == this.length + 1) {
+            } else if (position == this.countNodes()) {
                 return addLastNode(element);
             } else {
 
@@ -74,7 +70,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 newNode.next = currentNode.next;
                 currentNode.next = newNode;
             }
-            length++;
         }
         return true;
     }
@@ -90,11 +85,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             } while (currentNode != firstNode);
         }
         return length;
-    }
-
-    @Override
-    public boolean searchNode(T element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -124,11 +114,11 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public Object getAnyNode(int position) {
-        if (position >= 1 && position <= length) {
+        if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
                 getFirstNode();
-            } else if (position == this.length) {
+            } else if (position == countNodes()) {
                 getLastNode();
             } else {
                 Node currentNode = firstNode;
@@ -136,7 +126,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                     currentNode = currentNode.next;
                 }
 
-                return (T)currentNode.data;
+                return (T) currentNode.data;
             }
         }
         return null;
@@ -153,7 +143,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 lastNode = null;
             }
         }
-        length--;
+
         return true;
     }
 
@@ -172,11 +162,11 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public boolean removeAnyNode(int position) {
-        if (position >= 1 && position <= length) {
+        if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
                 return removeFirstNode();
-            } else if (position == this.length) {
+            } else if (position == countNodes()) {
                 return removeLastNode();
             } else {
                 Node currentNode = firstNode;
@@ -219,11 +209,11 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     @Override
     public boolean replaceAnyNode(T element, int position
     ) {
-        if (position >= 1 && position <= length) {
+        if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
                 return replaceFirstNode(element);
-            } else if (position == this.length) {
+            } else if (position == this.countNodes()) {
                 return replaceLastNode(element);
             } else {
                 Node newNode = new Node(element);

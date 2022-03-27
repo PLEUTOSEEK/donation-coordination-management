@@ -89,7 +89,7 @@ public class TestEvery {
         //</editor-fold>
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
-        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
+        //RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
         //        RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         //
         //        RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
@@ -141,9 +141,9 @@ public class TestEvery {
         // sponsor.controlPanel(sponsorDB);
         //funds.controlPanel(fundsDB, sponsorDB, demandListDB);
         //demandList.controlPanel(campaignDB, demandListDB);
-        sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
+        //sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
 
-        donor.donorPanel(donorDB);
+        //donor.donorPanel(donorDB);
 //       sponsor.controlPanel(sponsorDB);
 
         //donor.donorPanel(donorDB);2

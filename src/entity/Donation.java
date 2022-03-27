@@ -145,8 +145,9 @@ public class Donation implements Comparable<Donation> {
     }
 
     public boolean equals(Object o) {
+        Donation other = (Donation) o;
         if (o instanceof Donation) {
-            Donation other = (Donation) o;
+            
             if (this.donationID.equalsIgnoreCase(other.getDonationID())) {
                 return true;
             } else {
@@ -184,19 +185,19 @@ public class Donation implements Comparable<Donation> {
     }
 
     private static String[] donationHeaders() {
-        String[] campaignHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified"};
+        String[] campaignHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified", "Status"};
 
         return campaignHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString()};
+        return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
     }
 
     private static String[][] donationRows(CircularLinkedList<Donation> donationDB) {
         Donation[] donations = new Donation[donationDB.countNodes()];
         donations = donationDB.toArray(donations);
-        String[][] donationRows = new String[donations.length][];
+        String[][] donationRows = new String[donationDB.countNodes()][];
         for (int i = 0; i < donations.length; i++) {
             donationRows[i] = donations[i].strArr();
         }
@@ -221,7 +222,7 @@ public class Donation implements Comparable<Donation> {
         randomTimeRange = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
         String[] description = "Heaven Kitties,Heaven Bunnies,Heaven Pigeons,Heaven Volunteers,Heaven Pinks,Heaven Pink Jackets,Heaven Pink Legs,Heaven United,Heaven Athletic,Pink Kitties,Pink Bunnies,Pink Pigeons,Pink Volunteers,Lively Kitties,Lively Bunnies,Lively Pigeons,Lively Volunteers,Donation Kitties,Donation Bunnies,Donation Pigeons,Donation Volunteers,Generous Kitties,Generous Bunnies,Generous Pigeons,Generous Volunteers".split(",");
-        
+
         Donor[] donors = new Donor[donorDB.getDataCount()];
         for (int i = 0; i < donorDB.getDataCount(); i++) {
             donors[i] = donorDB.getAt(i);
@@ -234,8 +235,8 @@ public class Donation implements Comparable<Donation> {
 
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
         campaigns = campaignDB.getAllListInArray(campaigns);
-
-        for (int data = 0; data < 30; data++) {
+         
+        for (int data = 0; data < 10; data++) {
             LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
             Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(0, 3)).toEpochDay());
 
@@ -249,6 +250,8 @@ public class Donation implements Comparable<Donation> {
             donation.setDateOfDonation(dateOfDonation);
             donation.setStatus("Active");
             donation.setDateModified(dateModified);
+            
+            dummyDonations.addLastNode(donation);
         }
 
         return dummyDonations;
@@ -259,6 +262,5 @@ public class Donation implements Comparable<Donation> {
         Donation cloned = (Donation) super.clone();
         return cloned;
     }
-    
-    
+
 }
