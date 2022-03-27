@@ -111,7 +111,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         if (firstNode == null) {
             return null;
         }
-        return firstNode.data;
+        return (T) firstNode.data;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         if (isEmpty()) {
             return null;
         }
-        return lastNode.data;
+        return (T) lastNode.data;
     }
 
     @Override
@@ -136,7 +136,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                     currentNode = currentNode.next;
                 }
 
-                return currentNode.data;
+                return (T)currentNode.data;
             }
         }
         return null;
