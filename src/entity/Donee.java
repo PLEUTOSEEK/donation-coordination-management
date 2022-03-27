@@ -11,7 +11,7 @@ import com.github.javafaker.Faker;
 
 /**
  *
- * @author junyao
+ * @author Wong Jun Yao
  */
 public class Donee extends Account implements Comparable<Donee>, Cloneable {
 

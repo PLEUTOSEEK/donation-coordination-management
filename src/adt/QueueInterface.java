@@ -6,7 +6,7 @@
 package adt;
 
 /**
- * @author junyao
+ * @author Wong Jun Yao
  */
 import java.util.Iterator;
 
