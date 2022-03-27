@@ -120,7 +120,7 @@ class DonorListPanel implements Panel {
 
                             if (donorDB.contains(new Donor(donorID))) {
                                 DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
-                                donorListArr = donorListDB.getAllArrayList(donorListArr);
+                                donorListArr = donorListDB.getAllListInArray(donorListArr);
                                 if (donorListArr != null) {
                                     for (int i = 0; i < donorListArr.length; i++) {
                                         if (donorListArr[i].getCampaign().equals(campaign) && donorListArr[i].getDonor().equals(new Donor(donorID))) {
@@ -261,7 +261,7 @@ class DonorListPanel implements Panel {
 
                                                 if (donorDB.contains(new Donor(donorID))) {
                                                     DonorList[] donorListArr = new DonorList[donorListDB.getAllList().getLength()];
-                                                    donorListArr = donorListDB.getAllArrayList(donorListArr);
+                                                    donorListArr = donorListDB.getAllListInArray(donorListArr);
 
                                                     //check
                                                     for (int j = 0; j < donorListArr.length; j++) {
@@ -354,7 +354,7 @@ class DonorListPanel implements Panel {
 
             System.out.print("Enter donor list ID: ");
             donorListID = input.nextLine();
-            DoublyLinkedList<DonorList> donorLists = donorListDB.getAllList();
+            DoublyLinkedList<DonorList> donorLists = (DoublyLinkedList<DonorList>) donorListDB.getAllList();
             if (donorLists.contains(new DonorList(donorListID)) == true) {
                 DonorList donorList = donorLists.getAt(donorLists.indexOf(new DonorList(donorListID)));
                 if (donorList.getCampaign().isPermanentDelete() == false) {
@@ -390,7 +390,7 @@ class DonorListPanel implements Panel {
 
     public void search(RedBlackTree<LocalDate, DonorList> donorListDB) {
         DonorList[] DonorListArr = new DonorList[donorListDB.getAllList().getLength()];
-        DonorListArr = donorListDB.getAllArrayList(DonorListArr);
+        DonorListArr = donorListDB.getAllListInArray(DonorListArr);
         RedBlackTree<LocalDate, DonorList> listForPrint = new RedBlackTree<>();
         DonorList[] arrListForPrint = null;
 

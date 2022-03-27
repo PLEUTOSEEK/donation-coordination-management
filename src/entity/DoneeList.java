@@ -140,7 +140,7 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
         DoneeList[] doneeLists = new DoneeList[doneeListDB.getAllList().getLength()];
-        doneeLists = doneeListDB.getAllArrayList(doneeLists);
+        doneeLists = doneeListDB.getAllListInArray(doneeLists);
         String[][] doneeListRows = new String[doneeLists.length][];
         for (int i = 0; i < doneeLists.length; i++) {
             doneeListRows[i] = doneeLists[i].strArr();
@@ -184,7 +184,7 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
         //</editor-fold>
         int counter = 1;
-        DoublyLinkedList<Campaign> campaigns = campaignDB.getAllList();
+        DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
 
         DoneeList doneeList = new DoneeList();
 
@@ -196,7 +196,7 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
             for (int record = 0; record < randomTtl; record++) {
 
                 DoneeList[] doneeListArr = new DoneeList[dummyDoneeList.getAllList().getLength()];
-                doneeListArr = dummyDoneeList.getAllArrayList(doneeListArr);
+                doneeListArr = dummyDoneeList.getAllListInArray(doneeListArr);
                 Donee donee = doneeDB.dequeue();
                 doneeInHelpDB.addLast(donee);
                 doneeList = new DoneeList();

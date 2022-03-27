@@ -15,6 +15,7 @@ import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
 import entity.DonorList;
+import entity.Funds;
 import entity.Sponsor;
 import entity.SponsorList;
 import java.time.LocalDate;
@@ -32,7 +33,8 @@ public class MainPanel implements Panel {
             RedBlackTree<LocalDate, SponsorList> sponsorListDB,
             CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
+            RedBlackTree<LocalDate, DemandList> demandListDB,
+            DoublyLinkedList<Funds> fundsDB) throws CloneNotSupportedException {
         CampaignPanel campaignPanel = new CampaignPanel();
 
         DoneePanel doneePanel = new DoneePanel();

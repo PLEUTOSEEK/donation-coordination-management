@@ -25,7 +25,6 @@ public class SponsorItem implements Comparable<SponsorItem> {
     private String sponsoredID;
     private DemandList demandList;
     private Funds funds;
-    private Sponsor sponsor;
     private int quantity;
     private LocalDate dateDonate;
     private Timestamp dateModified;
@@ -36,11 +35,10 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
     }
 
-    public SponsorItem(String sponsoredID, DemandList demandList, Funds funds, Sponsor sponsor, int quantity, LocalDate dateDonate, Timestamp dateModified, String status) {
+    public SponsorItem(String sponsoredID, DemandList demandList, Funds funds, int quantity, LocalDate dateDonate, Timestamp dateModified, String status) {
         this.sponsoredID = sponsoredID;
         this.demandList = demandList;
         this.funds = funds;
-        this.sponsor = sponsor;
         this.quantity = quantity;
         this.dateDonate = dateDonate;
         this.dateModified = dateModified;
@@ -77,14 +75,6 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
     public void setFunds(Funds funds) {
         this.funds = funds;
-    }
-
-    public Sponsor getSponsor() {
-        return sponsor;
-    }
-
-    public void setSponsor(Sponsor sponsor) {
-        this.sponsor = sponsor;
     }
 
     public int getQuantity() {
@@ -146,14 +136,14 @@ public class SponsorItem implements Comparable<SponsorItem> {
     }
 
     private static String[] sponsorItemHeaders() {
-        String[] sponsorItemHeaders = {"Sponsored Item ID", "Demand List ID", "Fund ID", "Sponsor ID", "Quantity", "Date Donate", "Date Modified", "Status"};
+        String[] sponsorItemHeaders = {"Sponsored Item ID", "Demand List ID", "Fund ID", "Quantity", "Date Donate", "Date Modified", "Status"};
 
         return sponsorItemHeaders;
     }
 
     private String[] strArr() {
         String quan = String.valueOf(quantity);
-        return new String[]{sponsoredID, demandList.getDemandListID(), funds.getFundsID(), sponsor.getAccountID(), quan, this.dateDonate.toString(), this.dateModified.toString(), status};
+        return new String[]{sponsoredID, demandList.getDemandListID(), funds.getFundsID(), quan, this.dateDonate.toString(), this.dateModified.toString(), status};
     }
 
     //change the list and apply toArray method.
@@ -193,7 +183,7 @@ public class SponsorItem implements Comparable<SponsorItem> {
         return lastSponsoredID;
     }
 
-    public DoublyLinkedList<SponsorItem> generateDummySponsorItem(RedBlackTree<LocalDate, DemandList> demandListDB, DoublyLinkedList<Funds> fundsDB, DoublyLinkedList<Sponsor> sponsorDB) {
+    public DoublyLinkedList<SponsorItem> generateDummySponsorItem(RedBlackTree<LocalDate, DemandList> demandListDB, DoublyLinkedList<Funds> fundsDB) {
         DoublyLinkedList<SponsorItem> dummySponsorItem = new DoublyLinkedList<SponsorItem>();
         Faker faker = new Faker();
         LocalDateTimeRangeRandomizer randomLDTR;
@@ -202,9 +192,8 @@ public class SponsorItem implements Comparable<SponsorItem> {
         LocalDateTime maxTime = LocalDateTime.of(2021, Month.DECEMBER, 31, 23, 59, 59);
         randomLDTR = LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer(minTime, maxTime);
 
-        DoublyLinkedList<DemandList> demandList = demandListDB.getAllList();
+        DoublyLinkedList<DemandList> demandList = (DoublyLinkedList<DemandList>) demandListDB.getAllList();
         DoublyLinkedList<Funds> funds = fundsDB;
-        DoublyLinkedList<Sponsor> sponsor = sponsorDB;
 
         SponsorItem sponsorItem = new SponsorItem();
 
@@ -221,12 +210,11 @@ public class SponsorItem implements Comparable<SponsorItem> {
 
             DemandList demandListIndividual = demandList.getAt(data);
             Funds fundsIndividual = funds.getAt(data);
-            Sponsor sponsorIndividual = sponsor.getAt(data);
 
             sponsorItem.setSponsoredID(autoGenerateID());
             sponsorItem.setDemandList(demandListIndividual);
             sponsorItem.setFunds(fundsIndividual);
-            sponsorItem.setSponsor(sponsorIndividual);
+            //sponsorItem.setSponsor(sponsorIndividual);
 
             int qtyDeduct = faker.number().numberBetween(1, demandListIndividual.getQuantity());
             demandListIndividual.setQuantity(demandListIndividual.getQuantity() - qtyDeduct);
