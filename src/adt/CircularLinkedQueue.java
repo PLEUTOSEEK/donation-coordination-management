@@ -186,18 +186,6 @@ public class CircularLinkedQueue<T extends Comparable<T>> implements QueueInterf
         return;
     }
 
-//    public T[] get(CircularLinkedQueue q) {
-//        Node temp = q.firstNode;
-//
-//        T[] array = (T[]) new Object[q.size()];
-//
-//        for (int i = 0; i < q.size() - 1; i++) {
-//            array[i] = (T) temp.next.data;
-//        }
-//
-//        return array;
-//    }
-
     public T[] toArray(T[] array) {
         Node current = this.firstNode;
 

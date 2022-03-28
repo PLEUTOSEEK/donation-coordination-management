@@ -13,6 +13,7 @@ import com.github.javafaker.Faker;
  *
  * @author Wong Jun Yao
  */
+
 public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     private String requestIssue;
@@ -25,7 +26,10 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
         this("", "", "", ' ', "", "", "", "", 0.0, "", "", "");
     }
 
-    public Donee(String accountID, String name, String ic, char gender, String email, String phoneNo, String address, String requestIssue, double requestAmount, String bankType, String bankAcc, String status) {
+    public Donee(String accountID, String name, String ic, char gender, 
+            String email, String phoneNo, String address, String requestIssue,
+            double requestAmount, String bankType, String bankAcc, 
+            String status) {
         super(accountID, name, gender, ic, email, phoneNo, address, status);
         this.accountID = lastDoneeID;
         this.requestIssue = requestIssue;
@@ -111,7 +115,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     }
 
     @Override
-
     public int compareTo(Donee o) { //ID
         if (this.accountID.compareTo(o.accountID) < 0) {
             return -1;
@@ -142,9 +145,9 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private static String[] doneeHeaders() {
         String[] doneeRows = {"Donee ID",
             "Donee Name",
-            "IC", 
+            "IC",
             "Gender",
-            "Email", 
+            "Email",
             "Phone",
             "Address",
             "Request Issue",
@@ -159,17 +162,17 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private String[] strArr() {
         String gen = String.valueOf(gender);
         String amt = Double.toString(requestAmount);
-        return new String[]{accountID, 
-            name, 
-            ic, 
-            gen, 
-            email, 
-            phoneNo, 
-            address, 
-            requestIssue, 
-            amt, 
-            bankType, 
-            bankAcc, 
+        return new String[]{accountID,
+            name,
+            ic,
+            gen,
+            email,
+            phoneNo,
+            address,
+            requestIssue,
+            amt,
+            bankType,
+            bankAcc,
             status};
 
     }
@@ -195,13 +198,11 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     public CircularLinkedQueue<Donee> generateDummyDonee() {
         CircularLinkedQueue<Donee> dummyDonee = new CircularLinkedQueue<Donee>();
         Faker faker = new Faker();
-        String[] doneeIC = "1114152543,0904050315,0402005577,1004163133,0111147799,1101365780,0122554455,0302010441,0113224412,0730221541".split(",");
+        String[] doneeIC = "111415254345,090405033415,040200505077,100416316133,011114780799,110136578603,012255445650,0302010441,0113224412,0730221541".split(",");
         int[] gender = {77, 70};
-        String[] doneeEmail = "Uzair@gmail.com,Keaton@gmail.com,Kajal@Salas.com,Susie@gmail.com,Sullivan@Bean.com,Ralph@Yates.com,Ashlyn@Cooke.com,Habib@gmail.com,JeffReese@gmail.com,Corben@Donald.com".split(",");
         String[] doneePhone = "0197682204,0143268085,0122323462,0164242625,0143268022,0146741265,0122072540,0195893047,0139285361,0198837324".split(",");
         String[] doneeAddress = "No. 9M-36, Jalan Utama 3/7G,No. L-84-59, Jln Zaaba 9,No. 9Z-04, Jalan Bukit Tunku 7/9,Lot 9, Jln 4,No. 720, Jalan Bangsar 3/69F,5, Lorong Pahang 22Y,No. 19, Jln Damansara 8Q,816, Jalan Pudu 6/4,9N-43, Jalan Kedah 3/9V,19, Lorong Keliling 3/20".split(",");
         String[] doneeRequestIssue = "Request for nursing home,Request for orphanage,Request for flood,Request for earthquake,Request for famine,Request for the food bank,Request for daughter's leukemia,Request for cancer medical expenses,Request for supplies, food, and education to African children,Request for leukemia patients".split(",");
-        String[] doneeRequestAmount = "2000.00,1500.00,3200.00,2300.00,1000.00,2000.00,3000.00,1500.00,2500.00,3500.00".split(",");
         String[] doneeBankType = {"Public bank", "Maybank"};
 
         Donee donee = new Donee();

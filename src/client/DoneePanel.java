@@ -76,7 +76,6 @@ public class DoneePanel implements Panel {
 
         do {
             Donee donee = new Donee();
-            
 
             System.out.print("\nName:");
             donee.setName(s.nextLine());
@@ -109,7 +108,6 @@ public class DoneePanel implements Panel {
 
             System.out.printf("Bank Account:");
             donee.setBankAcc(s.nextLine());
-            
 
             System.out.print("Confirm add donee? (Y/N)");
             confirm = s.nextLine();
@@ -119,16 +117,14 @@ public class DoneePanel implements Panel {
                 donee.setStatus("Active");
                 doneeDB.enqueue(donee);
             }
-//            } else {
-//                Donee.setLastDoneeID(originalLastId);
-//            }
 
             System.out.println(confirm.toUpperCase().equals("Y") ? "Added successfully!!" : "Add donee failed...");
 
             System.out.print("\nContinue add donee? (Y/N)");
             opt = s.nextLine();
 
-            System.out.print(opt.toUpperCase().equals("Y") ? "" : "Return to donee menu page..\n");
+            System.out.print(opt.toUpperCase().equals("Y")
+                    ? "" : "Return to donee menu page..\n");
 
         } while (opt.toUpperCase().equals("Y"));
 
@@ -230,6 +226,7 @@ public class DoneePanel implements Panel {
                                 case 8:
                                     System.out.print("Enter the new request amount: ");
                                     donee.setRequestAmount(s.nextDouble());
+                                    s.nextLine();
                                     hasUpdateSomething = true;
                                     break;
                                 case 9:
@@ -244,6 +241,7 @@ public class DoneePanel implements Panel {
                                     break;
                                 default:
                                     System.out.println("Index " + splitIndexInt[i] + "out of bound!");
+                                    break;
                             }
                         }
 
@@ -254,23 +252,26 @@ public class DoneePanel implements Panel {
                             if (confirm.toUpperCase().equals("Y")) {
                                 doneeDB.modify(donees.getAt(donees.indexOf(new Donee(donee.getAccountID()))), donee);
                             }
-
                             System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update donee failed...\n");
+
                         } else {
                             System.out.println("No data selected");
                         }
                     }
+
                 } while (validIndex == false);
+
             } else {
                 System.out.println("Donee ID not found..");
             }
-            
+
             System.out.print("Continue update donee ? (Y/N) ");
             opt = s.nextLine();
 
             System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to donee main page...");
-            
-        } while (opt.toUpperCase().equals("Y"));
+
+        } while (opt.toUpperCase()
+                .equals("Y"));
     }
 
     public void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
