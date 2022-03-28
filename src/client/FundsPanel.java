@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import utils.FundsPredicates;
 
 /**
  *
@@ -140,6 +141,21 @@ public class FundsPanel implements Panel {
     }
 
     public void searchFunds(DoublyLinkedList<Funds> fundsDB) {
+        Funds[] fundsArray = new Funds[fundsDB.getLength()];
+        fundsArray = fundsDB.toArray(fundsArray);
+        DoublyLinkedList<Funds> listForPrint = new DoublyLinkedList<>();
+        Funds[] arrListForPrint = null;
+
+        arrListForPrint = FundsPredicates.ControlPanel(fundsArray);
+
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (Funds funds : arrListForPrint) {
+                listForPrint.addLast(funds);
+            }
+            Funds.fundsTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
 
     }
 

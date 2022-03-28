@@ -6,6 +6,7 @@
 package client;
 
 import adt.SinglyLinkedList;
+import adt.SinglyLinkedListInterface;
 import entity.Donor;
 import java.util.Scanner;
 import utils.DonorPredicates;
@@ -17,6 +18,7 @@ import utils.DonorPredicates;
 public class DonorPanel implements Panel {
 
     public void controlPanel(SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
+
         int option = 0;
         Scanner sc = new Scanner(System.in);
 
@@ -63,11 +65,6 @@ public class DonorPanel implements Panel {
             }
 
         } while (option != 6);
-
-    }
-
-    @Override
-    public void controlPanel() {
 
     }
 
@@ -248,7 +245,7 @@ public class DonorPanel implements Panel {
                                     if (donorType == "organization") {
                                         donor.setGender(' ');
                                         System.out.print("\nThe donor type is organization,so gender cannot be set");
-                                         hasUpdateSomething = true;
+                                        hasUpdateSomething = true;
                                     } else {
                                         System.out.print("\nGender(M/F)  :");
                                         donor.setGender(sc.next().charAt(0));
@@ -324,9 +321,8 @@ public class DonorPanel implements Panel {
             option = s.next().charAt(0);
         } while (option == 'Y' || option == 'y');
 
-    
     }
-    
+
     public void delete(SinglyLinkedList<Donor> donorDB) {
         Scanner sc = new Scanner(System.in);
         String id = "";
@@ -386,7 +382,12 @@ public class DonorPanel implements Panel {
         }
 
     }
-    
+
+    @Override
+    public void controlPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public void add() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -417,6 +418,3 @@ public class DonorPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
-
-
-
