@@ -27,11 +27,6 @@ import utils.DonationPredicates;
  */
 public class DonationPanel implements Panel {
 
-    @Override
-    public void controlPanel() {
-
-    }
-
     public void controlPanel(
             CircularLinkedList<Donation> donationDB,
             RedBlackTree<LocalDate, Campaign> campaignDB,
@@ -53,7 +48,7 @@ public class DonationPanel implements Panel {
                     addDonorToCampaign(donationDB, campaignDB, donorDB); //donor to campaign
                     break;
                 case 3:
-                    Donation.donationTable(donationDB);
+                    displayDonation(donationDB);
                     break;
                 case 4:
                     searchDonation(donationDB);
@@ -87,12 +82,6 @@ public class DonationPanel implements Panel {
 
         return menu.toString();
     }
-
-    @Override
-    public void add() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public void addDonorToDonee(CircularLinkedList<Donation> donationDB,
             CircularLinkedQueue<Donee> doneeDB,
             SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
@@ -125,6 +114,7 @@ public class DonationPanel implements Panel {
                     Donee.doneeTable(doneeDB);
                     System.out.print("Enter Donee ID: ");
                     doneeID = input.nextLine();
+
                     if (doneeDB.contains(new Donee(doneeID)) == true) {
                         donee = doneeDB.getAt(doneeDB.indexOf(new Donee(doneeID)));
 
@@ -165,13 +155,13 @@ public class DonationPanel implements Panel {
                 } else {
                     System.out.println("Donor with inactive status cannot be added...");
                 }
-                System.out.print("Continue adding new donation? (Y/N) ");
-                option = input.nextLine();
-
             } else {
                 System.out.println("Donor ID not found...");
             }
-
+            
+            System.out.print("Continue adding new donation? (Y/N) ");
+            option = input.nextLine();
+            
         } while (option.toUpperCase().equals("Y"));
     }
 
@@ -251,17 +241,76 @@ public class DonationPanel implements Panel {
 
         System.out.println("Return to previous step...");
     }
-
-    @Override
-
-    public void display() {
+    
+    public void displayDonation(CircularLinkedList<Donation> donationDB){
+        Donation.donationTable(donationDB);
     }
 
-    @Override
-    public void update() {
+    public void searchDonation(CircularLinkedList<Donation> donationDB) {
+        Donation[] donationArray = new Donation[donationDB.countNodes()];
+        donationArray = donationDB.toArray(donationArray);
+        CircularLinkedList<Donation> listForPrint = new CircularLinkedList<>();
+        Donation[] arrListForPrint = null;
 
+        arrListForPrint = DonationPredicates.ControlPanel(donationArray);
+        if (arrListForPrint != null && arrListForPrint.length != 0) {
+            for (Donation arrListForPrint1 : arrListForPrint) {
+                listForPrint.addLastNode(arrListForPrint1);
+            }
+            Donation.donationTable(listForPrint);
+        } else {
+            System.out.println("No Record Found...");
+        }
     }
+    
+    public void deleteDonation(CircularLinkedList<Donation> donationDB) {
+        Scanner input = new Scanner(System.in);
+        String option = "";
+        String confirmation = "";
+        String donationID = "";
+        String[] status = {"Active", "Inactive"};
+        int selection;
+        Donation donation = new Donation();
 
+        do {
+            Donation.donationTable(donationDB);
+
+            System.out.print("Enter Donation ID : ");
+            donationID = input.nextLine();
+
+            if (donationDB.contains(new Donation(donationID)) == true) {
+                CircularLinkedList<Donation> donations = donationDB;
+                donation = (Donation) donationDB.getAnyNode(donationDB.indexOf(new Donation(donationID)));
+
+                StringBuilder statusMenu = new StringBuilder();
+                for (int i = 0; i < status.length; i++) {
+                    statusMenu.append((i + 1) + ". " + status[i] + "\n");
+                }
+
+                System.out.println(statusMenu.toString());
+                System.out.print("Option: ");
+                selection = input.nextInt();
+                input.nextLine();
+                System.out.print("Confirm " + status[selection - 1] + " this record ? (Y/N) ");
+                confirmation = input.nextLine();
+
+                if (confirmation.toUpperCase().equals("Y")) {
+                    donation.setStatus(status[selection - 1].toString());
+                    donation.setDateModified(new Timestamp(System.currentTimeMillis()));
+                    donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
+                }
+                System.out.println("Updated successfully");
+            } else {
+                System.out.println("Donation ID not found");
+            }
+            System.out.print("Continue deleting ? (Y/N) ");
+            option = input.nextLine();
+
+        } while (option.toUpperCase().equals("Y"));
+
+        System.out.println("Return to previous step...");
+    }
+    
     public void updateDonation(CircularLinkedList<Donation> donationDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -346,66 +395,14 @@ public class DonationPanel implements Panel {
                 } else {
                     System.out.println("Donation with inactive status cannot be updated...");
                 }
-
             } else {
                 System.out.println("Donation ID not found...");
             }
-
             System.out.print("Continue updating donation records? (Y/N) ");
             option = input.nextLine();
-
         } while (option.toUpperCase().equals("Y"));
 
         System.out.println("Return to the previous page...");
-    }
-
-    public void deleteDonation(CircularLinkedList<Donation> donationDB) {
-        Scanner input = new Scanner(System.in);
-        String option = "";
-        String confirmation = "";
-        String donationID = "";
-        String[] status = {"Active", "Inactive"};
-        int selection;
-        Donation donation = new Donation();
-
-        do {
-            Donation.donationTable(donationDB);
-
-            System.out.print("Enter Donation ID : ");
-            donationID = input.nextLine();
-
-            if (donationDB.contains(new Donation(donationID)) == true) {
-                CircularLinkedList<Donation> donations = donationDB;
-                donation = (Donation) donationDB.getAnyNode(donationDB.indexOf(new Donation(donationID)));
-
-                StringBuilder statusMenu = new StringBuilder();
-                for (int i = 0; i < status.length; i++) {
-                    statusMenu.append((i + 1) + ". " + status[i] + "\n");
-                }
-
-                System.out.println(statusMenu.toString());
-                System.out.print("Option: ");
-                selection = input.nextInt();
-                input.nextLine();
-                System.out.print("Confirm " + status[selection - 1] + " this record ? (Y/N) ");
-                confirmation = input.nextLine();
-
-                if (confirmation.toUpperCase().equals("Y")) {
-                    donation.setStatus(status[selection - 1].toString());
-                    donation.setDateModified(new Timestamp(System.currentTimeMillis()));
-                    donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
-                }
-
-                System.out.println("Updated successfully");
-            } else {
-                System.out.println("Donation ID not found");
-            }
-            System.out.print("Continue deleting ? (Y/N) ");
-            option = input.nextLine();
-
-        } while (option.toUpperCase().equals("Y"));
-
-        System.out.println("Return to previous step...");
     }
 
     public String donationUpdateMenu() {
@@ -418,21 +415,9 @@ public class DonationPanel implements Panel {
         return menu.toString();
     }
 
-    public void searchDonation(CircularLinkedList<Donation> donationDB) {
-        Donation[] donationArray = new Donation[donationDB.countNodes()];
-        donationArray = donationDB.toArray(donationArray);
-        CircularLinkedList<Donation> listForPrint = new CircularLinkedList<>();
-        Donation[] arrListForPrint = null;
-
-        arrListForPrint = DonationPredicates.ControlPanel(donationArray);
-        if (arrListForPrint != null && arrListForPrint.length != 0) {
-            for (Donation arrListForPrint1 : arrListForPrint) {
-                listForPrint.addLastNode(arrListForPrint1);
-            }
-            Donation.donationTable(listForPrint);
-        } else {
-            System.out.println("No Record Found...");
-        }
+    @Override
+    public void add() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -450,4 +435,17 @@ public class DonationPanel implements Panel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void controlPanel() {
+
+    }
+
+    @Override
+    public void display() {
+    }
+
+    @Override
+    public void update() {
+
+    }
 }

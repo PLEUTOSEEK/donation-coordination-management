@@ -169,6 +169,12 @@ public class Donation implements Comparable<Donation> {
         }
     }
 
+    @Override
+    public Donation clone() throws CloneNotSupportedException {
+        Donation cloned = (Donation) super.clone();
+        return cloned;
+    }
+
     public String autoGenerateID() {
         String newDonationID = "";
         int seq = 0;
@@ -187,17 +193,21 @@ public class Donation implements Comparable<Donation> {
 
     private static String[] donationHeaders() {
 
-        String[] donationHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID", "Total Amount", "Description", "Date of Donation", "Date Modified", "Status"};
+        String[] donationHeaders = {"Donation ID", "Donor ID", "Campaign ID", "Donee ID",
+            "Total Amount", "Description", "Date of Donation", "Date Modified", "Status"};
 
         return donationHeaders;
     }
 
     private String[] strArr() {
         if (campaign == null) {
-            return new String[]{donationID, donor.getAccountID(), "", donee.getAccountID(), String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
-
+            return new String[]{donationID, donor.getAccountID(), "", donee.getAccountID(),
+                String.valueOf(totalAmount), description, dateOfDonation.toString(),
+                dateModified.toLocalDateTime().toString(), status};
         } else {
-            return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), "", String.valueOf(totalAmount), description, dateOfDonation.toString(), dateModified.toLocalDateTime().toString(), status};
+            return new String[]{donationID, donor.getAccountID(), campaign.getCampaignID(), "",
+                String.valueOf(totalAmount), description, dateOfDonation.toString(),
+                dateModified.toLocalDateTime().toString(), status};
         }
     }
 
@@ -218,7 +228,10 @@ public class Donation implements Comparable<Donation> {
         ASCIITable.getInstance().printTable(donationHeader, donationData);
     }
 
-    public CircularLinkedList<Donation> generateDummyDonation(SinglyLinkedList<Donor> donorDB, CircularLinkedQueue<Donee> doneeDB, RedBlackTree<LocalDate, Campaign> campaignDB) {
+    public CircularLinkedList<Donation> generateDummyDonation(SinglyLinkedList<Donor> donorDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            RedBlackTree<LocalDate, Campaign> campaignDB) {
+
         CircularLinkedList<Donation> dummyDonations = new CircularLinkedList<Donation>();
         Faker faker = new Faker();
         Donation donation = new Donation();
@@ -232,12 +245,12 @@ public class Donation implements Comparable<Donation> {
 
         Donor[] donors = new Donor[donorDB.getDataCount()];
         for (int i = 0; i < donorDB.getDataCount(); i++) {
-            donors[i] = donorDB.getAt(i+1);
+            donors[i] = donorDB.getAt(i + 1);
         }
 
         Donee[] donees = new Donee[doneeDB.getLength()];
         for (int i = 0; i < doneeDB.getLength(); i++) {
-            donees[i] = doneeDB.getAt(i+1);
+            donees[i] = doneeDB.getAt(i + 1);
         }
 
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
@@ -250,7 +263,7 @@ public class Donation implements Comparable<Donation> {
             donation = new Donation();
             donation.setDonationID(autoGenerateID());
             donation.setDonor(donors[faker.number().numberBetween(0, donors.length - 1)]);
-            donation.setDonee(donees[faker.number().numberBetween(0, donees.length-1)]);
+            donation.setDonee(donees[faker.number().numberBetween(0, donees.length - 1)]);
             donation.setCampaign(campaigns[faker.number().numberBetween(0, campaigns.length - 1)]);
             donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
             donation.setDescription(description[faker.number().numberBetween(0, description.length - 1)]); // suspect
@@ -263,11 +276,4 @@ public class Donation implements Comparable<Donation> {
 
         return dummyDonations;
     }
-
-    @Override
-    public Donation clone() throws CloneNotSupportedException {
-        Donation cloned = (Donation) super.clone();
-        return cloned;
-    }
-
 }
