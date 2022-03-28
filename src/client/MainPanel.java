@@ -5,18 +5,21 @@
  */
 package client;
 
+import adt.CircularLinkedList;
 import adt.CircularLinkedQueue;
 import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
 import entity.DemandList;
+import entity.Donation;
 import entity.Donee;
 import entity.DoneeList;
 import entity.Donor;
 import entity.DonorList;
 import entity.Funds;
 import entity.Sponsor;
+import entity.SponsorItem;
 import entity.SponsorList;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -34,11 +37,16 @@ public class MainPanel implements Panel {
             CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB,
             RedBlackTree<LocalDate, DonorList> donorListDB,
             RedBlackTree<LocalDate, DemandList> demandListDB,
-            DoublyLinkedList<Funds> fundsDB) throws CloneNotSupportedException {
-        CampaignPanel campaignPanel = new CampaignPanel();
+            DoublyLinkedList<Funds> fundsDB,
+            CircularLinkedList<Donation> donationDB,
+            DoublyLinkedList<SponsorItem> sponsorItemDB) throws CloneNotSupportedException {
 
+        CampaignPanel campaignPanel = new CampaignPanel();
+        
         DoneePanel doneePanel = new DoneePanel();
 
+        DonationPanel donationPanel = new DonationPanel();
+        
         Scanner input = new Scanner(System.in);
         int option = 0;
 
@@ -61,6 +69,7 @@ public class MainPanel implements Panel {
                     campaignPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB, demandListDB);
                     break;
                 case 5:
+                    donationPanel.controlPanel(donationDB, campaignDB, doneeDB, donorDB);
                     break;
                 case 6:
                     System.out.println("Return to previous Page...");
@@ -80,7 +89,7 @@ public class MainPanel implements Panel {
         menu.append("2. Donor\n");
         menu.append("3. Donee\n");
         menu.append("4. Campaign\n");
-        menu.append("5. Sponsor\n");
+        menu.append("5. Donation\n");
         menu.append("6. Exit\n");
 
         return menu.toString();
