@@ -28,50 +28,26 @@ import java.time.LocalDate;
  * @author Tee Zhuo Xuan
  */
 public class CaregiverDonationCordinationManagementSystem {
-    
+
     public static void main(String[] args) throws CloneNotSupportedException {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
-<<<<<<< HEAD:src/client/SystemEntryPoint.java
 
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();//new Sponsor().generateDummySponsor();]
-=======
-        
-        DoublyLinkedList<Sponsor> sponsorDB = new DoublyLinkedList<>();//new Sponsor().generateDummySponsor();]
->>>>>>> 5a75617db0f88c8eaf5b633b2c29e857cfc1635e:src/client/CaregiverDonationCordinationManagementSystem.java
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(sponsorDB);
-<<<<<<< HEAD:src/client/SystemEntryPoint.java
-=======
         CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
-
-//<editor-fold defaultstate="collapsed" desc="Temporary delete later">
-        sponsorDB.addLast(new Sponsor("S001", "TZX", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S002", "ZZZ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S003", "AAA", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S004", "QQQ", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S005", "TTT", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S006", "WWW", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S007", "PPP", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S008", "agyj", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S009", "dfg", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
-        sponsorDB.addLast(new Sponsor("S010", "yuio", 'M', "0112", "cc@gmail.com", "012", "company adrdress ", "Company name", "Active"));
->>>>>>> 5a75617db0f88c8eaf5b633b2c29e857cfc1635e:src/client/CaregiverDonationCordinationManagementSystem.java
 
         RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
 
-        
-
-
         DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB);
-        
 
         Campaign.deactiveExpiredCampaign(campaignDB);
-        
+
         MainPanel mainPanel = new MainPanel();
 
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB,
