@@ -167,13 +167,31 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
     }
 
     private static String[] demandHeaders() {
-        String[] campaignHeaders = {"Demand List ID", "Demand Name", "Quantity", "Date Register", "Campaign ID", "Campaign Name", "Campaign Status", "Demand Reister Date", "Status", "Date Modified"};
+        String[] demandListHeaders = {"Demand List ID",
+            "Demand Name",
+            "Quantity",
+            "Date Register",
+            "Campaign ID",
+            "Campaign Name",
+            "Campaign Status",
+            "Demand Reister Date",
+            "Status",
+            "Date Modified"};
 
-        return campaignHeaders;
+        return demandListHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{demandListID, demandName, String.valueOf(quantity), dateRegister.toString(), campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateRegister.toString(), status, dateModified.toLocalDateTime().toString()};
+        return new String[]{demandListID,
+            demandName,
+            String.valueOf(quantity),
+            dateRegister.toString(),
+            campaign.getCampaignID(),
+            campaign.getCampaignName(),
+            campaign.getStatus(),
+            dateRegister.toString(),
+            status,
+            dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] demandRows(RedBlackTree<LocalDate, DemandList> demandListDB) {

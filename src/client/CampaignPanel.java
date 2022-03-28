@@ -153,7 +153,15 @@ public class CampaignPanel implements Panel {
         } while (option != 5);
     }
 
-    public void add(RedBlackTree<LocalDate, Campaign> campaignDB, DoublyLinkedList<Sponsor> sponsorDB, RedBlackTree<LocalDate, SponsorList> sponsorListDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB, SinglyLinkedList<Donor> donorDB, RedBlackTree<LocalDate, DonorList> donorListDB) {
+    public void add(RedBlackTree<LocalDate, Campaign> campaignDB,
+            DoublyLinkedList<Sponsor> sponsorDB,
+            RedBlackTree<LocalDate, SponsorList> sponsorListDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB,
+            RedBlackTree<LocalDate, DoneeList> doneeListDB,
+            SinglyLinkedList<Donor> donorDB,
+            RedBlackTree<LocalDate, DonorList> donorListDB) {
+
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -607,7 +615,6 @@ public class CampaignPanel implements Panel {
                                         campaignDB.addData(campaign.getCampaignStartDate(), campaign);
                                     } else {
                                         campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
-                                        System.out.println("hi");
                                     }
                                 }
 
@@ -632,7 +639,11 @@ public class CampaignPanel implements Panel {
         } while (option.toUpperCase().equals("Y"));
     }
 
-    public void delete(RedBlackTree<LocalDate, Campaign> campaignDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB, RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+    public void delete(RedBlackTree<LocalDate, Campaign> campaignDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB,
+            RedBlackTree<LocalDate, DoneeList> doneeListDB) {
+
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";

@@ -48,7 +48,7 @@ public class FundsPanel implements Panel {
                     break;
                 }
                 case 3: {
-                    //searchFunds();
+                    searchFunds(fundsDB);
                     break;
                 }
                 case 4: {
@@ -60,7 +60,6 @@ public class FundsPanel implements Panel {
         } while (opt != 4);
 
     }
-// if demandList inactive sponsor cannot add funds
 
     public void addFunds(DoublyLinkedList<Funds> fundsDB,
             DoublyLinkedList<Sponsor> sponsorDB) {
@@ -72,6 +71,7 @@ public class FundsPanel implements Panel {
         Scanner s = new Scanner(System.in);
         String fundsLastID = Funds.getLastFundsID();
         Funds funds = new Funds();
+        DemandList demandList = new DemandList();
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         do {
@@ -119,8 +119,11 @@ public class FundsPanel implements Panel {
 
                     }
 
+                } else if (demandList.getStatus().toUpperCase().equals("Inactive")) {
+                    System.out.println("Demand List is Inactive, you can't add funds");
+
                 } else {
-                    System.out.println("This is Inactive");
+                    System.out.println("Sponsor ID is Inactive");
                 }
 
             }
@@ -134,6 +137,10 @@ public class FundsPanel implements Panel {
 
     public void displayFunds(DoublyLinkedList<Funds> fundsDB) {
         Funds.fundsTable(fundsDB);
+    }
+
+    public void searchFunds(DoublyLinkedList<Funds> fundsDB) {
+
     }
 
     @Override

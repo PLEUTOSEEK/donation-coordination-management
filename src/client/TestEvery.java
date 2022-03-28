@@ -129,12 +129,12 @@ public class TestEvery {
 //        MainPanel mainPanel = new MainPanel();
 //      doneeP.doneePanel(doneeDB);
 //      doneeP.doneePanel(doneeDB
-        //donor.donorPanel(donorDB);
-        //         donor.donorPanel(donorDB);
+        //donor.controlPanel(donorDB);
+        //         donor.controlPanel(donorDB);
         //       doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
-        //         donor.donorPanel(donorDB);
-        //donor.donorPanel(donorDB);
+        //         donor.controlPanel(donorDB);
+        //donor.controlPanel(donorDB);
 
        // sponsor.controlPanel(sponsorDB);
 
@@ -143,18 +143,18 @@ public class TestEvery {
         //demandList.controlPanel(campaignDB, demandListDB);
         //sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
 
-        //donor.donorPanel(donorDB);
+        //donor.controlPanel(donorDB);
 //       sponsor.controlPanel(sponsorDB);
 
-        //donor.donorPanel(donorDB);2
+        //donor.controlPanel(donorDB);2
         //       sponsor.controlPanel(sponsorDB);
 
         //sponsorItemPanel.controlPanel(sponsorItemDB, sponsorDB, fundsDB, demandListDB);
-        //         donor.donorPanel(donorDB);
+        //         donor.controlPanel(donorDB);
         //doneeL.controlPanel(campaignDB, doneeDB, doneeInHelpDB, doneeListDB);
         //        doneeP.controlPanel(doneeDB);
-        //         donor.donorPanel(donorDB);
-        donation.donationPanel(donationDB, campaignDB, doneeDB, donorDB);
+        //         donor.controlPanel(donorDB);
+        donation.controlPanel(donationDB, campaignDB, doneeDB, donorDB);
     }
 
 }

@@ -19,7 +19,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private double requestAmount;
     private double requestOriAmount;
     private String bankType, bankAcc;
-    //private List<Donation> donations;
     private static String lastDoneeID = "";
 
     public Donee() {
@@ -113,7 +112,7 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     @Override
 
-    public int compareTo(Donee o) {//ID
+    public int compareTo(Donee o) { //ID
         if (this.accountID.compareTo(o.accountID) < 0) {
             return -1;
         } else if (this.accountID.compareTo(o.accountID) > 0) {
@@ -141,7 +140,16 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     }
 
     private static String[] doneeHeaders() {
-        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account", "Status"};
+        String[] doneeRows = {"Donee ID",
+            "Donee Name",
+            "IC", "Gender",
+            "Email", "Phone",
+            "Address",
+            "Request Issue",
+            "Request Amount",
+            "Bank Type",
+            "Bank Account",
+            "Status"};
 
         return doneeRows;
     }
