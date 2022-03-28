@@ -27,12 +27,12 @@ public class DemandListPredicates implements Inputs {
         return x -> x.getDemandName().equalsIgnoreCase(name);
     }
 
-    public static Predicate<DemandList> isQtyBiggerTan(int qty) {
+    public static Predicate<DemandList> isQtyBiggerThan(int qty) {
         return x -> x.getQuantity() > qty;
     }
 
     public static Predicate<DemandList> isQtySmallerOrEquals(int qty) {
-        return isQtyBiggerTan(qty).negate();
+        return isQtyBiggerThan(qty).negate();
     }
 
     public static Predicate<DemandList> isPricePerUnitBiggerTan(double price) {
@@ -104,7 +104,7 @@ public class DemandListPredicates implements Inputs {
         menu.append("13. Campaign start date before or equal\n");
         menu.append("14. Campaign end date after\n");
         menu.append("15. Campaign end date before or equal\n");
-        menu.append("16. Campaign status equal n");
+        menu.append("16. Campaign status equal \n");
 
         return menu.toString();
     }
@@ -129,7 +129,7 @@ public class DemandListPredicates implements Inputs {
                 return filterDemandList(demandListArray, isDemandNameEquals(demandListPredicates.askStr()));
 
             case 3:
-                return filterDemandList(demandListArray, isQtyBiggerTan(demandListPredicates.askInt()));
+                return filterDemandList(demandListArray, isQtyBiggerThan(demandListPredicates.askInt()));
 
             case 4:
                 return filterDemandList(demandListArray, isQtySmallerOrEquals(demandListPredicates.askInt()));

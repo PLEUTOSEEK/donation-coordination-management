@@ -8,8 +8,6 @@ package entity;
 import adt.DoublyLinkedList;
 import com.bethecoder.ascii_table.ASCIITable;
 import com.github.javafaker.Faker;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Sponsor extends Account implements Comparable<Sponsor>, Cloneable {
 

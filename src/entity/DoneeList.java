@@ -129,13 +129,33 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
     }
 
     private static String[] doneeListHeaders() {
-        String[] campaignHeaders = {"Donee List ID", "Donee ID", "Donee Name", "Donee Email", "Donee Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donee Date Join", "Status", "Date Modified"};
+        String[] doneeListHeaders = {"Donee List ID",
+            "Donee ID",
+            "Donee Name",
+            "Donee Email",
+            "Donee Phone No",
+            "Campaign ID",
+            "Campaign Name",
+            "Campaign Status",
+            "Donee Date Join",
+            "Status",
+            "Date Modified"};
 
-        return campaignHeaders;
+        return doneeListHeaders;
     }
 
     private String[] strArr() {
-        return new String[]{doneeListID, donee.accountID, donee.name, donee.email, donee.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
+        return new String[]{doneeListID,
+            donee.accountID,
+            donee.name,
+            donee.email,
+            donee.phoneNo,
+            campaign.getCampaignID(),
+            campaign.getCampaignName(),
+            campaign.getStatus(),
+            dateJoin.toString(),
+            status,
+            dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] doneeListRows(RedBlackTree<LocalDate, DoneeList> doneeListDB) {
@@ -172,7 +192,10 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
         return lastDoneeListID;
     }
 
-    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(RedBlackTree<LocalDate, Campaign> campaignDB, CircularLinkedQueue<Donee> doneeDB, DoublyLinkedList<Donee> doneeInHelpDB) {
+    public RedBlackTree<LocalDate, DoneeList> generateDummyDoneeList(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            CircularLinkedQueue<Donee> doneeDB,
+            DoublyLinkedList<Donee> doneeInHelpDB) {
 
         RedBlackTree<LocalDate, DoneeList> dummyDoneeList = new RedBlackTree<>();
         //<editor-fold defaultstate="collapsed" desc="fake data generator tools">

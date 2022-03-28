@@ -31,6 +31,10 @@ public class DoneeListPredicates implements Inputs {
         return isDoneeListDateJoinAfter(date).negate();
     }
 
+    public static Predicate<DoneeList> isDoneeStatusEquals(String status) {
+        return x -> x.getStatus().equalsIgnoreCase(status);
+    }
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="campaign predicates">
     public static Predicate<DoneeList> isCampaignIDEquals(String id) {
@@ -93,11 +97,11 @@ public class DoneeListPredicates implements Inputs {
         menu.append("08. campaign start date before or equal\n");
         menu.append("09. campaign end date after\n");
         menu.append("10. campaign end date before or equal\n");
-        menu.append("10. campaign status equal n");
-        menu.append("11. Donee ID equal\n");
-        menu.append("12. Donee name equal\n");
-        menu.append("13. Donee email equal\n");
-        menu.append("14. Donee phone no. equal\n");
+        menu.append("11. campaign status equal n");
+        menu.append("12. Donee ID equal\n");
+        menu.append("13. Donee name equal\n");
+        menu.append("14. Donee email equal\n");
+        menu.append("15. Donee phone no. equal\n");
 
         return menu.toString();
     }
@@ -125,36 +129,39 @@ public class DoneeListPredicates implements Inputs {
                 return filterDoneeList(DoneeListArray, isDoneeListDateJoinBeforeOrEquals(DoneeListPredicates.askDate()));
 
             case 4:
-                return filterDoneeList(DoneeListArray, isCampaignIDEquals(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isDoneeStatusEquals(DoneeListPredicates.askStr()));
 
             case 5:
-                return filterDoneeList(DoneeListArray, isCampaignNameContains(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isCampaignIDEquals(DoneeListPredicates.askStr()));
 
             case 6:
-                return filterDoneeList(DoneeListArray, isCampaignStartDateAfter(DoneeListPredicates.askDate()));
+                return filterDoneeList(DoneeListArray, isCampaignNameContains(DoneeListPredicates.askStr()));
 
             case 7:
-                return filterDoneeList(DoneeListArray, isCampaignStartDateBeforeOrEquals(DoneeListPredicates.askDate()));
+                return filterDoneeList(DoneeListArray, isCampaignStartDateAfter(DoneeListPredicates.askDate()));
 
             case 8:
-                return filterDoneeList(DoneeListArray, isCampaignEndDateAfter(DoneeListPredicates.askDate()));
+                return filterDoneeList(DoneeListArray, isCampaignStartDateBeforeOrEquals(DoneeListPredicates.askDate()));
 
             case 9:
-                return filterDoneeList(DoneeListArray, isCampaignEndDateBeforeOrEquals(DoneeListPredicates.askDate()));
+                return filterDoneeList(DoneeListArray, isCampaignEndDateAfter(DoneeListPredicates.askDate()));
 
             case 10:
-                return filterDoneeList(DoneeListArray, isCampaignStatusEquals(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isCampaignEndDateBeforeOrEquals(DoneeListPredicates.askDate()));
 
             case 11:
-                return filterDoneeList(DoneeListArray, isDoneeIDEquals(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isCampaignStatusEquals(DoneeListPredicates.askStr()));
 
             case 12:
-                return filterDoneeList(DoneeListArray, isDoneeNameEquals(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isDoneeIDEquals(DoneeListPredicates.askStr()));
 
             case 13:
-                return filterDoneeList(DoneeListArray, isDoneeEmailEquals(DoneeListPredicates.askStr()));
+                return filterDoneeList(DoneeListArray, isDoneeNameEquals(DoneeListPredicates.askStr()));
 
             case 14:
+                return filterDoneeList(DoneeListArray, isDoneeEmailEquals(DoneeListPredicates.askStr()));
+
+            case 15:
                 return filterDoneeList(DoneeListArray, isDoneePhoneNoEquals(DoneeListPredicates.askStr()));
 
             default:

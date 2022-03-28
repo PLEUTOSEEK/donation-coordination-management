@@ -129,14 +129,34 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
     }
 
     private static String[] donorListHeaders() {
-        String[] campaignHeaders = {"Donor List ID", "Donor ID", "Donor Name", "Donor Email", "Donor Phone No", "Campaign ID", "Campaign Name", "Campaign Status", "Donor Date Join", "Status", "Date Modified"};
+        String[] donotListHeaders = {"Donor List ID",
+            "Donor ID",
+            "Donor Name",
+            "Donor Email",
+            "Donor Phone No",
+            "Campaign ID",
+            "Campaign Name",
+            "Campaign Status",
+            "Donor Date Join",
+            "Status",
+            "Date Modified"};
 
-        return campaignHeaders;
+        return donotListHeaders;
     }
 
     private String[] strArr() {
 
-        return new String[]{donorListID, donor.accountID, donor.name, donor.email, donor.phoneNo, campaign.getCampaignID(), campaign.getCampaignName(), campaign.getStatus(), dateJoin.toString(), status, dateModified.toLocalDateTime().toString()};
+        return new String[]{donorListID,
+            donor.accountID,
+            donor.name,
+            donor.email,
+            donor.phoneNo,
+            campaign.getCampaignID(),
+            campaign.getCampaignName(),
+            campaign.getStatus(),
+            dateJoin.toString(),
+            status,
+            dateModified.toLocalDateTime().toString()};
     }
 
     private static String[][] donorListRows(RedBlackTree<LocalDate, DonorList> donorListDB) {
@@ -173,7 +193,10 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
         return lastDonorListID;
     }
 
-    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList(RedBlackTree<LocalDate, Campaign> campaignDB, SinglyLinkedList<Donor> donorDB) {
+    public RedBlackTree<LocalDate, DonorList> generateDummyDonorList(
+            RedBlackTree<LocalDate, Campaign> campaignDB,
+            SinglyLinkedList<Donor> donorDB) {
+
         RedBlackTree<LocalDate, DonorList> dummyDonorList = new RedBlackTree<>();
         //<editor-fold defaultstate="collapsed" desc="fake data generator tools">
         Faker faker = new Faker();
@@ -222,7 +245,6 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
             }
             counter++;
         }
-
         return dummyDonorList;
     }
 
