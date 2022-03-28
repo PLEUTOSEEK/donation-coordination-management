@@ -33,6 +33,7 @@ public class CaregiverDonationCordinationManagementSystem {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();//new Sponsor().generateDummySponsor();]
+
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();

@@ -19,7 +19,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private double requestAmount;
     private double requestOriAmount;
     private String bankType, bankAcc;
-    //private List<Donation> donations;
     private static String lastDoneeID = "";
 
     public Donee() {
@@ -113,7 +112,7 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     @Override
 
-    public int compareTo(Donee o) {//ID
+    public int compareTo(Donee o) { //ID
         if (this.accountID.compareTo(o.accountID) < 0) {
             return -1;
         } else if (this.accountID.compareTo(o.accountID) > 0) {
@@ -141,15 +140,37 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     }
 
     private static String[] doneeHeaders() {
-        String[] doneeRows = {"Donee ID", "Donee Name", "IC", "Gender", "Email", "Phone", "Address", "Request Issue", "Request Amount", "Bank Type", "Bank Account", "Status"};
+        String[] doneeRows = {"Donee ID",
+            "Donee Name",
+            "IC", 
+            "Gender",
+            "Email", 
+            "Phone",
+            "Address",
+            "Request Issue",
+            "Request Amount",
+            "Bank Type",
+            "Bank Account",
+            "Status"};
 
         return doneeRows;
     }
 
     private String[] strArr() {
-        String gend = String.valueOf(gender);
+        String gen = String.valueOf(gender);
         String amt = Double.toString(requestAmount);
-        return new String[]{accountID, name, ic, gend, email, phoneNo, address, requestIssue, amt, bankType, bankAcc, status};
+        return new String[]{accountID, 
+            name, 
+            ic, 
+            gen, 
+            email, 
+            phoneNo, 
+            address, 
+            requestIssue, 
+            amt, 
+            bankType, 
+            bankAcc, 
+            status};
 
     }
 
@@ -169,19 +190,6 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
         String[][] doneeData = Donee.doneeRows(doneeList);
 
         ASCIITable.getInstance().printTable(header, doneeData);
-    }
-
-    public String autoGenerateID1(CircularLinkedQueue<Donee> d) {
-
-//        if (d.isEmpty() == true) {
-//            newDoneeID = "DE1001";
-//        } else {
-//            newDoneeID = d.getEnd().getLastDoneeID();
-//            n = Integer.parseInt(newDoneeID.substring(2));
-//            n++;
-//            newDoneeID = "DE" + n;
-//        }
-        return lastDoneeID;
     }
 
     public CircularLinkedQueue<Donee> generateDummyDonee() {

@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class DonationPredicates implements Inputs {
 
     public static Predicate<Donation> isDonationIDEquals(String id) {
-        return x -> x.getDonationID().equalsIgnoreCase(id);
+        return x -> x.getDonationID().toLowerCase().equalsIgnoreCase(id.toLowerCase());
     }
 
     public static Predicate<Donation> isTotalAmtBiggerThan(double totalAmount) {
@@ -32,7 +32,7 @@ public class DonationPredicates implements Inputs {
     }
 
     public static Predicate<Donation> isDateOfDonationAfter(LocalDate date) {
-        return x -> x.getDateOfDonation().isAfter(date);
+        return x -> x.getDateOfDonation().equals(date);
     }
 
     public static Predicate<Donation> isDateOfDonationBeforeOrEquals(LocalDate date) {
@@ -44,15 +44,15 @@ public class DonationPredicates implements Inputs {
     }
 
     public static Predicate<Donation> isDonorIDEquals(String id) {
-        return x -> x.getDonor().getAccountID().equalsIgnoreCase(id);
+        return x -> x.getDonor().getAccountID().toLowerCase().equalsIgnoreCase(id.toLowerCase());
     }
 
     public static Predicate<Donation> isDoneeIDEquals(String id) {
-        return x -> x.getDonee().getAccountID().equalsIgnoreCase(id);
+        return x -> x.getDonee().getAccountID().toLowerCase().equalsIgnoreCase(id.toLowerCase());
     }
 
     public static Predicate<Donation> isCampaignIDEquals(String id) {
-        return x -> x.getCampaign().getCampaignID().equalsIgnoreCase(id);
+        return x -> x.getCampaign().getCampaignID().toLowerCase().equalsIgnoreCase(id.toLowerCase());
     }
 
     public static String donationSearchMenu() {
