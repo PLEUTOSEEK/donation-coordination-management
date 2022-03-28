@@ -7,7 +7,12 @@ package client;
 
 import adt.DoublyLinkedList;
 import adt.ListInterface;
+import adt.RedBlackTree;
+import entity.DemandList;
+import entity.Funds;
 import entity.Sponsor;
+import entity.SponsorItem;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Scanner;
 import utils.DoneePredicates;
@@ -19,8 +24,13 @@ import utils.SponsorPredicates;
  */
 public class SponsorPanel implements Panel {
 
-    public void controlPanel(DoublyLinkedList<Sponsor> sponsorDB) throws CloneNotSupportedException {
+    public void controlPanel(DoublyLinkedList<Sponsor> sponsorDB, DoublyLinkedList<Funds> fundsDB,
+            RedBlackTree<LocalDate, DemandList> demandListDB,
+            DoublyLinkedList<SponsorItem> sponsorItemDB) throws CloneNotSupportedException {
         ListInterface<Sponsor> sponsor;
+
+        FundsPanel fundsPanel = new FundsPanel();
+        SponsorItemPanel sponsorItemPanel = new SponsorItemPanel();
 
         int opt;
         Scanner s = new Scanner(System.in);
@@ -30,7 +40,9 @@ public class SponsorPanel implements Panel {
             System.out.println("3.View sponsor list");
             System.out.println("4.Search sponsor");
             System.out.println("5.Delete sponsor");
-            System.out.println("6.Exit");
+            System.out.println("6.Funds");
+            System.out.println("7.Sponsor Item");
+            System.out.println("8.Exit");
             System.out.print("Please select an action: ");
             opt = s.nextInt();
 
@@ -56,11 +68,19 @@ public class SponsorPanel implements Panel {
                     break;
                 }
                 case 6: {
-                    //exit
+                    fundsPanel.controlPanel(fundsDB, sponsorDB, demandListDB);
                     break;
                 }
+                case 7: {
+                    sponsorItemPanel.controlPanel(sponsorItemDB, fundsDB, demandListDB);
+                    break;
+                }
+                case 8: {
+                    // exit
+                }
             }
-        } while (opt != 6);
+
+        } while (opt != 8);
 
     }
 

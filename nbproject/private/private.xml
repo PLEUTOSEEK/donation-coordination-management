@@ -2,33 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/DonationPanel.java</file>
-            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SystemEntryPoint.java</file>
-            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/TestEvery.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/utils/SponsorPredicates.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/FundsPanel.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorItemPanel.java</file>
-            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Funds.java</file>
-            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Sponsor.java</file>
-=======
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedQueue.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/SponsorItem.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DemandListPanel.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedList.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Donation.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/utils/DonationPredicates.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/SinglyLinkedList.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/TestEvery.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedListInterface.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DonationPanel.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/RedBlackTree.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Sponsor.java</file>
-            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Donee.java</file>
->>>>>>> 243067fe9316092bb5d158e2c1d458daaf910499
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Donation.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/utils/CampaignPredicates.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/MainPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/CaregiverDonationCordinationManagementSystem.java</file>
         </group>
->>>>>>> 4c5ff3ad2f201d00170148de43f1eabfc79ebad0
     </open-files>
 </project-private>

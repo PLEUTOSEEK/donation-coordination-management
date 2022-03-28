@@ -189,7 +189,7 @@ public class SponsorItemPanel implements Panel {
             for (SponsorItem sponsorItem : arrListForPrint) {
                 listForPrint.addLast(sponsorItem);
             }
-            SponsorItem.sponsorItemTable(sponsorItemDB);
+            SponsorItem.sponsorItemTable(listForPrint);
 
         } else {
             System.out.println("No Record Found...");
