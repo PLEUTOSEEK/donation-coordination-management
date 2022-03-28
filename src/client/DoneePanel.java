@@ -227,12 +227,12 @@ public class DoneePanel implements Panel {
                                     break;
                                 case 8:
                                     System.out.print("Enter the new request amount: ");
-<<<<<<< HEAD
+
                                     donee.setRequestAmount(s.nextDouble());
                                     s.nextLine();
-=======
+
                                     memoDonee.setRequestAmount(s.nextDouble());
->>>>>>> cc433aeaf0504ea5348fa74f61e67edfe43770d4
+
                                     hasUpdateSomething = true;
                                     break;
                                 case 9:
@@ -277,12 +277,7 @@ public class DoneePanel implements Panel {
 
             System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to donee main page...");
 
-<<<<<<< HEAD
-        } while (opt.toUpperCase()
-                .equals("Y"));
-=======
         } while (opt.toUpperCase().equals("Y"));
->>>>>>> cc433aeaf0504ea5348fa74f61e67edfe43770d4
     }
 
     public void displayDonee(CircularLinkedQueue<Donee> doneeDB) {
