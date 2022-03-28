@@ -31,7 +31,7 @@ public class SponsorListPredicates implements Inputs {
         return isSponsorListDateJoinAfter(date).negate();
     }
 
-    public static Predicate<SponsorList> isSPonsorListEquals(String status) {
+    public static Predicate<SponsorList> isSponsorListStatusEquals(String status) {
         return x -> x.getStatus().equalsIgnoreCase(status);
     }
 
@@ -129,7 +129,7 @@ public class SponsorListPredicates implements Inputs {
                 return filterSponsorList(sponsorListArray, isSponsorListDateJoinBeforeOrEquals(sponsorListPredicates.askDate()));
 
             case 4:
-                return filterSponsorList(sponsorListArray, isSPonsorListEquals(sponsorListPredicates.askStr()));
+                return filterSponsorList(sponsorListArray, isSponsorListStatusEquals(sponsorListPredicates.askStr()));
 
             case 5:
                 return filterSponsorList(sponsorListArray, isCampaignIDEquals(sponsorListPredicates.askStr()));

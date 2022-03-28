@@ -102,7 +102,7 @@ class DemandListPanel implements Panel {
         RedBlackTree<LocalDate, DemandList> listForPrint = new RedBlackTree<>();
         DemandList[] arrListForPrint = null;
 
-        arrListForPrint = DemandListPredicates.ControlPanel(DemandListArr);;
+        arrListForPrint = DemandListPredicates.ControlPanel(DemandListArr);
 
         // CampaignPredicates.ControlPanel(campaignArray);
         if (arrListForPrint != null && arrListForPrint.length != 0) {
@@ -339,7 +339,6 @@ class DemandListPanel implements Panel {
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
         } while (option.toUpperCase().equals("Y"));
-
     }
 
     @Override

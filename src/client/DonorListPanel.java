@@ -380,7 +380,6 @@ class DonorListPanel implements Panel {
 
             System.out.println(confirmation.toUpperCase().equals("Y") ? "" : "Return to previous step...");
         } while (option.toUpperCase().equals("Y"));
-
     }
 
     @Override

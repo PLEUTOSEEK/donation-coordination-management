@@ -363,7 +363,6 @@ class SponsorListPanel implements Panel {
         } else {
             System.out.println("No Record Found...");
         }
-
     }
 
     @Override

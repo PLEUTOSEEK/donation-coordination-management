@@ -31,6 +31,10 @@ public class DonorListPredicates implements Inputs {
         return isDonorListDateJoinAfter(date).negate();
     }
 
+    public static Predicate<DonorList> isDonorStatusEquals(String status) {
+        return x -> x.getStatus().equalsIgnoreCase(status);
+    }
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="campaign predicates">
     public static Predicate<DonorList> isCampaignIDEquals(String id) {
@@ -125,36 +129,39 @@ public class DonorListPredicates implements Inputs {
                 return filterSponsorList(donorListArray, isDonorListDateJoinBeforeOrEquals(donorListPredicates.askDate()));
 
             case 4:
-                return filterSponsorList(donorListArray, isCampaignIDEquals(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isDonorStatusEquals(donorListPredicates.askStr()));
 
             case 5:
-                return filterSponsorList(donorListArray, isCampaignNameContains(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isCampaignIDEquals(donorListPredicates.askStr()));
 
             case 6:
-                return filterSponsorList(donorListArray, isCampaignStartDateAfter(donorListPredicates.askDate()));
+                return filterSponsorList(donorListArray, isCampaignNameContains(donorListPredicates.askStr()));
 
             case 7:
-                return filterSponsorList(donorListArray, isCampaignStartDateBeforeOrEquals(donorListPredicates.askDate()));
+                return filterSponsorList(donorListArray, isCampaignStartDateAfter(donorListPredicates.askDate()));
 
             case 8:
-                return filterSponsorList(donorListArray, isCampaignEndDateAfter(donorListPredicates.askDate()));
+                return filterSponsorList(donorListArray, isCampaignStartDateBeforeOrEquals(donorListPredicates.askDate()));
 
             case 9:
-                return filterSponsorList(donorListArray, isCampaignEndDateBeforeOrEquals(donorListPredicates.askDate()));
+                return filterSponsorList(donorListArray, isCampaignEndDateAfter(donorListPredicates.askDate()));
 
             case 10:
-                return filterSponsorList(donorListArray, isCampaignStatusEquals(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isCampaignEndDateBeforeOrEquals(donorListPredicates.askDate()));
 
             case 11:
-                return filterSponsorList(donorListArray, isDonorIDEquals(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isCampaignStatusEquals(donorListPredicates.askStr()));
 
             case 12:
-                return filterSponsorList(donorListArray, isDonorNameEquals(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isDonorIDEquals(donorListPredicates.askStr()));
 
             case 13:
-                return filterSponsorList(donorListArray, isDonorEmailEquals(donorListPredicates.askStr()));
+                return filterSponsorList(donorListArray, isDonorNameEquals(donorListPredicates.askStr()));
 
             case 14:
+                return filterSponsorList(donorListArray, isDonorEmailEquals(donorListPredicates.askStr()));
+
+            case 15:
                 return filterSponsorList(donorListArray, isDonorPhoneNoEquals(donorListPredicates.askStr()));
 
             default:

@@ -33,24 +33,33 @@ public class CaregiverDonationCordinationManagementSystem {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
 
         DoublyLinkedList<Sponsor> sponsorDB = new Sponsor().generateDummySponsor();//new Sponsor().generateDummySponsor();]
+<<<<<<< HEAD
 
+=======
+>>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
         CircularLinkedQueue<Donee> doneeDB = new Donee().generateDummyDonee();//new Donee().generateDummyDonee();
         DoublyLinkedList<Donee> doneeInHelpDB = new DoublyLinkedList<>();//new Donee().generateDummyDonee();
         SinglyLinkedList<Donor> donorDB = new Donor().generateDummyDonor();//new Donor().generateDummyDonor();
         DoublyLinkedList<Funds> fundsDB = new Funds().generateDummyFunds(sponsorDB);
         CircularLinkedList<Donation> donationDB = new Donation().generateDummyDonation(donorDB, doneeDB, campaignDB);
 
+<<<<<<< HEAD
         //</editor-fold>
+=======
+>>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
         RedBlackTree<LocalDate, SponsorList> sponsorListDB = new SponsorList().generateDummySponsorList(campaignDB, sponsorDB);
         RedBlackTree<LocalDate, DoneeList> doneeListDB = new DoneeList().generateDummyDoneeList(campaignDB, doneeDB, doneeInHelpDB);
         RedBlackTree<LocalDate, DonorList> donorListDB = new DonorList().generateDummyDonorList(campaignDB, donorDB);
         RedBlackTree<LocalDate, DemandList> demandListDB = new DemandList().generateDummyDemandList(campaignDB);
+
         DoublyLinkedList<SponsorItem> sponsorItemDB = new SponsorItem().generateDummySponsorItem(demandListDB, fundsDB);
 
         Campaign.deactiveExpiredCampaign(campaignDB);
 
         MainPanel mainPanel = new MainPanel();
+
         mainPanel.controlPanel(campaignDB, sponsorDB, sponsorListDB, doneeDB, doneeInHelpDB, doneeListDB, donorDB, donorListDB,
                 demandListDB, fundsDB, donationDB, sponsorItemDB);
+
     }
 }

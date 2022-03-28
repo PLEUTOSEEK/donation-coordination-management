@@ -40,11 +40,21 @@ public class MainPanel implements Panel {
             DoublyLinkedList<Funds> fundsDB,
             CircularLinkedList<Donation> donationDB,
             DoublyLinkedList<SponsorItem> sponsorItemDB) throws CloneNotSupportedException {
+<<<<<<< HEAD
+=======
+
+        CampaignPanel campaignPanel = new CampaignPanel();
+>>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
 
         CampaignPanel campaignPanel = new CampaignPanel();
         DoneePanel doneePanel = new DoneePanel();
+<<<<<<< HEAD
         SponsorPanel sponsorPanel = new SponsorPanel();
         DonorPanel donorPanel = new DonorPanel();
+=======
+        DonorPanel donorPanel = new DonorPanel();
+
+>>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
         DonationPanel donationPanel = new DonationPanel();
 
         Scanner input = new Scanner(System.in);
