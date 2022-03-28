@@ -18,11 +18,7 @@ import utils.DonorPredicates;
 public class DonorPanel implements Panel {
 
     public void controlPanel(SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
-<<<<<<< HEAD
 
-        SinglyLinkedListInterface<Donor> donor;
-=======
->>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
         int option = 0;
         Scanner sc = new Scanner(System.in);
 
