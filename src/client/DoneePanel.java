@@ -154,6 +154,7 @@ public class DoneePanel implements Panel {
         String id = "";
         Scanner s = new Scanner(System.in);
         Donee donee = new Donee();
+        Donee memoDonee = new Donee();
 
         do {
             Donee.doneeTable(doneeDB);
@@ -162,7 +163,8 @@ public class DoneePanel implements Panel {
 
             if (doneeDB.contains(new Donee(id)) == true) {
                 CircularLinkedQueue<Donee> donees = doneeDB;
-                donee = donees.getAt(donees.indexOf(new Donee(id))).clone();
+                donee = donees.getAt(donees.indexOf(new Donee(id)));
+                memoDonee = donee.clone();
                 boolean validIndex = true;
                 do {
                     System.out.println(doneeUpdateMenu());
@@ -189,54 +191,58 @@ public class DoneePanel implements Panel {
                             switch (splitIndexInt[i]) {
                                 case 1:
                                     System.out.print("Enter the new name: ");
-                                    donee.setName(s.nextLine());
+                                    memoDonee.setName(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 2:
                                     System.out.print("Enter the new NRIC: ");
-                                    donee.setIc(s.nextLine());
+                                    memoDonee.setIc(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 3:
                                     System.out.print("Enter the new gender: ");
-                                    donee.setGender(s.next().charAt(0));
+                                    memoDonee.setGender(s.next().charAt(0));
                                     s.nextLine();
                                     hasUpdateSomething = true;
                                     break;
                                 case 4:
                                     System.out.print("Enter the new email: ");
-                                    donee.setEmail(s.nextLine());
+                                    memoDonee.setEmail(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 5:
                                     System.out.print("Enter the new phone no: ");
-                                    donee.setPhoneNo(s.nextLine());
+                                    memoDonee.setPhoneNo(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 6:
                                     System.out.print("Enter the new address: ");
-                                    donee.setAddress(s.nextLine());
+                                    memoDonee.setAddress(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 7:
                                     System.out.print("Enter the new request issue: ");
-                                    donee.setRequestIssue(s.nextLine());
+                                    memoDonee.setRequestIssue(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 8:
                                     System.out.print("Enter the new request amount: ");
+<<<<<<< HEAD
                                     donee.setRequestAmount(s.nextDouble());
                                     s.nextLine();
+=======
+                                    memoDonee.setRequestAmount(s.nextDouble());
+>>>>>>> cc433aeaf0504ea5348fa74f61e67edfe43770d4
                                     hasUpdateSomething = true;
                                     break;
                                 case 9:
                                     System.out.print("Enter the new bank type: ");
-                                    donee.setBankType(s.nextLine());
+                                    memoDonee.setBankType(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 10:
                                     System.out.print("Enter the new bank account: ");
-                                    donee.setBankAcc(s.nextLine());
+                                    memoDonee.setBankAcc(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 default:
@@ -250,6 +256,7 @@ public class DoneePanel implements Panel {
                             confirm = s.nextLine();
 
                             if (confirm.toUpperCase().equals("Y")) {
+                                donee.copy(memoDonee);
                                 doneeDB.modify(donees.getAt(donees.indexOf(new Donee(donee.getAccountID()))), donee);
                             }
                             System.out.println(confirm.toUpperCase().equals("Y") ? "Update successfully!!\n" : "Update donee failed...\n");
@@ -270,8 +277,12 @@ public class DoneePanel implements Panel {
 
             System.out.println(opt.toUpperCase().equals("Y") ? "" : "Return to donee main page...");
 
+<<<<<<< HEAD
         } while (opt.toUpperCase()
                 .equals("Y"));
+=======
+        } while (opt.toUpperCase().equals("Y"));
+>>>>>>> cc433aeaf0504ea5348fa74f61e67edfe43770d4
     }
 
     public void displayDonee(CircularLinkedQueue<Donee> doneeDB) {

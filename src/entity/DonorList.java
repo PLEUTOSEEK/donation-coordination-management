@@ -128,6 +128,15 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
         return false;
     }
 
+    public void copy(DonorList copyDonorList) {
+        donorListID = copyDonorList.donorListID;
+        donor = copyDonorList.donor;
+        campaign = copyDonorList.campaign;
+        dateJoin = copyDonorList.dateJoin;
+        dateModified = copyDonorList.dateModified;
+        status = copyDonorList.status;
+    }
+
     private static String[] donorListHeaders() {
         String[] donotListHeaders = {"Donor List ID",
             "Donor ID",
@@ -253,4 +262,5 @@ public class DonorList implements Comparable<DonorList>, Cloneable {
         DonorList cloned = (DonorList) super.clone();
         return cloned;
     }
+
 }

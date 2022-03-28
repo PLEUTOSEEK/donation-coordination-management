@@ -501,6 +501,7 @@ public class CampaignPanel implements Panel {
         String confirmation = "";
         String campaignID = "";
         String indexSelected = "";
+        Campaign memoCampaign = new Campaign();
         Campaign campaign = new Campaign();
         LocalDate oriStartDate = null;
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
@@ -514,11 +515,13 @@ public class CampaignPanel implements Panel {
 
             if (campaignDB.contains(new Campaign(campaignID)) == true) {
                 DoublyLinkedList<Campaign> campaigns = (DoublyLinkedList<Campaign>) campaignDB.getAllList();
+                memoCampaign = new Campaign();
                 campaign = new Campaign();
-                campaign = campaignDB.get(new Campaign(campaignID)).clone();
+                campaign = campaignDB.get(new Campaign(campaignID));
+                memoCampaign = campaign.clone();
 
-                if (campaign.isPermanentDelete() == false) {
-                    oriStartDate = campaign.getCampaignStartDate();
+                if (memoCampaign.isPermanentDelete() == false) {
+                    oriStartDate = memoCampaign.getCampaignStartDate();
 
                     boolean validIndex = true;
                     do {
@@ -545,58 +548,58 @@ public class CampaignPanel implements Panel {
                                 switch (splitIndexInt[i]) {
                                     case 1:
                                         System.out.print("Enter the new campaign name: ");
-                                        campaign.setCampaignName(input.nextLine());
+                                        memoCampaign.setCampaignName(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 2:
                                         System.out.print("Enter the new campaign start date [dd. MMM. yyyy]: ");
-                                        campaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoCampaign.setCampaignStartDate(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
                                     case 3:
                                         System.out.print("Enter the new campaign start time [H:mm:ss]: ");
-                                        campaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                        memoCampaign.setCampaignStartTime(LocalTime.parse(input.nextLine(), dtfTime));
                                         hasUpdateSomething = true;
                                         break;
                                     case 4:
                                         System.out.print("Enter the new campaign end date [dd. MMM. yyyy]: ");
-                                        campaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoCampaign.setCampaignEndDate(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
                                     case 5:
                                         System.out.print("Enter the new campaign end time [H:mm:ss]: ");
-                                        campaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
+                                        memoCampaign.setCampaignEndTime(LocalTime.parse(input.nextLine(), dtfTime));
                                         hasUpdateSomething = true;
                                         break;
                                     case 6:
                                         System.out.print("Enter the new target amount: ");
-                                        campaign.setTargetAmount(input.nextDouble());
+                                        memoCampaign.setTargetAmount(input.nextDouble());
                                         hasUpdateSomething = true;
                                         break;
                                     case 7:
                                         System.out.print("Enter the new campaign email: ");
-                                        campaign.setCampaignEmail(input.nextLine());
+                                        memoCampaign.setCampaignEmail(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 8:
                                         System.out.print("Enter the new campaign mobile no: ");
-                                        campaign.setCampaignMobileNo(input.nextLine());
+                                        memoCampaign.setCampaignMobileNo(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 9:
 
                                         System.out.print("Enter the new campaign address: ");
-                                        campaign.setCampagnAddress(input.nextLine());
+                                        memoCampaign.setCampagnAddress(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 10:
                                         System.out.print("Enter the new campaign bank no: ");
-                                        campaign.setCampaignBankNo(input.nextLine());
+                                        memoCampaign.setCampaignBankNo(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 11:
                                         System.out.print("Enter the new campaign description: ");
-                                        campaign.setDescription(input.nextLine());
+                                        memoCampaign.setDescription(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     default:
@@ -609,11 +612,15 @@ public class CampaignPanel implements Panel {
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
-                                    campaign.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    memoCampaign.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    campaign.copy(memoCampaign);
                                     if (oriStartDate != campaign.getCampaignStartDate()) {
+                                        System.out.println("I am redelete");
                                         campaignDB.delData(oriStartDate, campaign);
                                         campaignDB.addData(campaign.getCampaignStartDate(), campaign);
                                     } else {
+                                        System.out.println("I am just update");
+
                                         campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
                                     }
                                 }

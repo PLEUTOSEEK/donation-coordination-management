@@ -127,6 +127,15 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
         return false;
     }
 
+    public void copy(SponsorList copySponsorList) {
+        sponsorListID = copySponsorList.sponsorListID;
+        sponsor = copySponsorList.sponsor;
+        campaign = copySponsorList.campaign;
+        dateJoin = copySponsorList.dateJoin;
+        dateModified = copySponsorList.dateModified;
+        status = copySponsorList.status;
+    }
+
     private static String[] sponsorListHeaders() {
         String[] sponsorListHeaders = {"Sponsor List ID",
             "Sponsor ID",
@@ -253,4 +262,5 @@ public class SponsorList implements Comparable<SponsorList>, Cloneable {
         SponsorList cloned = (SponsorList) super.clone();
         return cloned;
     }
+
 }

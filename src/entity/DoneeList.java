@@ -128,6 +128,15 @@ public class DoneeList implements Comparable<DoneeList>, Cloneable {
         return false;
     }
 
+    public void copy(DoneeList copyDoneeList) {
+        doneeListID = copyDoneeList.doneeListID;
+        donee = copyDoneeList.donee;
+        campaign = copyDoneeList.campaign;
+        dateJoin = copyDoneeList.dateJoin;
+        dateModified = copyDoneeList.dateModified;
+        status = copyDoneeList.status;
+    }
+
     private static String[] doneeListHeaders() {
         String[] doneeListHeaders = {"Donee List ID",
             "Donee ID",

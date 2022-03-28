@@ -210,6 +210,7 @@ class DonorListPanel implements Panel {
         String indexSelected = "";
         boolean hasDonor = true;
         DonorList donorList = new DonorList();
+        DonorList memoDonorList = new DonorList();
         LocalDate oriJoinDate = null;
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("H:mm:ss");
@@ -219,13 +220,14 @@ class DonorListPanel implements Panel {
 
             System.out.print("Enter donor list ID: ");
             donorListID = input.nextLine();
-            donorList = new DonorList();
+            memoDonorList = new DonorList();
 
             if (donorListDB.contains(new DonorList(donorListID)) == true) {
-                donorList = donorListDB.get(new DonorList(donorListID)).clone();
-                if (donorList.getCampaign().isPermanentDelete() == false) {
+                donorList = donorListDB.get(new DonorList(donorListID));
+                memoDonorList = donorList.clone();
+                if (memoDonorList.getCampaign().isPermanentDelete() == false) {
 
-                    oriJoinDate = donorList.getDateJoin();
+                    oriJoinDate = memoDonorList.getDateJoin();
                     boolean validIndex = true;
                     do {
                         System.out.println(donorListUpdateMenu());
@@ -265,7 +267,7 @@ class DonorListPanel implements Panel {
 
                                                     //check
                                                     for (int j = 0; j < donorListArr.length; j++) {
-                                                        if (donorListArr[j].getCampaign().equals(donorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
+                                                        if (donorListArr[j].getCampaign().equals(memoDonorList.getCampaign()) && donorListArr[j].getDonor().equals(new Donor(donorID))) {
                                                             hasDonor = false;
                                                             break;
                                                         }
@@ -281,7 +283,7 @@ class DonorListPanel implements Panel {
 
                                             Donor donor = donorDB.getAt(donorDB.indexOf(new Donor(donorID)));
                                             if (donor.isInActive() == false) {
-                                                donorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
+                                                memoDonorList.setDonor(donorDB.getAt(donorDB.indexOf(new Donor(donorID))));
                                                 hasUpdateSomething = true;
                                                 setDonorSuccess = true;
                                             } else {
@@ -291,7 +293,7 @@ class DonorListPanel implements Panel {
                                         break;
                                     case 2:
                                         System.out.print("Enter the new donor join date [dd. MMM. yyyy]: ");
-                                        donorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoDonorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
 
@@ -306,7 +308,8 @@ class DonorListPanel implements Panel {
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
-                                    donorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    memoDonorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    donorList.copy(memoDonorList);
                                     if (oriJoinDate != donorList.getDateJoin()) {
                                         donorListDB.delData(oriJoinDate, donorList);
                                         donorListDB.addData(donorList.getDateJoin(), donorList);
