@@ -208,6 +208,7 @@ class DemandListPanel implements Panel {
         String indexSelected = "";
         boolean hasSponsor = true;
         DemandList demandList = new DemandList();
+        DemandList memoDemandList = new DemandList();
         LocalDate oriRegisterDate = null;
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
 
@@ -218,10 +219,11 @@ class DemandListPanel implements Panel {
             demandListID = input.nextLine();
 
             if (demandListDB.contains(new DemandList(demandListID)) == true) {
-                demandList = demandListDB.get(new DemandList(demandListID)).clone();
-                if (demandList.getCampaign().isPermanentDelete() == false) {
+                demandList = demandListDB.get(new DemandList(demandListID));
+                memoDemandList = demandList.clone();
+                if (memoDemandList.getCampaign().isPermanentDelete() == false) {
 
-                    oriRegisterDate = demandList.getDateRegister();
+                    oriRegisterDate = memoDemandList.getDateRegister();
                     boolean validIndex = true;
                     do {
                         System.out.println(demandListUpdateMenu());
@@ -247,18 +249,18 @@ class DemandListPanel implements Panel {
                                 switch (splitIndexInt[i]) {
                                     case 1:
                                         System.out.print("Enter demand name: ");
-                                        demandList.setDemandName(input.nextLine());
+                                        memoDemandList.setDemandName(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 2:
                                         System.out.print("Enter demand description: ");
-                                        demandList.setDescription(input.nextLine());
+                                        memoDemandList.setDescription(input.nextLine());
                                         hasUpdateSomething = true;
                                         break;
                                     case 3:
 
                                         System.out.print("Enter demand register date [dd. MMM. yyyy]: ");
-                                        demandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoDemandList.setDateRegister(LocalDate.parse(input.nextLine(), dtfDate));
                                         break;
 
                                     default:
@@ -271,7 +273,8 @@ class DemandListPanel implements Panel {
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
-                                    demandList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    memoDemandList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    demandList.copy(memoDemandList);
                                     if (oriRegisterDate != demandList.getDateRegister()) {
                                         demandListDB.delData(oriRegisterDate, demandList);
                                         demandListDB.addData(demandList.getDateRegister(), demandList);

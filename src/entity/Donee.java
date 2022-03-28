@@ -139,12 +139,29 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
 
     }
 
+    public void copy(Donee copyDonee) {
+        accountID = copyDonee.accountID;
+        name = copyDonee.name;
+        gender = copyDonee.gender;
+        ic = copyDonee.ic;
+        email = copyDonee.email;
+        phoneNo = copyDonee.phoneNo;
+        address = copyDonee.address;
+        status = copyDonee.status;
+
+        requestIssue = copyDonee.requestIssue;
+        requestAmount = copyDonee.requestAmount;
+        requestOriAmount = copyDonee.requestOriAmount;
+        bankType = copyDonee.bankType;
+        bankAcc = copyDonee.bankAcc;
+    }
+
     private static String[] doneeHeaders() {
         String[] doneeRows = {"Donee ID",
             "Donee Name",
-            "IC", 
+            "IC",
             "Gender",
-            "Email", 
+            "Email",
             "Phone",
             "Address",
             "Request Issue",
@@ -159,17 +176,17 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     private String[] strArr() {
         String gen = String.valueOf(gender);
         String amt = Double.toString(requestAmount);
-        return new String[]{accountID, 
-            name, 
-            ic, 
-            gen, 
-            email, 
-            phoneNo, 
-            address, 
-            requestIssue, 
-            amt, 
-            bankType, 
-            bankAcc, 
+        return new String[]{accountID,
+            name,
+            ic,
+            gen,
+            email,
+            phoneNo,
+            address,
+            requestIssue,
+            amt,
+            bankType,
+            bankAcc,
             status};
 
     }
@@ -257,4 +274,5 @@ public class Donee extends Account implements Comparable<Donee>, Cloneable {
     public boolean isInActive() {
         return status.equalsIgnoreCase("Inactive");
     }
+
 }

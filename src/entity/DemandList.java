@@ -151,6 +151,19 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
         }
     }
 
+    public void copy(DemandList copyDemandList) {
+        demandListID = copyDemandList.demandListID;
+        campaign = copyDemandList.campaign;
+        demandName = copyDemandList.demandName;
+        quantity = copyDemandList.quantity;
+        pricePerUnit = copyDemandList.pricePerUnit;
+        description = copyDemandList.description;
+        orgiQty = copyDemandList.orgiQty;
+        dateRegister = copyDemandList.dateRegister;
+        dateModified = copyDemandList.dateModified;
+        status = copyDemandList.status;
+    }
+
     @Override
     public boolean equals(Object o) {
 
@@ -170,7 +183,6 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
         String[] demandListHeaders = {"Demand List ID",
             "Demand Name",
             "Quantity",
-            "Date Register",
             "Campaign ID",
             "Campaign Name",
             "Campaign Status",
@@ -185,7 +197,6 @@ public class DemandList implements Comparable<DemandList>, Cloneable {
         return new String[]{demandListID,
             demandName,
             String.valueOf(quantity),
-            dateRegister.toString(),
             campaign.getCampaignID(),
             campaign.getCampaignName(),
             campaign.getStatus(),

@@ -13,9 +13,7 @@ import entity.Funds;
 import entity.Sponsor;
 import entity.SponsorItem;
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.Scanner;
-import utils.DoneePredicates;
 import utils.SponsorPredicates;
 
 /**
@@ -162,6 +160,7 @@ public class SponsorPanel implements Panel {
         String id = "";
         Scanner s = new Scanner(System.in);
         Sponsor sponsor = new Sponsor();
+        Sponsor memoSponsor = new Sponsor();
 
         do {
             Sponsor.sponsorTable(sponsorDB);
@@ -170,7 +169,8 @@ public class SponsorPanel implements Panel {
 
             if (sponsorDB.contains(new Sponsor(id)) == true) {
                 DoublyLinkedList<Sponsor> sponsors = sponsorDB;
-                sponsor = sponsors.getAt(sponsors.indexOf(new Sponsor(id))).clone();
+                sponsor = sponsors.getAt(sponsors.indexOf(new Sponsor(id)));
+                memoSponsor = sponsor.clone();
                 boolean validIndex = true;
 
                 do {
@@ -198,38 +198,38 @@ public class SponsorPanel implements Panel {
                             switch (splitIndexInt[i]) {
                                 case 1:
                                     System.out.print("Enter the new name: ");
-                                    sponsor.setName(s.nextLine());
+                                    memoSponsor.setName(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 2:
                                     System.out.print("Enter the new NRIC: ");
-                                    sponsor.setIc(s.nextLine());
+                                    memoSponsor.setIc(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 3:
                                     System.out.print("Enter the new gender: ");
-                                    sponsor.setGender(s.next().charAt(0));
+                                    memoSponsor.setGender(s.next().charAt(0));
                                     s.nextLine();
                                     hasUpdateSomething = true;
                                     break;
                                 case 4:
                                     System.out.print("Enter the new phone no: ");
-                                    sponsor.setPhoneNo(s.nextLine());
+                                    memoSponsor.setPhoneNo(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 5:
                                     System.out.print("Enter the new company name: ");
-                                    sponsor.setCompanyName(s.nextLine());
+                                    memoSponsor.setCompanyName(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 6:
                                     System.out.print("Enter the new company email: ");
-                                    sponsor.setEmail(s.nextLine());
+                                    memoSponsor.setEmail(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 case 7:
                                     System.out.print("Enter the new company address: ");
-                                    sponsor.setAddress(s.nextLine());
+                                    memoSponsor.setAddress(s.nextLine());
                                     hasUpdateSomething = true;
                                     break;
                                 default:
@@ -243,7 +243,7 @@ public class SponsorPanel implements Panel {
                             confirm = s.nextLine();
 
                             if (confirm.toUpperCase().equals("Y")) {
-
+                                sponsor.copy(memoSponsor);
                                 sponsorDB.replaceAt(sponsor, sponsorDB.indexOf(sponsor));
 
                             }

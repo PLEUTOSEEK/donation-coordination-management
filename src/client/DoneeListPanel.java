@@ -194,6 +194,7 @@ class DoneeListPanel implements Panel {
         String indexSelected = "";
         boolean hasDonee = true;
         DoneeList doneeList = new DoneeList();
+        DoneeList memoDoneeList = new DoneeList();
         LocalDate oriJoinDate = null;
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
 
@@ -204,10 +205,11 @@ class DoneeListPanel implements Panel {
             doneeListID = input.nextLine();
 
             if (doneeListDB.contains(new DoneeList(doneeListID)) == true) {
-                doneeList = doneeListDB.get(new DoneeList(doneeListID)).clone();
-                if (doneeList.getCampaign().isPermanentDelete() == false) {
+                doneeList = doneeListDB.get(new DoneeList(doneeListID));
+                memoDoneeList = doneeList.clone();
+                if (memoDoneeList.getCampaign().isPermanentDelete() == false) {
 
-                    oriJoinDate = doneeList.getDateJoin();
+                    oriJoinDate = memoDoneeList.getDateJoin();
                     boolean validIndex = true;
                     do {
                         System.out.println(doneeListUpdateMenu());
@@ -234,7 +236,7 @@ class DoneeListPanel implements Panel {
                                     case 1:
 
                                         System.out.print("Enter the new donee join date [dd. MMM. yyyy]: ");
-                                        doneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoDoneeList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
 
@@ -248,7 +250,8 @@ class DoneeListPanel implements Panel {
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
-                                    doneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    memoDoneeList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    doneeList.copy(memoDoneeList);
                                     if (oriJoinDate != doneeList.getDateJoin()) {
                                         doneeListDB.delData(oriJoinDate, doneeList);
                                         doneeListDB.addData(doneeList.getDateJoin(), doneeList);

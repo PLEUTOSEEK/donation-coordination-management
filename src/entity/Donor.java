@@ -84,6 +84,20 @@ public class Donor extends Account implements Comparable<Donor>, Cloneable {
 
     }
 
+    public void copy(Donor copyDonor) {
+
+        accountID = copyDonor.accountID;
+        name = copyDonor.name;
+        gender = copyDonor.gender;
+        ic = copyDonor.ic;
+        email = copyDonor.email;
+        phoneNo = copyDonor.phoneNo;
+        address = copyDonor.address;
+        status = copyDonor.status;
+
+        donorType = copyDonor.donorType;
+    }
+
     private static String[] donorHeaders() {
         String[] donorHeaders = {"Donor ID", "Donor Name", "Donor Type", "IC/ Company Register No", "Gender", "Email Address", "Phone Number", "Address", "Status"};
 
@@ -149,15 +163,15 @@ public class Donor extends Account implements Comparable<Donor>, Cloneable {
             donor.setAccountID(autoGenerateID());
             donor.setName(faker.name().fullName());
             donor.setDonorType(donorType[faker.random().nextInt(0, donorType.length - 1)]);
-        
+
             if (donor.getDonorType().equals("organization")) {
-             donor.setIc(registerNo[faker.random().nextInt(0, registerNo.length - 1)]);
-             donor.setGender('-');
+                donor.setIc(registerNo[faker.random().nextInt(0, registerNo.length - 1)]);
+                donor.setGender('-');
             } else {
                 donor.setGender((char) gender[faker.random().nextInt(0, 1)]);
                 donor.setIc(ic[faker.random().nextInt(0, ic.length - 1)]);
             }
-            
+
             donor.setEmail(faker.internet().emailAddress());
             donor.setPhoneNo(phoneNo[faker.random().nextInt(0, phoneNo.length - 1)]);
             donor.setAddress(address[faker.random().nextInt(0, address.length - 1)]);

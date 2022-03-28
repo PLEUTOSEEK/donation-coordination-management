@@ -15,7 +15,6 @@ import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomize
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 
 /**
