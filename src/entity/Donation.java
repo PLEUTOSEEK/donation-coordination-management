@@ -256,15 +256,18 @@ public class Donation implements Comparable<Donation> {
         Campaign[] campaigns = new Campaign[campaignDB.getAllList().getLength()];
         campaigns = campaignDB.getAllListInArray(campaigns);
 
-        for (int data = 0; data < 10; data++) {
+        for (int data = 0; data < 30; data++) {
             LocalDate dateOfDonation = randomTimeRange.getRandomValue().toLocalDate();
             Timestamp dateModified = new Timestamp(dateOfDonation.plusDays(faker.number().numberBetween(0, 3)).toEpochDay());
 
             donation = new Donation();
             donation.setDonationID(autoGenerateID());
             donation.setDonor(donors[faker.number().numberBetween(0, donors.length - 1)]);
-            donation.setDonee(donees[faker.number().numberBetween(0, donees.length - 1)]);
-            donation.setCampaign(campaigns[faker.number().numberBetween(0, campaigns.length - 1)]);
+            if (data % 2 == 0) {
+                donation.setDonee(donees[faker.number().numberBetween(0, donees.length - 1)]);
+            } else {
+                donation.setCampaign(campaigns[faker.number().numberBetween(0, campaigns.length - 1)]);
+            }
             donation.setTotalAmount(faker.number().randomDouble(2, 10, 10000));
             donation.setDescription(description[faker.number().numberBetween(0, description.length - 1)]); // suspect
             donation.setDateOfDonation(dateOfDonation);
@@ -273,7 +276,6 @@ public class Donation implements Comparable<Donation> {
 
             dummyDonations.addLastNode(donation);
         }
-
         return dummyDonations;
     }
 }
