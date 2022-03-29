@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Account.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/adt/DoublyLinkedList.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorPanel.java</file>
@@ -10,6 +11,61 @@
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/adt/QueueInterface.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Sponsor.java</file>
             <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Funds.java</file>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/QueueInterface.java</file>
+            <file>file:/C:/Users/wjuny/DSA/donation-coordination-management/src/adt/CircularLinkedQueue.java</file>
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> b218ef34ad1e8983c2607d4ecabbaa0dbd340a78
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/DonationPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/utils/SponsorPredicates.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/FundsPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/SponsorItemPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/entity/Donation.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/utils/CampaignPredicates.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/MainPanel.java</file>
+            <file>file:/C:/Users/Angelina%20Oon/Desktop/donation-coordination-management/src/client/CaregiverDonationCordinationManagementSystem.java</file>
+=======
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/CaregiverDonationCordinationManagementSystem.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/FundsPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/Panel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Account.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DemandListPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DoneePanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/utils/Arr.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedList.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Donation.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/CampaignPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/SponsorPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DonorListPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/SponsorItemPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/utils/DonationPredicates.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/TestEvery.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/adt/CircularLinkedListInterface.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DoneeListPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DonationPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/DonorPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Sponsor.java</file>
+<<<<<<< HEAD
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Donee.java</file>
+>>>>>>> 243067fe9316092bb5d158e2c1d458daaf910499
+>>>>>>> c4f4fe459d1fbb66e44a7faa8cd35826115c4def
+>>>>>>> 73eec9f0256aeb4e1140a91bcd0a438804091e7b
+=======
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/SponsorListPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/entity/Funds.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/client/MainPanel.java</file>
+            <file>file:/C:/Users/USER/Desktop/donation-coordination-management/src/utils/Inputs.java</file>
+>>>>>>> 83b877b6f04438dc724889cb0296f29ff9b3ad35
+>>>>>>> b218ef34ad1e8983c2607d4ecabbaa0dbd340a78
+>>>>>>> 9c4fc1f1a16a7d018788d3fb8a753554d3faad48
         </group>
     </open-files>
 </project-private>

@@ -206,6 +206,7 @@ class SponsorListPanel implements Panel {
         String indexSelected = "";
         boolean hasSponsor = true;
         SponsorList sponsorList = new SponsorList();
+        SponsorList memoSponsorList = new SponsorList();
         LocalDate oriJoinDate = null;
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd. MMM. yyyy");
 
@@ -216,10 +217,11 @@ class SponsorListPanel implements Panel {
             sponsorListID = input.nextLine();
 
             if (sponsorListDB.contains(new SponsorList(sponsorListID)) == true) {
-                sponsorList = sponsorListDB.get(new SponsorList(sponsorListID)).clone();
-                if (sponsorList.getCampaign().isPermanentDelete() == false) {
+                sponsorList = sponsorListDB.get(new SponsorList(sponsorListID));
+                memoSponsorList = sponsorList.clone();
+                if (memoSponsorList.getCampaign().isPermanentDelete() == false) {
 
-                    oriJoinDate = sponsorList.getDateJoin();
+                    oriJoinDate = memoSponsorList.getDateJoin();
                     boolean validIndex = true;
                     do {
                         System.out.println(sponsorListUpdateMenu());
@@ -245,7 +247,7 @@ class SponsorListPanel implements Panel {
                                 switch (splitIndexInt[i]) {
                                     case 1:
                                         System.out.print("Enter the new Sponsor join date [dd. MMM. yyyy]: ");
-                                        sponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
+                                        memoSponsorList.setDateJoin(LocalDate.parse(input.nextLine(), dtfDate));
                                         hasUpdateSomething = true;
                                         break;
 
@@ -259,7 +261,8 @@ class SponsorListPanel implements Panel {
                                 confirmation = input.nextLine();
 
                                 if (confirmation.toUpperCase().equals("Y")) {
-                                    sponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    memoSponsorList.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    sponsorList.copy(memoSponsorList);
                                     if (oriJoinDate != sponsorList.getDateJoin()) {
                                         sponsorListDB.delData(oriJoinDate, sponsorList);
                                         sponsorListDB.addData(sponsorList.getDateJoin(), sponsorList);

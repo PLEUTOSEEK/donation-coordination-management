@@ -6,7 +6,6 @@
 package client;
 
 import adt.SinglyLinkedList;
-import adt.SinglyLinkedListInterface;
 import entity.Donor;
 import java.util.Scanner;
 import utils.DonorPredicates;
@@ -172,6 +171,7 @@ public class DonorPanel implements Panel {
         String opt = "";
         String donorID = "";
         Donor donor = new Donor();
+        Donor memoDonor = new Donor();
 
         do {
             Donor.donorTable(donorDB);
@@ -180,7 +180,8 @@ public class DonorPanel implements Panel {
 
             if (donorDB.contains(new Donor(donorID)) == true) {
                 SinglyLinkedList<Donor> donors = donorDB;
-                donor = donors.getAt(donors.indexOf(new Donor(donorID))).clone();
+                donor = donors.getAt(donors.indexOf(new Donor(donorID)));
+                memoDonor = donor.clone();
                 boolean optvalidation = true;
 
                 do {
@@ -209,7 +210,7 @@ public class DonorPanel implements Panel {
                                 case 1:
                                     //sc.nextLine();
                                     System.out.print("\nDonor name   :");
-                                    donor.setName(sc.nextLine());
+                                    memoDonor.setName(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
@@ -220,49 +221,49 @@ public class DonorPanel implements Panel {
                                     int selection = sc.nextInt();
 
                                     if (selection == 1) {
-                                        donor.setDonorType("organization");
+                                        memoDonor.setDonorType("organization");
 
-                                        donor.setGender(' ');
+                                        memoDonor.setGender(' ');
                                         sc.nextLine();
                                         System.out.print("\nRegister No  :");
-                                        donor.setIc(sc.nextLine());
+                                        memoDonor.setIc(sc.nextLine());
 
                                     } else {
-                                        donor.setDonorType("individual");
+                                        memoDonor.setDonorType("individual");
                                         sc.nextLine();
                                         System.out.print("\nGender(M/F)  :");
-                                        donor.setGender(sc.next().charAt(0));
+                                        memoDonor.setGender(sc.next().charAt(0));
                                         //sc.nextLine();
                                         System.out.print("\nNRIC         :");
-                                        donor.setIc(sc.nextLine());
+                                        memoDonor.setIc(sc.nextLine());
 
                                     }
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 3:
-                                    String donorType = donor.getDonorType();
+                                    String donorType = memoDonor.getDonorType();
                                     if (donorType == "organization") {
-                                        donor.setGender(' ');
+                                        memoDonor.setGender(' ');
                                         System.out.print("\nThe donor type is organization,so gender cannot be set");
                                         hasUpdateSomething = true;
                                     } else {
                                         System.out.print("\nGender(M/F)  :");
-                                        donor.setGender(sc.next().charAt(0));
+                                        memoDonor.setGender(sc.next().charAt(0));
                                         hasUpdateSomething = true;
                                     }
                                     break;
 
                                 case 4:
-                                    donorType = donor.getDonorType();
+                                    donorType = memoDonor.getDonorType();
                                     //sc.nextLine();
                                     if (donorType == "organization") {
                                         System.out.print("\nRegister No  :");
-                                        donor.setIc(sc.nextLine());
+                                        memoDonor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     } else {
                                         System.out.print("\nNRIC           :");
-                                        donor.setIc(sc.nextLine());
+                                        memoDonor.setIc(sc.nextLine());
                                         hasUpdateSomething = true;
                                     }
                                     break;
@@ -270,28 +271,28 @@ public class DonorPanel implements Panel {
                                 case 5:
                                     //sc.nextLine();
                                     System.out.print("\nEmail        :");
-                                    donor.setEmail(sc.nextLine());
+                                    memoDonor.setEmail(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 6:
                                     //sc.nextLine();
                                     System.out.print("\nPhone number :");
-                                    donor.setPhoneNo(sc.nextLine());
+                                    memoDonor.setPhoneNo(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 7:
                                     //sc.nextLine();
                                     System.out.print("\nAddress      :");
-                                    donor.setAddress(sc.nextLine());
+                                    memoDonor.setAddress(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
                                 case 8:
                                     //sc.nextLine();
                                     System.out.println("\nStatus       :");
-                                    donor.setStatus(sc.nextLine());
+                                    memoDonor.setStatus(sc.nextLine());
                                     hasUpdateSomething = true;
                                     break;
 
@@ -305,7 +306,7 @@ public class DonorPanel implements Panel {
                             System.out.print("\nConfirm update (Y/N)");
                             option = s.next().charAt(0);
                             if (option == 'Y' || option == 'y') {
-
+                                donor.copy(memoDonor);
                                 donorDB.replace(donor, donorDB.indexOf(donor));
 
                                 System.out.println("\nUpdate successfully...");

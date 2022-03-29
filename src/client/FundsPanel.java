@@ -11,7 +11,6 @@ import adt.RedBlackTree;
 import entity.DemandList;
 import entity.Funds;
 import entity.Sponsor;
-import entity.SponsorItem;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +24,7 @@ import utils.FundsPredicates;
 public class FundsPanel implements Panel {
 
     public void controlPanel(DoublyLinkedList<Funds> fundsDB, DoublyLinkedList<Sponsor> sponsorDB,
-            RedBlackTree<LocalDate, DemandList> demandListDB) throws CloneNotSupportedException {
+            RedBlackTree<LocalDate, DemandList> demandListDB) {
 
         ListInterface<Funds> funds;
 

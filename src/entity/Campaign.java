@@ -346,6 +346,24 @@ public class Campaign implements Comparable<Campaign>, Cloneable {
         return dummyCampaign;
     }
 
+    public void copy(Campaign copyCampaign) {
+        campaignID = copyCampaign.campaignID;
+        campaignName = copyCampaign.campaignName;
+        campaignStartDate = copyCampaign.campaignStartDate;
+        campaignStartTime = copyCampaign.campaignStartTime;
+        campaignEndDate = copyCampaign.campaignEndDate;
+        campaignEndTime = copyCampaign.campaignEndTime;
+        targetAmount = copyCampaign.targetAmount;
+        campaignEmail = copyCampaign.campaignEmail;
+        campaignMobileNo = copyCampaign.campaignMobileNo;
+        campaignAddress = copyCampaign.campaignAddress;
+        campaignBankNo = copyCampaign.campaignBankNo;
+        description = copyCampaign.description;
+        status = copyCampaign.status;
+        campaignRegisterDate = copyCampaign.campaignRegisterDate;
+        dateModified = copyCampaign.dateModified;
+    }
+
     @Override
     public Campaign clone() throws CloneNotSupportedException {
         Campaign cloned = (Campaign) super.clone();
