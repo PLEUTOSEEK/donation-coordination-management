@@ -102,9 +102,4 @@ public abstract class Account {
 
     // need to have auto generate ID
     public abstract String autoGenerateID();
-
-    @Override
-    public String toString() {
-        return address + "\n" + phoneNo + "\n";
-    }
 }
