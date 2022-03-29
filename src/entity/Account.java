@@ -21,7 +21,9 @@ public abstract class Account {
 
     }
 
-    public Account(String accountID, String name, char gender, String ic, String email, String phoneNo, String address, String status) {
+    public Account(String accountID, String name, char gender, 
+            String ic, String email, String phoneNo, String address, 
+            String status) {
         this.accountID = accountID;
         this.name = name;
         this.gender = gender;
@@ -102,9 +104,4 @@ public abstract class Account {
 
     // need to have auto generate ID
     public abstract String autoGenerateID();
-
-    @Override
-    public String toString() {
-        return address + "\n" + phoneNo + "\n";
-    }
 }

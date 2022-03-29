@@ -6,9 +6,7 @@
 package client;
 
 import adt.CircularLinkedList;
-import adt.CircularLinkedListInterface;
 import adt.CircularLinkedQueue;
-import adt.DoublyLinkedList;
 import adt.RedBlackTree;
 import adt.SinglyLinkedList;
 import entity.Campaign;
@@ -31,7 +29,7 @@ public class DonationPanel implements Panel {
             CircularLinkedList<Donation> donationDB,
             RedBlackTree<LocalDate, Campaign> campaignDB,
             CircularLinkedQueue<Donee> doneeDB,
-            SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
+            SinglyLinkedList<Donor> donorDB) {
 
         int opt;
         Scanner sc = new Scanner(System.in);
@@ -82,9 +80,10 @@ public class DonationPanel implements Panel {
 
         return menu.toString();
     }
+
     public void addDonorToDonee(CircularLinkedList<Donation> donationDB,
             CircularLinkedQueue<Donee> doneeDB,
-            SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
+            SinglyLinkedList<Donor> donorDB) {
 
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -158,16 +157,16 @@ public class DonationPanel implements Panel {
             } else {
                 System.out.println("Donor ID not found...");
             }
-            
+
             System.out.print("Continue adding new donation? (Y/N) ");
             option = input.nextLine();
-            
+
         } while (option.toUpperCase().equals("Y"));
     }
 
     public void addDonorToCampaign(CircularLinkedList<Donation> donationDB,
             RedBlackTree<LocalDate, Campaign> campaignDB,
-            SinglyLinkedList<Donor> donorDB) throws CloneNotSupportedException {
+            SinglyLinkedList<Donor> donorDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
         String confirmation = "";
@@ -241,8 +240,8 @@ public class DonationPanel implements Panel {
 
         System.out.println("Return to previous step...");
     }
-    
-    public void displayDonation(CircularLinkedList<Donation> donationDB){
+
+    public void displayDonation(CircularLinkedList<Donation> donationDB) {
         Donation.donationTable(donationDB);
     }
 
@@ -262,7 +261,7 @@ public class DonationPanel implements Panel {
             System.out.println("No Record Found...");
         }
     }
-    
+
     public void deleteDonation(CircularLinkedList<Donation> donationDB) {
         Scanner input = new Scanner(System.in);
         String option = "";
@@ -310,7 +309,7 @@ public class DonationPanel implements Panel {
 
         System.out.println("Return to previous step...");
     }
-    
+
     public void updateDonation(CircularLinkedList<Donation> donationDB) {
         Scanner input = new Scanner(System.in);
         String option = "";

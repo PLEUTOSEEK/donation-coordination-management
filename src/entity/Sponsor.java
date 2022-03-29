@@ -76,6 +76,19 @@ public class Sponsor extends Account implements Comparable<Sponsor>, Cloneable {
         return false;
     }
 
+    public void copy(Sponsor copySponsor) {
+        accountID = copySponsor.accountID;
+        name = copySponsor.name;
+        gender = copySponsor.gender;
+        ic = copySponsor.ic;
+        email = copySponsor.email;
+        phoneNo = copySponsor.phoneNo;
+        address = copySponsor.address;
+        status = copySponsor.status;
+
+        companyName = copySponsor.companyName;
+    }
+
     private static String[] sponsorHeaders() {
         String[] sponsorHeaders = {"Sponsor ID", "Sponsor Name", "IC", "Gender", "Phone No", "Company Name", "Company Email", "Company Address", "Status"};
 
