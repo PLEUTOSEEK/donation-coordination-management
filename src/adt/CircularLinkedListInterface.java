@@ -38,4 +38,10 @@ public interface CircularLinkedListInterface<T> {
     boolean replaceLastNode(T element);
 
     boolean replaceAnyNode(T element, int position);
+
+    T[] toArray(T[] array);
+
+    boolean contains(T element);
+
+    int indexOf(T element);
 }

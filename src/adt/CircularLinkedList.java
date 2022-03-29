@@ -233,6 +233,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         return false;
     }
 
+    @Override
     public T[] toArray(T[] array) {
         Node currentNode = firstNode;
 
@@ -255,10 +256,12 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         }
     }
 
+    @Override
     public boolean contains(T element) {
         return indexOf(element) != -1;
     }
 
+    @Override
     public int indexOf(T element) {
         Node currentNode = firstNode;
         int counter = 1;
