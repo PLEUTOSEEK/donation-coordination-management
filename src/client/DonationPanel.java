@@ -297,8 +297,10 @@ public class DonationPanel implements Panel {
                     donation.setStatus(status[selection - 1].toString());
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
+                    System.out.println("Updated successfully");
+                } else {
+                    System.out.println("Delete cancelled...");
                 }
-                System.out.println("Updated successfully");
             } else {
                 System.out.println("Donation ID not found");
             }
@@ -372,22 +374,21 @@ public class DonationPanel implements Panel {
                                     default:
                                         System.out.println("Please choose digit between 1 - 3!");
                                 }
+                            }
+                            if (hasUpdateSomething == true) {
+                                input.nextLine();
+                                System.out.print("Confirm update donation record? (Y/N) ");
+                                confirmation = input.nextLine();
 
-                                if (hasUpdateSomething == true) {
-                                    input.nextLine();
-                                    System.out.print("Confirm update donation record? (Y/N) ");
-                                    confirmation = input.nextLine();
-
-                                    if (confirmation.toUpperCase().equals("Y")) {
-                                        donation.setDateModified(new Timestamp(System.currentTimeMillis()));
-                                        donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
-                                        System.out.println("Updated successfully...");
-                                    } else {
-                                        System.out.println("Update cancelled...");
-                                    }
+                                if (confirmation.toUpperCase().equals("Y")) {
+                                    donation.setDateModified(new Timestamp(System.currentTimeMillis()));
+                                    donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
+                                    System.out.println("Updated successfully...");
                                 } else {
-                                    System.out.println("Nothing is selected for update...");
+                                    System.out.println("Update cancelled...");
                                 }
+                            } else {
+                                System.out.println("Nothing is selected for update...");
                             }
                         }
                     } while (validIndex == false);

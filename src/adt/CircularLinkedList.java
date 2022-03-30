@@ -250,9 +250,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         Node currentNode = firstNode;
 
         if (currentNode != null) {
-
-            int num = 0;
-
+            int num = 0;    
             while (currentNode != null) {
                 try {
                     array[num] = ((T) currentNode.data);
