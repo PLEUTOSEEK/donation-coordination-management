@@ -13,6 +13,22 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     private Node firstNode, lastNode;
 
+    private class Node {
+
+        private T data;
+        private Node next;
+
+        private Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        private Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
+
     public CircularLinkedList() {
         this.firstNode = null;
         this.lastNode = null;
@@ -75,28 +91,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
     }
 
     @Override
-    public int countNodes() {
-        Node currentNode = firstNode;
-        int length = 0;
-        if (firstNode != null) {
-            do {
-                currentNode = currentNode.next;
-                length++;
-            } while (currentNode != firstNode);
-        }
-        return length;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        if (firstNode == null && lastNode == null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
     public Object getFirstNode() {
         if (firstNode == null) {
             return null;
@@ -114,7 +108,7 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
     @Override
     public Object getAnyNode(int position) {
-        
+
         if (position >= 1 && position <= countNodes()) {
 
             if (position == 1) {
@@ -144,7 +138,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 lastNode = null;
             }
         }
-
         return true;
     }
 
@@ -178,7 +171,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
                 currentNode.next = dltNode.next;
                 return true;
             }
-
         }
         return true;
     }
@@ -192,7 +184,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             firstNode = newNode;
             lastNode.next = newNode;
         }
-
         return true;
     }
 
@@ -228,11 +219,33 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
 
                 return true;
             }
-
         }
         return false;
     }
 
+    @Override
+    public int countNodes() {
+        Node currentNode = firstNode;
+        int length = 0;
+        if (firstNode != null) {
+            do {
+                currentNode = currentNode.next;
+                length++;
+            } while (currentNode != firstNode);
+        }
+        return length;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (firstNode == null && lastNode == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+     @Override
     public T[] toArray(T[] array) {
         Node currentNode = firstNode;
 
@@ -254,11 +267,13 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
             return null;
         }
     }
-
+    
+    @Override
     public boolean contains(T element) {
         return indexOf(element) != -1;
     }
 
+    @Override
     public int indexOf(T element) {
         Node currentNode = firstNode;
         int counter = 1;
@@ -274,22 +289,6 @@ public class CircularLinkedList<T> implements CircularLinkedListInterface<T> {
         }
 
         return -1;
-    }
-
-    private class Node {
-
-        private T data;
-        private Node next;
-
-        private Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
-
-        private Node(T data, Node next) {
-            this.data = data;
-            this.next = next;
-        }
     }
 
 }
