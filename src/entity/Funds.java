@@ -208,8 +208,6 @@ public class Funds implements Comparable<Funds>, Cloneable {
 
             Sponsor sponsorIndividual = sponsor.getAt(record);
             funds = new Funds();
-            //DemandList demandListIndividual = demandList.getAt(record);
-            //funds.setSponsorItem(demandListIndividual);
 
             funds.setFundsID(autoGenerateID());
             funds.setSponsor(sponsorIndividual);

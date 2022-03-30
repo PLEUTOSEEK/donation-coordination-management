@@ -218,12 +218,13 @@ public class DonorPanel implements Panel {
                                     System.out.println("Donor type   :");
                                     System.out.println("1.Organization");
                                     System.out.println("2.Individual");
+                                    System.out.println("Please enter a numeric:");
                                     int selection = sc.nextInt();
 
                                     if (selection == 1) {
                                         memoDonor.setDonorType("organization");
 
-                                        memoDonor.setGender(' ');
+                                        memoDonor.setGender('-');
                                         sc.nextLine();
                                         System.out.print("\nRegister No  :");
                                         memoDonor.setIc(sc.nextLine());
@@ -232,7 +233,7 @@ public class DonorPanel implements Panel {
                                         memoDonor.setDonorType("individual");
                                         sc.nextLine();
                                         System.out.print("\nGender(M/F)  :");
-                                        memoDonor.setGender(sc.next().charAt(0));
+                                        memoDonor.setGender(s.next().charAt(0));
                                         //sc.nextLine();
                                         System.out.print("\nNRIC         :");
                                         memoDonor.setIc(sc.nextLine());
@@ -249,7 +250,7 @@ public class DonorPanel implements Panel {
                                         hasUpdateSomething = true;
                                     } else {
                                         System.out.print("\nGender(M/F)  :");
-                                        memoDonor.setGender(sc.next().charAt(0));
+                                        memoDonor.setGender(s.next().charAt(0));
                                         hasUpdateSomething = true;
                                     }
                                     break;

@@ -26,7 +26,8 @@ public class Donor extends Account implements Comparable<Donor>, Cloneable {
         this.accountID = accountID;
     }
 
-    public Donor(String accountID, String name, String donorType, char gender, String ic, String email, String phoneNo, String address, String status) {
+    public Donor(String accountID, String name, String donorType, char gender, String ic,
+            String email, String phoneNo, String address, String status) {
         //String name, char gender, String ic, String email, String phoneNo, String address,
         super(accountID, name, gender, ic, email, phoneNo, address, status);
         this.donorType = donorType;
@@ -99,7 +100,9 @@ public class Donor extends Account implements Comparable<Donor>, Cloneable {
     }
 
     private static String[] donorHeaders() {
-        String[] donorHeaders = {"Donor ID", "Donor Name", "Donor Type", "IC/ Company Register No", "Gender", "Email Address", "Phone Number", "Address", "Status"};
+        String[] donorHeaders = {"Donor ID", "Donor Name", "Donor Type",
+            "IC/ Company Register No", "Gender", "Email Address", "Phone Number",
+            "Address", "Status"};
 
         return donorHeaders;
     }
@@ -111,12 +114,12 @@ public class Donor extends Account implements Comparable<Donor>, Cloneable {
 
     //change the list and apply toArray method.
     private static String[][] donorRows(SinglyLinkedList<Donor> donorList) {
-        Donor[] donees = new Donor[donorList.getDataCount()];
-        donees = donorList.toArray(donees);
+        Donor[] donor = new Donor[donorList.getDataCount()];
+        donor = donorList.toArray(donor);
         String[][] donorRows = new String[donorList.getDataCount()][];
 
-        for (int i = 0; i < donees.length; i++) {
-            donorRows[i] = donees[i].strArr();
+        for (int i = 0; i < donor.length; i++) {
+            donorRows[i] = donor[i].strArr();
         }
         return donorRows;
     }

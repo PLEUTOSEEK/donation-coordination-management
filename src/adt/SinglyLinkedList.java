@@ -29,31 +29,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         return tail;
     }
 
-    public T getAt(int givenPos) {
-        //givenPos is start from 1
-
-        if (givenPos >= 1 && givenPos <= dataCount) {
-
-            if (givenPos == 1) {
-
-                return (T) this.firstNode.data;
-
-            } else {
-
-                Node current = this.firstNode;
-                for (int i = 2; i <= givenPos; i++) {
-                    current = current.getNext();
-                }
-
-                return (T) current.data;
-
-            }
-
-        }
-
-        return null;
-    }
-
     public int getDataCount() {
         return dataCount;
     }
@@ -128,10 +103,12 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         return false;
     }
 
+    @Override
     public boolean contains(T element) {
         return indexOf(element) != -1;
     }
 
+    @Override
     public int indexOf(T element) {
         Node current = this.firstNode;
         int counter = 1;
@@ -147,63 +124,6 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
         }
 
         return -1;
-    }
-
-    @Override
-    public final void clear(T element) {
-        firstNode = null;
-        dataCount = 0;
-    }
-
-    @Override
-    public boolean empty() {
-        boolean result;
-        result = dataCount == 0;
-        return result;
-    }
-
-    @Override
-    public void print(T element) {
-        Node curr = firstNode;
-
-        while (curr != null) {
-            System.out.print("[" + curr.getData() + "], ");
-            curr = curr.getNext();
-        }
-        System.out.println("");
-    }
-
-    public void printSpec(T element) {
-        Node curr = firstNode;
-
-        while (curr != null) {
-            if (element.equals(curr.data)) {
-                System.out.print("[" + curr.getData() + "], ");
-            }
-        }
-        System.out.println("");
-    }
-
-    public T[] toArray(T[] array) {
-        Node curr = this.firstNode;
-
-        if (curr != null) {
-
-            int num = 0;
-
-            while (curr != null) {
-                try {
-                    array[num] = ((T) curr.data);
-                    curr = curr.getNext();
-                    num++;
-                } catch (Exception e) {
-                    break;
-                }
-            }
-            return array;
-        } else {
-            return null;
-        }
     }
 
     @Override
@@ -235,6 +155,79 @@ public class SinglyLinkedList<T extends Comparable<T>> implements SinglyLinkedLi
 
         }
         return false;
+    }
+
+    @Override
+    public final void clear(T element) {
+        firstNode = null;
+        dataCount = 0;
+    }
+
+    @Override
+    public boolean empty() {
+        boolean result;
+        result = this.dataCount == 0;
+        return result;
+    }
+
+    @Override
+    public void print(T element) {
+        Node curr = firstNode;
+
+        while (curr != null) {
+            System.out.print("[" + curr.getData() + "], ");
+            curr = curr.getNext();
+        }
+        System.out.println("");
+    }
+
+    @Override
+    public T[] toArray(T[] array) {
+        Node curr = this.firstNode;
+
+        if (curr != null) {
+
+            int num = 0;
+
+            while (curr != null) {
+                try {
+                    array[num] = ((T) curr.data);
+                    curr = curr.getNext();
+                    num++;
+                } catch (Exception e) {
+                    break;
+                }
+            }
+            return array;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public T getAt(int givenPos) {
+        //givenPos is start from 1
+
+        if (givenPos >= 1 && givenPos <= dataCount) {
+
+            if (givenPos == 1) {
+
+                return (T) this.firstNode.data;
+
+            } else {
+
+                Node current = this.firstNode;
+                for (int i = 2; i <= givenPos; i++) {
+                    current = current.getNext();
+                }
+
+                return (T) current.data;
+
+            }
+
+        }
+
+        return null;
     }
 
     private class Node<T extends Comparable<T>> {
