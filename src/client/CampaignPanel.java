@@ -615,12 +615,9 @@ public class CampaignPanel implements Panel {
                                     memoCampaign.setDateModified(new Timestamp(System.currentTimeMillis()));
                                     campaign.copy(memoCampaign);
                                     if (oriStartDate != campaign.getCampaignStartDate()) {
-                                        System.out.println("I am redelete");
                                         campaignDB.delData(oriStartDate, campaign);
                                         campaignDB.addData(campaign.getCampaignStartDate(), campaign);
                                     } else {
-                                        System.out.println("I am just update");
-
                                         campaignDB.updateData(campaign.getCampaignStartDate(), campaign);
                                     }
                                 }

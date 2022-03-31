@@ -141,7 +141,7 @@ public class Sponsor extends Account implements Comparable<Sponsor>, Cloneable {
         DoublyLinkedList<Sponsor> dummySponsor = new DoublyLinkedList<Sponsor>();
 
         Faker faker = new Faker();
-        String[] sponsorIC = "1114152543,0904050315,0402005577,1004163133,0111147799,1101365780,0122554455,0302010441,0113224412,0730221541".split(",");
+        String[] sponsorIC = "111415254311,090405031522,040200557733,100416313311,011114779944,110136578055,012255445511,030201044177,011322441288,073022154199".split(",");
         int[] gender = {77, 70};
         String[] sponsorPhone = "0197682204,0143268085,0122323462,0164242625,0143268022,0146741265,0122072540,0195893047,0139285361,0198837324".split(",");
         String[] sponsorCompanyName = "Cox Unlimited,Rabbit Industries,Jolie and Co,Teach Teach Teach,Support Orphanage,Cameron Jolie Associates,Jolie of Malaysia,Kangaroo Support,Yeep & Associates,Happy TF Malaysia".split(",");
