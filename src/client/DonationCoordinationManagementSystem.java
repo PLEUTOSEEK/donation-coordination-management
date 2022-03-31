@@ -27,7 +27,7 @@ import java.time.LocalDate;
  *
  * @author Tee Zhuo Xuan
  */
-public class DonationCordinationManagementSystem {
+public class DonationCoordinationManagementSystem {
 
     public static void main(String[] args) throws CloneNotSupportedException {
         RedBlackTree<LocalDate, Campaign> campaignDB = new Campaign().generateDummyCampaign();
