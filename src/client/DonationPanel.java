@@ -297,7 +297,7 @@ public class DonationPanel implements Panel {
                     donation.setStatus(status[selection - 1].toString());
                     donation.setDateModified(new Timestamp(System.currentTimeMillis()));
                     donationDB.replaceAnyNode(donation, donationDB.indexOf(new Donation(donationID)));
-                    System.out.println("Updated successfully");
+                    System.out.println("Delete successfully");
                 } else {
                     System.out.println("Delete cancelled...");
                 }
